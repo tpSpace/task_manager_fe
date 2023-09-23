@@ -13,7 +13,7 @@ Second, run the development server:
 ```bash
 yarn run dev
 ```
-# or run with turbo for faster build. But at your own risk.
+## or run with turbo for faster build. But at your own risk.
 ```bash
 yarn run turbo 
 ```
