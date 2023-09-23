@@ -11,9 +11,9 @@ yarn
 Second, run the development server:
 
 ```bash
-yarn dev
-# or
-bun run dev
+yarn run dev
+# or run with turbo for faster build. But at your own risk.
+yarn run turbo 
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
