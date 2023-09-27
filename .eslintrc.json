@@ -1,7 +1,41 @@
 {
-  "extends": ["next/core-web-vitals", ""],
+  "extends": [
+    "next/core-web-vitals", 
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
   "rules": {
-    "react/react-in-jsx-scope": "off"
+    "react/react-in-jsx-scope": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    // "@typescript-eslint/no-empty-function": "off",
+    // "@typescript-eslint/no-explicit-any": "warn",
+    // "@typescript-eslint/ban-ts-comment": "warn",
+    "import/no-extraneous-dependencies": 2,
+    "import/extensions": ["error", "never", { "svg": "always" }],
+    "for-direction": 2,
+    "no-cond-assign": 2,
+    "no-constant-condition": 2,
+    "no-inline-comments": 2,
+    "no-promise-executor-return": 2,
+    "no-fallthrough": 2,
+    "no-dupe-args": 2,
+    "no-dupe-keys": 2,
+    "no-import-assign": 2,
+    "no-dupe-else-if": 2,
+    "no-duplicate-imports": 2,
+    "no-ex-assign": 2,
+    "react/prop-types": "off",
+    
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["Link"],
+        "specialLink": ["hrefLeft", "hrefRight"],
+        "aspects": ["invalidHref", "preferButton"]
+      }
+    ],
+    "jsx-a11y/no-onchange": "off"
   },
   // only tsx ts files no js files
   "overrides": [
