@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "turbo": "next dev --turbo"
   },
   "dependencies": {
     "@types/node": "20.6.3",
@@ -23,6 +24,8 @@
     "typescript": "5.2.2"
   },
   "devDependencies": {
+    "@swc/cli": "^0.1.62",
+    "@swc/core": "^1.3.89",
     "eslint-config-prettier": "^9.0.0",
     "prettier": "3.0.3"
   }
