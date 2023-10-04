@@ -9,7 +9,7 @@ const Header = () => {
       <div className="flex justify-start w-6/12">
         <CustomLink
           containerStyles="justify-self-start border-2 border-solid rounded-lg p-2"
-          route="/home"
+          route="/"
           title="Home"
         />
       </div>
