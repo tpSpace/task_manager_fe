@@ -5,22 +5,22 @@ import CustomLink from './CustomLink';
 
 const Header = () => {
   return (
-    <div className="flex w-screen m-4">
-      <div className="flex justify-start w-6/12">
+    <div className="flex m-4 flex-row justify-between border-black border-1 h-2.5">
+      <div className="">
         <CustomLink
-          containerStyles="justify-self-start border-2 border-solid rounded-lg p-2"
+          containerStyles="border-2 border-solid border-black rounded-lg p-2 hover:bg-black hover:text-white"
           route="/"
           title="Home"
         />
       </div>
-      <div className="flex justify-end w-6/12">
+      <div className="">
         <CustomLink
-          containerStyles="justify-self-end mr-10 border-2 border-solid rounded-lg p-2"
+          containerStyles="mr-10 border-2 border-solid border-black rounded-lg p-2 hover:bg-black hover:text-white"
           route="/login"
           title="Login"
         />
         <CustomLink
-          containerStyles="justify-self-end mr-10 border-2 border-solid rounded-lg p-2"
+          containerStyles="mr-10 border-2 border-solid border-black rounded-lg p-2 hover:bg-black hover:text-white"
           route="/register"
           title="Register"
         />
