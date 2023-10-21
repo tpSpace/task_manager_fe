@@ -4,7 +4,7 @@ import React from 'react';
 
 const LoginPage = () => {
   return (
-    <div className="flex justify-center items-center h-full">
+    <div className="flex justify-center items-center h-[90%]">
       <div className="border-2 boder-solid border-black">
         <form className="flex flex-col m-4 gap-4">
           <input
