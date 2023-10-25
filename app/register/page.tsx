@@ -5,13 +5,34 @@ import React from 'react';
 const RegisterPage = () => {
   return (
     <div className="flex justify-center items-center h-[90%] w-full">
-      <div>
-        <form>
-          <input type="text">Username</input>
-          <input type="text">Email</input>
-          <input type="password">Password</input>
-          <input type="password">Confirm Password</input>
-          <input type="submit" value="submit" />
+      <div className="border-2 boder-solid border-black">
+        <form className="flex flex-col m-4 gap-4">
+          <input
+            className="border-2 border-black p-1"
+            placeholder="username"
+            type="text"
+          />
+          <input
+            className="border-2 border-black p-1"
+            placeholder="email"
+            type="email"
+          />
+          <input
+            className="border-2 border-black p-1"
+            placeholder="password"
+            type="password"
+          />
+          <input
+            className="border-2 border-black p-1"
+            placeholder="retype-password"
+            type="password"
+          />
+          <button
+            className="border-2 border-black bg-white hover:bg-black hover:text-white"
+            type="submit"
+          >
+            Login
+          </button>
         </form>
       </div>
     </div>
