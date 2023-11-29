@@ -3,10 +3,14 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-import { registerSchemaType } from '../../types/inputValidate';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import { registerSchema, registerSchemaType } from '../../types/inputValidate';
 
 const RegisterPage = () => {
-  const { register, handleSubmit } = useForm<registerSchemaType>({});
+  const { register, handleSubmit } = useForm<registerSchemaType>({
+    resolver: zodResolver(registerSchema),
+  });
 
   return (
     <div className="flex justify-center items-center h-[90%] w-full">
