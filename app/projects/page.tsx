@@ -14,12 +14,13 @@ const Projects = () => {
       {projects.map((project, index) => (
         <SingleProject
           admin={project.admin}
-          dateCreate={project.dateCreate}
           id={project.id}
           key={index}
           members={project.members}
           stages={project.stages}
           title={project.title}
+          history={[]}
+          tags={[]}
         />
       ))}
     </div>
