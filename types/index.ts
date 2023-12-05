@@ -12,47 +12,52 @@ export interface CustomLinkProps {
   route: string;
 }
 
-export interface UserProps {
-  userName: string;
-  id: string;
-  avatar: string;
-  token: string;
-}
-
 export interface ProjectProps {
   id: string;
   title: string;
   stages: StageProps[];
   members: UserProps[];
-  dateCreate: Date;
   admin: UserProps;
+  history: string[];
+  tags: TagProps[];
+}
+
+export interface UserProps {
+  userName: string;
+  id: string;
+  avatar: string;
+  token: string;
+  projects?: ProjectProps[];
 }
 
 export interface StageProps {
+  id: string;
   title: string;
   tickets: TicketProps[];
 }
 
 export interface TicketProps {
+  id: string;
   title: string;
   description: string;
-  comments: CommentProps[];
-  assignedUsers: UserProps[];
-  tag: TagProps;
+  comments?: CommentProps[];
+  assignees?: UserProps[];
+  tag?: TagProps;
   parent?: TicketProps;
   children?: TicketProps[];
-  Deadline: TimeRanges;
+  deadline?: TimeRanges;
   creator: UserProps;
 }
 
 export interface TagProps {
+  id: string;
   title: string;
-  level: number;
+  priority: number;
+  color: string;
 }
 
 export interface CommentProps {
+  id: string;
   commenter: UserProps;
   content: string;
-  dateCreated: Date;
-  timeCreated: TimeRanges;
 }

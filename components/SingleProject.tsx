@@ -2,10 +2,14 @@ import React from 'react';
 
 import { ProjectProps } from '@/types';
 
-const SingleProject = ({ title }: ProjectProps) => {
+interface SingleProjectProps {
+  project: ProjectProps;
+}
+
+const SingleProject = ({ project }: SingleProjectProps) => {
   return (
     <div>
-      <h1>{title}</h1>
+      <h1>{project.title}</h1>
     </div>
   );
 };

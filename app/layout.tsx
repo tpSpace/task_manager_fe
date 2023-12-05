@@ -7,8 +7,8 @@ import Header from '@/components/Header';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'TaskFlow',
-  description: 'Your next task manager',
+  title: 'TasKing',
+  description: 'An task manager app that is better than Jira',
 };
 
 export default function RootLayout({
