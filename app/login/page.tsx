@@ -37,7 +37,7 @@ const LoginPage = () => {
         <form
           className="flex flex-col m-4 gap-4"
           onSubmit={() => {
-            console.log('submit');
+            console.log('submit :(((');
             handleSubmit(submit);
           }}
         >
