@@ -21,14 +21,20 @@ const LoginPage = () => {
     resolver: zodResolver(schema),
   });
 
-  const submit = (data: LoginPageProps) => {
+  const submit = async (data: LoginPageProps) => {
     // TODO: login
     // help me write a axious request to login to the server
-    axios.post('http://localhost:3001/auth/login', {
-      email: data.email,
-      password: data.password,
-    });
-    console.log('submitted');
+    await axios
+      .post('http://localhost:3001/auth/login', {
+        email: data.email,
+        password: data.password,
+      })
+      .then(res => {
+        console.log(res);
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   return (
@@ -37,17 +43,18 @@ const LoginPage = () => {
         <form
           className="flex flex-col m-4 gap-4"
           onSubmit={() => {
-            console.log('submit :(((');
             handleSubmit(submit);
           }}
         >
           <input
+            autoComplete="email"
             className="border-2 border-black p-1"
             placeholder="username"
             type="text"
             {...register('email')}
           />
           <input
+            autoComplete="password"
             className="border-2 border-black p-1"
             placeholder="password"
             type="password"
