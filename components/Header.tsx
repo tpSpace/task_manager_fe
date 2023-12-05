@@ -16,7 +16,7 @@ const Header = () => {
       <div className="flex gap-4">
         <CustomLink
           containerStyles="border-2 border-solid border-black rounded-lg p-2 hover:bg-black hover:text-white"
-          route="/login"
+          route="/projects"
           title="Login"
         />
         <CustomLink

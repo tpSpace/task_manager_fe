@@ -2,11 +2,15 @@ import React from 'react';
 
 import { TicketProps } from '@/types';
 
-const SingleTicket = (ticket: TicketProps) => {
+interface SingleTicketProps {
+  ticket: TicketProps;
+}
+
+const SingleTicket = ({ ticket }: SingleTicketProps) => {
   return (
     <div>
       <h1>{ticket.title}</h1>
-      <p></p>
+      <p>{ticket.description}</p>
     </div>
   );
 };
