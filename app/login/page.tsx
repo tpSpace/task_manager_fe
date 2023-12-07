@@ -31,6 +31,12 @@ const LoginPage = () => {
       })
       .then(res => {
         console.log(res);
+        if (res.data.status === 'success') {
+          console.log(res);
+          localStorage.setItem('token', res.data.token);
+          window.location.href = '/projects';
+          console.log(res.data.token);
+        }
       })
       .catch(err => {
         console.log(err);
@@ -42,9 +48,7 @@ const LoginPage = () => {
       <div className="border-2 boder-solid border-black">
         <form
           className="flex flex-col m-4 gap-4"
-          onSubmit={() => {
-            handleSubmit(submit);
-          }}
+          onSubmit={handleSubmit(submit)}
         >
           <input
             autoComplete="email"
