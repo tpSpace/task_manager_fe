@@ -12,7 +12,11 @@ interface ProjectDetailProps {
 }
 
 const ProjectDetail = ({ params }: ProjectDetailProps) => {
-  return <div>Project {params.projectId} Detail</div>;
+  return (
+    <div className="flex justify-center font-bold text-2xl">
+      Project {params.projectId} Detail
+    </div>
+  );
 };
 
 export default ProjectDetail;
