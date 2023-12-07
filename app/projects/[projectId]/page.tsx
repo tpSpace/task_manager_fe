@@ -37,7 +37,20 @@ const ProjectDetail = ({ params }: ProjectDetailProps) => {
       .get(`http://localhost:3001/projects/get/${params.projectId}`)
       .then(res => {
         console.log(res);
-        setProject(res.data);
+        setProject({
+          id: res.data.id,
+          title: res.data.title,
+          stages: res.data.stages,
+          members: res.data.members,
+          admin: {
+            userName: res.data.admin.userName,
+            id: res.data.admin.id,
+            avatar: res.data.admin.avatar,
+            token: res.data.admin.token,
+          },
+          history: res.data.history,
+          tags: res.data.tags,
+        });
       })
       .catch(err => {
         console.log(err);
