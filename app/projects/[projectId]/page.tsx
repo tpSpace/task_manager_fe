@@ -2,9 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 
-import { ProjectProps } from '@/types';
 import axios from 'axios';
+
 import SingleProject from '@/components/SingleProject';
+import { ProjectProps } from '@/types';
 
 interface ProjectDetailProps {
   params: {

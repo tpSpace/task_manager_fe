@@ -1,5 +1,6 @@
-import { StageProps } from '@/types';
 import TicketCard from './TicketCard';
+
+import { StageProps } from '@/types';
 
 interface SingleStageProps {
   stage: StageProps;

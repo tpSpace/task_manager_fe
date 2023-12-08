@@ -1,10 +1,11 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
+import axios from 'axios';
 import { useRouter } from 'next/navigation';
 
 import CustomButton from '@/components/CustomButton';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
 
 interface ProjectInforProps {
   projectName: string;
@@ -23,7 +24,7 @@ const Projects = () => {
 
   const fetchProjects = async () => {
     await axios
-      .get(`http://localhost:3001/projects/get`)
+      .get(`http://localhost:3001/projects/get`, {})
       .then(res => {
         console.log(res);
         setProjects(res.data);
@@ -42,8 +43,8 @@ const Projects = () => {
         />
         {projects.map((project, index) => (
           <button
-            onClick={() => router.push(`projects/${project.projectId}`)}
             key={index}
+            onClick={() => router.push(`projects/${project.projectId}`)}
           >
             {project.projectName}
           </button>

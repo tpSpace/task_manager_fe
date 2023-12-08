@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react';
 
-import { TicketProps } from '@/types';
-import SingleComment from './SingleComment';
 import { Dialog, Transition } from '@headlessui/react';
-
 import Image from 'next/image';
+
+import SingleComment from './SingleComment';
+
+import { TicketProps } from '@/types';
 
 interface SingleTicketProps {
   isOpen: boolean;
@@ -15,7 +16,7 @@ interface SingleTicketProps {
 const SingleTicket = ({ isOpen, ticket, closeModal }: SingleTicketProps) => {
   return (
     <>
-      <Transition appear show={isOpen} as={Fragment}>
+      <Transition appear as={Fragment} show={isOpen}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
@@ -42,16 +43,16 @@ const SingleTicket = ({ isOpen, ticket, closeModal }: SingleTicketProps) => {
               >
                 <Dialog.Panel className="relative w-full max-w-full max-h-[90vh] overflow-y-auto transform rounded-2xl bg-white p-6 text-left shadow-xl transition-all flex-col gap-5">
                   <button
-                    type="button"
-                    onClick={closeModal}
                     className="absolute top-2 right-2 z-10 w-fit pt-2 bg-primary-blue-100 rounded-full"
+                    onClick={closeModal}
+                    type="button"
                   >
                     <Image
-                      src="/close.svg"
                       alt="close"
-                      width={20}
-                      height={20}
                       className="object-contain"
+                      height={20}
+                      src="/close.svg"
+                      width={20}
                     />
                   </button>
 
@@ -65,7 +66,7 @@ const SingleTicket = ({ isOpen, ticket, closeModal }: SingleTicketProps) => {
 
                   <div>
                     {ticket.comments?.map((comment, index) => (
-                      <SingleComment key={index} comment={comment} />
+                      <SingleComment comment={comment} key={index} />
                     ))}
                   </div>
                 </Dialog.Panel>

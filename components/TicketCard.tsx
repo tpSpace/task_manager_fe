@@ -1,7 +1,9 @@
-import { TicketProps } from '@/types';
-import SingleTicket from './SingleTicket';
 import { useState } from 'react';
+
 import CustomButton from './CustomButton';
+import SingleTicket from './SingleTicket';
+
+import { TicketProps } from '@/types';
 
 interface TicketCardProps {
   ticket: TicketProps;
@@ -9,13 +11,14 @@ interface TicketCardProps {
 
 const TicketCard = ({ ticket }: TicketCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
+
   return (
     <div>
       <div>
         <CustomButton
-          title={ticket.title}
           containerStyles="font-semibold text-xl"
           handleClick={() => setIsOpen(true)}
+          title={ticket.title}
         />
       </div>
       <div>{ticket.tag?.title}</div>
@@ -26,9 +29,9 @@ const TicketCard = ({ ticket }: TicketCardProps) => {
       </div>
 
       <SingleTicket
-        ticket={ticket}
-        isOpen={isOpen}
         closeModal={() => setIsOpen(false)}
+        isOpen={isOpen}
+        ticket={ticket}
       />
     </div>
   );
