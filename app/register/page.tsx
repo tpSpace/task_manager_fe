@@ -15,10 +15,15 @@ const RegisterPage = () => {
 
   const submit = async (data: registerSchemaType) => {
     console.log(data);
+    if (!checkPassword(data.password, data.confirmPassword)) {
+      alert('password and confirm password must match');
+
+      return;
+    }
+
     await axios
       .post('http://localhost:3001/auth/register', {
-        name: data.name,
-        username: data.username,
+        name: data.username,
         email: data.email,
         password: data.password,
       })
@@ -34,6 +39,15 @@ const RegisterPage = () => {
       .catch(err => {
         console.log(err);
       });
+  };
+  // check retye password
+
+  const checkPassword = (password: string, confirmPassword: string) => {
+    if (password !== confirmPassword) {
+      return false;
+    }
+
+    return true;
   };
 
   return (
