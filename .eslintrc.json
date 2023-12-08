@@ -1,6 +1,13 @@
 {
   "parser": "@typescript-eslint/parser",
-  "plugins": ["import", "prettier", "react-hooks", "@typescript-eslint", "react", "@next/next"],
+  "plugins": [
+    "import",
+    "prettier",
+    "react-hooks",
+    "@typescript-eslint",
+    "react",
+    "@next/next"
+  ],
   "parserOptions": {
     "sourceType": "module"
   },
@@ -114,7 +121,10 @@
     "@typescript-eslint/indent": 0,
     "import/no-anonymous-default-export": 2,
     "react-hooks/rules-of-hooks": 1,
-    "react-hooks/exhaustive-deps": ["warn", { "additionalHooks": "(useDidMount)" }],
+    "react-hooks/exhaustive-deps": [
+      "warn",
+      { "additionalHooks": "(useDidMount)" }
+    ],
     "camelcase": 0,
     "prefer-destructuring": 2,
     "no-nested-ternary": 2,

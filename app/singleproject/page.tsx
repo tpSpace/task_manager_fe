@@ -2,6 +2,7 @@
 
 import React from 'react';
 
+import CustomButton from '@/components/CustomButton';
 import UserCard from '@/components/UserCard';
 
 const SingleProjectPage = () => {
@@ -11,8 +12,8 @@ const SingleProjectPage = () => {
   ];
 
   return (
-    <div className="flex flex-row">
-      <div className="flex items-center flex-col bg-gray-200 w-40 h-screen">
+    <div className="flex flex-row max-h-screen">
+      <div className="flex items-center flex-col bg-gray-200 w-40">
         <div className="relative border-2 border-black rounded-lg h-10 w-5/6 bg-black top-20 flex items-center justify-center">
           <div className="text-white text-xl">Task</div>
         </div>
@@ -34,9 +35,31 @@ const SingleProjectPage = () => {
         </div>
       </div>
       <div className="w-screen h-screen">
-        <div className="bg-gray-100 w-full h-20 flex items-center justify-center">
-          <div className="relative right-96"> Back button </div>
-          <div className="font-bold text-4xl absolute">Project Name</div>
+        <div className="bg-gray-100 h-20 flex items-center px-6 justify-between">
+          <div className=""> Back button </div>
+          <div className="font-bold text-4xl">Project Name</div>
+          <div>Setting</div>
+        </div>
+        <div className="relative top-20 left-10 flex flex-row h-screen space-x-20">
+          <div className="w-64 h-4/6 ml-2 rounded-lg border border-black flex justify-between flex-col">
+            <div className="h-12 relative -top-5 flex items-center justify-center border rounded-full bg-black text-white text-3xl">
+              To do
+            </div>
+            <div className="flex flex-col justify-between items-center">
+              ListCard
+            </div>
+            <div className="h-20 p-2 flex items-center justify-center">
+              <CustomButton
+                containerStyles="border-solid w-56 rounded-lg mb-16 h-20 text-6xl flex justify-center bg-gray-100 items-center"
+                title="+"
+              />
+            </div>
+          </div>
+          <div className="w-64 h-4/6 ml-2 rounded-lg border border-black flex justify-between flex-col">
+            <div className="h-12 relative -top-5 flex items-center justify-center border rounded-full bg-black text-white text-3xl">
+              In process
+            </div>
+          </div>
         </div>
       </div>
     </div>

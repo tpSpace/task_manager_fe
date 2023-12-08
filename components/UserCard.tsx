@@ -9,8 +9,7 @@ const UserCard = ({ id, userName }: UserCardProps) => {
     <div className="bg-white rounded-lg p-4 flex items-center justify-center">
       <div className="text-xl">
         {' '}
-        {id}
-        {userName}
+        {id} {userName}
       </div>
     </div>
   );
