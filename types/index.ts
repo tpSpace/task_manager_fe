@@ -32,8 +32,8 @@ export interface UserProps {
 
 export interface StageProps {
   id: string;
-  title: string;
-  tickets: TicketProps[];
+  title?: string;
+  tickets?: TicketProps[];
 }
 
 export interface TicketProps {

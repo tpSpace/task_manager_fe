@@ -1,6 +1,4 @@
-import React from 'react';
-
-import SingleTicket from './SingleTicket';
+import TicketCard from './TicketCard';
 
 import { StageProps } from '@/types';
 
@@ -9,20 +7,14 @@ interface SingleStageProps {
 }
 
 const SingleStage = ({ stage }: SingleStageProps) => {
-  const displayTicket = () => {
-    return (
-      <div>
-        {stage.tickets.map((ticket, index) => (
-          <SingleTicket key={index} ticket={ticket} />
-        ))}
-      </div>
-    );
-  };
-
   return (
     <div>
       <h1>{stage.title}</h1>
-      {displayTicket()}
+      <div>
+        {stage.tickets?.map((ticket, index) => (
+          <TicketCard key={index} ticket={ticket} />
+        ))}
+      </div>
     </div>
   );
 };
