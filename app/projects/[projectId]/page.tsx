@@ -14,8 +14,6 @@ interface ProjectDetailProps {
 }
 
 const ProjectDetail = ({ params }: ProjectDetailProps) => {
-  const token = localStorage.getItem('token');
-
   const [project, setProject] = useState<ProjectProps>({
     id: '',
     title: '',
@@ -32,10 +30,11 @@ const ProjectDetail = ({ params }: ProjectDetailProps) => {
   });
 
   useEffect(() => {
-    fetchProject();
+    const token = localStorage.getItem('token');
+    fetchProject(token);
   }, []);
 
-  const fetchProject = async () => {
+  const fetchProject = async (token: string | null) => {
     await axios
       .get(`http://localhost:3001/projects/get/${params.projectId}`, {
         headers: {
