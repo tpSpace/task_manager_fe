@@ -2,8 +2,9 @@
 
 import React from 'react';
 
-import CustomButton from '@/components/CustomButton';
+import SingleStage from '@/components/SingleStage';
 import UserCard from '@/components/UserCard';
+import { StageProps } from '@/types';
 // import { ProjectProps } from '@/types';
 
 interface ProjectDetailProps {
@@ -20,6 +21,49 @@ const ProjectDetail = ({ params }: ProjectDetailProps) => {
     { id: 2, userName: 'Khang' },
     { id: 3, userName: 'Khoi' },
   ];
+  const stagesData: StageProps[] = [
+    {
+      id: 'stage1',
+      title: 'To Do',
+      tickets: [
+        {
+          id: 'ticket1',
+          title: 'Implement Feature A',
+          description: 'Lorem ipsum dolor sit amet...',
+          creator: {
+            userName: 'JohnDoe',
+            id: 'user1',
+            avatar: 'url-to-avatar',
+            token: 'user-token',
+          },
+          // ... other TicketProps
+        },
+        // ... other tickets in the "To Do" stage
+      ],
+    },
+    {
+      id: 'stage2',
+      title: 'In Progress',
+      tickets: [
+        {
+          id: 'ticket2',
+          title: 'Fix Bug B',
+          description: 'Lorem ipsum dolor sit amet...',
+          creator: {
+            userName: 'JaneDoe',
+            id: 'user2',
+            avatar: 'url-to-avatar',
+            token: 'user-token',
+          },
+          // ... other TicketProps
+        },
+        // ... other tickets in the "In Progress" stage
+      ],
+    },
+    // ... other stages
+  ];
+
+  // You can add more stages or modify the existing ones according to your application requirements.
 
   return (
     <div className="flex flex-row max-h-screen">
@@ -54,25 +98,9 @@ const ProjectDetail = ({ params }: ProjectDetailProps) => {
           <div>Setting</div>
         </div>
         <div className="relative top-20 left-10 flex flex-row h-screen space-x-20">
-          <div className="w-64 h-4/6 ml-2 rounded-lg border border-black flex justify-between flex-col">
-            <div className="h-12 relative -top-5 flex items-center justify-center border rounded-full bg-black text-white text-3xl">
-              To do
-            </div>
-            <div className="flex flex-col justify-between items-center">
-              ListCard
-            </div>
-            <div className="h-20 p-2 flex items-center justify-center">
-              <CustomButton
-                containerStyles="border-solid w-56 rounded-lg mb-16 h-20 text-6xl flex justify-center bg-gray-100 items-center"
-                title="+"
-              />
-            </div>
-          </div>
-          <div className="w-64 h-4/6 ml-2 rounded-lg border border-black flex justify-between flex-col">
-            <div className="h-12 relative -top-5 flex items-center justify-center border rounded-full bg-black text-white text-3xl">
-              In process
-            </div>
-          </div>
+          {stagesData.map((stage, index) => (
+            <SingleStage key={index} stage={stage} />
+          ))}
         </div>
       </div>
     </div>
