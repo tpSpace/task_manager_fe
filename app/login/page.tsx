@@ -14,8 +14,8 @@ type LoginPageProps = {
 
 const LoginPage = () => {
   const schema: ZodType<LoginPageProps> = z.object({
-    email: z.string().email().min(5).max(20),
-    password: z.string().min(8).max(20),
+    email: z.string().email().min(5).max(30),
+    password: z.string().min(8).max(30),
   });
   const { register, handleSubmit } = useForm<LoginPageProps>({
     resolver: zodResolver(schema),
