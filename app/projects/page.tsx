@@ -13,6 +13,8 @@ interface ProjectInforProps {
 }
 
 const Projects = () => {
+  const token = localStorage.getItem('token');
+
   const [projects, setProjects] = useState<ProjectInforProps[]>([]);
 
   // this hook is for dynamic routing (that's what youtube said, it's more complicated with more hooks required)
@@ -24,7 +26,11 @@ const Projects = () => {
 
   const fetchProjects = async () => {
     await axios
-      .get(`http://localhost:3001/projects/get`, {})
+      .get(`http://localhost:3001/projects/get`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then(res => {
         console.log(res);
         setProjects(res.data);
