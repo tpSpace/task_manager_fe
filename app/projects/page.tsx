@@ -8,7 +8,7 @@ import { useRouter } from 'next/navigation';
 import CustomButton from '@/components/CustomButton';
 
 interface ProjectInforProps {
-  projectName: string;
+  title: string;
   projectId: string;
 }
 
@@ -19,15 +19,21 @@ const Projects = () => {
   const router = useRouter();
 
   useEffect(() => {
-    fetchProjects();
+    const token = localStorage.getItem('token');
+    fetchProjects(token);
   }, []);
 
-  const fetchProjects = async () => {
+  const fetchProjects = async (token: string | null) => {
     await axios
-      .get(`http://localhost:3001/projects/get`, {})
+      .get(`http://localhost:3001/projects/get`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then(res => {
         console.log(res);
-        setProjects(res.data);
+        setProjects(res.data.projects);
+        console.log(projects);
       })
       .catch(err => {
         console.log(err);
@@ -46,7 +52,7 @@ const Projects = () => {
             key={index}
             onClick={() => router.push(`projects/${project.projectId}`)}
           >
-            {project.projectName}
+            {project.title}
           </button>
         ))}
       </div>
