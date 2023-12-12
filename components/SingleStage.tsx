@@ -27,7 +27,7 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
       <div className="h-12 relative -top-5 flex items-center justify-center border rounded-full bg-black text-white text-3xl">
         {stage.title}
       </div>
-      <div className="flex flex-col justify-between items-center">
+      <div className="flex flex-col justify-between items-center overflow-x-hidden overflow-y-auto max-h-96">
         {stage.tickets?.map((ticket, index) => (
           <TicketCard key={index} ticket={ticket} />
         ))}

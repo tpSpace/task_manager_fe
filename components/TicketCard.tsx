@@ -16,7 +16,7 @@ const TicketCard = ({ ticket }: TicketCardProps) => {
     <div>
       <div>
         <CustomButton
-          containerStyles="font-semibold text-xl"
+          containerStyles="font-semibold text-xl border-solid w-56 rounded-lg mb-16 h-20 flex justify-center bg-gray-100 items-center"
           handleClick={() => setIsOpen(true)}
           title={ticket.title}
         />

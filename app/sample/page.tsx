@@ -35,6 +35,46 @@ const ProjectDetail = ({ params }: ProjectDetailProps) => {
             id: 'user1',
             avatar: 'url-to-avatar',
             token: 'user-token',
+            email: 'asd',
+          },
+          // ... other TicketProps
+        },
+        {
+          id: 'ticket1',
+          title: 'Implement Feature A',
+          description: 'Lorem ipsum dolor sit amet...',
+          creator: {
+            userName: 'JohnDoe',
+            id: 'user1',
+            avatar: 'url-to-avatar',
+            token: 'user-token',
+            email: 'asd',
+          },
+          // ... other TicketProps
+        },
+        {
+          id: 'ticket1',
+          title: 'Implement Feature A',
+          description: 'Lorem ipsum dolor sit amet...',
+          creator: {
+            userName: 'JohnDoe',
+            id: 'user1',
+            avatar: 'url-to-avatar',
+            token: 'user-token',
+            email: 'asd',
+          },
+          // ... other TicketProps
+        },
+        {
+          id: 'ticket1',
+          title: 'Implement Feature A',
+          description: 'Lorem ipsum dolor sit amet...',
+          creator: {
+            userName: 'JohnDoe',
+            id: 'user1',
+            avatar: 'url-to-avatar',
+            token: 'user-token',
+            email: 'asd',
           },
           // ... other TicketProps
         },
@@ -54,6 +94,7 @@ const ProjectDetail = ({ params }: ProjectDetailProps) => {
             id: 'user2',
             avatar: 'url-to-avatar',
             token: 'user-token',
+            email: 'asd',
           },
           // ... other TicketProps
         },
