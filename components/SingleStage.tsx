@@ -1,20 +1,48 @@
-import TicketCard from './TicketCard';
+// SingleStage.tsx
+import React, { useState } from 'react';
 
+import TicketCard from './TicketCard';
+import TicketCreationForm from './TicketCreationForm';
+
+import CustomButton from '@/components/CustomButton';
 import { StageProps } from '@/types';
 
 interface SingleStageProps {
   stage: StageProps;
 }
 
-const SingleStage = ({ stage }: SingleStageProps) => {
+const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
+  const [isTicketFormOpen, setIsTicketFormOpen] = useState(false);
+
+  const openTicketForm = () => {
+    setIsTicketFormOpen(true);
+  };
+
+  const closeTicketForm = () => {
+    setIsTicketFormOpen(false);
+  };
+
   return (
-    <div>
-      <h1>{stage.title}</h1>
-      <div>
+    <div className="w-64 h-4/6 ml-2 rounded-lg border border-black flex justify-between flex-col">
+      <div className="h-12 relative -top-5 flex items-center justify-center border rounded-full bg-black text-white text-3xl">
+        {stage.title}
+      </div>
+      <div className="flex flex-col justify-between items-center">
         {stage.tickets?.map((ticket, index) => (
           <TicketCard key={index} ticket={ticket} />
         ))}
       </div>
+      <div className="h-20 p-2 flex items-center justify-center">
+        <CustomButton
+          containerStyles="border-solid w-56 rounded-lg mb-16 h-20 text-6xl flex justify-center bg-gray-100 items-center"
+          handleClick={openTicketForm}
+          title="+"
+        />
+      </div>
+      {/* Ticket Creation Form */}
+      {isTicketFormOpen && (
+        <TicketCreationForm onClose={closeTicketForm} stageId={stage.id} />
+      )}
     </div>
   );
 };

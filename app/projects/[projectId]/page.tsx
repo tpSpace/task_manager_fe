@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 
 import axios from 'axios';
 
-import SingleProject from '@/components/SingleProject';
 import { ProjectProps } from '@/types';
+import SingleProject from '@/components/SingleProject';
 
 interface ProjectDetailProps {
   projectId: string;
