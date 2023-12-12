@@ -25,6 +25,7 @@ export interface ProjectProps {
 export interface UserProps {
   userName: string;
   id: string;
+  email: string;
   avatar: string;
   token: string;
   projects?: ProjectProps[];
