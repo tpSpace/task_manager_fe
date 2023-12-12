@@ -185,7 +185,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
   };
 
   return (
-    <div className="flex flex-col items-center font-bold text-2xl">
+    <div className="flex flex-col items-center">
       <SingleProject project={project} />
     </div>
   );

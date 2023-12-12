@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { ProjectProps } from '@/types';
+import SingleStage from './SingleStage';
 
 interface SingleProjectProps {
   project: ProjectProps;
@@ -11,17 +12,15 @@ const SingleProject = ({ project }: SingleProjectProps) => {
     <div>
       <h1>{project.title}</h1>
 
-      <div>Admin name: {project.admin.userName}</div>
-
       <div>
-        {project.members?.map((member, index) => (
-          <p key={index}>Member name: {member.userName}</p>
+        {project.tags?.map((tag, index) => (
+          <p key={index}>tag name: {tag.title}</p>
         ))}
       </div>
 
       <div>
-        {project.tags?.map((tag, index) => (
-          <p key={index}>tag name: {tag.title}</p>
+        {project.stages?.map((stage, index) => (
+          <SingleStage stage={stage} key={index} />
         ))}
       </div>
     </div>
