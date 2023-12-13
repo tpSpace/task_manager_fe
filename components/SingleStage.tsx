@@ -23,8 +23,8 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
   };
 
   return (
-    <div className="w-72 h-4/6 ml-2 rounded-lg border border-black flex justify-between flex-col">
-      <div className="h-12 relative -top-5 flex items-center justify-center border rounded-full bg-black text-white text-3xl">
+    <div className="mt-20 mx-10 w-72 h-4/6 rounded-lg border border-black flex justify-between flex-col">
+      <div className="h-12 relative -top-5 flex items-center justify-center border rounded-full bg-black text-white text-2xl">
         {stage.title}
       </div>
       <div className="flex flex-col justify-between items-center overflow-x-hidden overflow-y-auto max-h-96">

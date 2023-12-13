@@ -14,8 +14,8 @@ interface SingleProjectProps {
 
 const SingleProject = ({ project }: SingleProjectProps) => {
   return (
-    <div className="flex flex-row max-h-[47rem] w-full overflow-x-hidden overflow-y-hidden">
-      <div className="flex items-center flex-col bg-gray-200 w-40">
+    <div className="flex h-full w-full overflow-hidden">
+      <nav className="flex items-center flex-col bg-gray-200 w-40">
         <div className="flex flex-col space-y-3 justify-start items-center py-20 w-32">
           <div className="border-2 border-black rounded-full h-10 w-full bg-black flex items-center justify-center">
             <div className="text-white text-xl">Task</div>
@@ -38,8 +38,8 @@ const SingleProject = ({ project }: SingleProjectProps) => {
           Copy this code <br /> to add member
           <br /># 1234
         </div>
-      </div>
-      <div className="w-full h-full">
+      </nav>
+      <div className="w-[76rem] h-full] overflow-hidden">
         <div className="bg-gray-100 h-20 flex items-center px-6 justify-between">
           <div className="flex">
             {' '}
