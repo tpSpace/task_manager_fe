@@ -35,6 +35,7 @@ const ProjectDetail = ({ params }: ProjectDetailProps) => {
             id: 'user1',
             avatar: 'url-to-avatar',
             token: 'user-token',
+            email: 'email',
           },
           // ... other TicketProps
         },
