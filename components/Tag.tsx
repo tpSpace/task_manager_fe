@@ -3,11 +3,17 @@ import React from 'react';
 import { TagProps } from '@/types';
 
 interface TagDetailProps {
-  tag: TagProps;
+  tags: TagProps[];
 }
 
-const Tag = ({ tag }: TagDetailProps) => {
-  return <div>{tag.title}</div>;
+const Tag = ({ tags }: TagDetailProps) => {
+  return (
+    <div>
+      {tags.map((tag, index) => (
+        <span key={index}>{tag.title}</span>
+      ))}
+    </div>
+  );
 };
 
 export default Tag;
