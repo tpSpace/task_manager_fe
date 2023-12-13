@@ -15,7 +15,7 @@ const SingleProject = ({ project }: SingleProjectProps) => {
       <h1>{project.title}</h1>
 
       <div>
-        {project.tags?.map((tag, index) => <Tag key={index} tag={tag} />)}
+        <Tag tags={project.tags} />
       </div>
 
       <div>
