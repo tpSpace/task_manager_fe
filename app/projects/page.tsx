@@ -32,7 +32,7 @@ const Projects = () => {
       })
       .then(res => {
         console.log(res);
-        setProjects(res.data.items.projects);
+        setProjects(res.data.projects);
         console.log(projects);
       })
       .catch(err => {

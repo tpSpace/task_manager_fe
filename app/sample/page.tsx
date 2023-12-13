@@ -102,6 +102,26 @@ const ProjectDetail = ({ params }: ProjectDetailProps) => {
       ],
     },
     // ... other stages
+    {
+      id: 'stage2',
+      title: 'In Progress',
+      tickets: [
+        {
+          id: 'ticket2',
+          title: 'Fix Bug B',
+          description: 'Lorem ipsum dolor sit amet...',
+          creator: {
+            userName: 'JaneDoe',
+            id: 'user2',
+            avatar: 'url-to-avatar',
+            token: 'user-token',
+            email: 'asd',
+          },
+          // ... other TicketProps
+        },
+        // ... other tickets in the "In Progress" stage
+      ],
+    },
   ];
 
   // You can add more stages or modify the existing ones according to your application requirements.
