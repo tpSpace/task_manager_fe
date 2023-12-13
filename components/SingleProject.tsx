@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { ProjectProps } from '@/types';
 import SingleStage from './SingleStage';
+
+import { ProjectProps } from '@/types';
 
 interface SingleProjectProps {
   project: ProjectProps;
@@ -20,7 +21,7 @@ const SingleProject = ({ project }: SingleProjectProps) => {
 
       <div>
         {project.stages?.map((stage, index) => (
-          <SingleStage stage={stage} key={index} />
+          <SingleStage key={index} stage={stage} />
         ))}
       </div>
     </div>

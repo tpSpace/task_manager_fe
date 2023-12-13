@@ -12,10 +12,20 @@ interface ProjectInforProps {
   projectId: string;
 }
 
+const getFilteredProjects = (search:string, projects:ProjectInforProps[]) => {
+  if (!search){
+    return projects;
+  }
+  return projects.filter(project => {
+    project.title.toLowerCase().includes(search.toLowerCase());
+  });
+};
 const Projects = () => {
   const [projects, setProjects] = useState<ProjectInforProps[]>([]);
+  const [search, setSearch] = useState<string>('');
 
-  // this hook is for dynamic routing (that's what youtube said, it's more complicated with more hooks required)
+  const filteredProjects = getFilteredProjects(search, projects);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -42,19 +52,27 @@ const Projects = () => {
 
   return (
     <div className="flex flex-col justify-center">
+      <input
+        onChange={(e) => setSearch(e.target.value)}
+        placeholder={'Search project'}
+        type={'text'}
+        value={search}
+      />
       <div className="grid place-content-center">
         <CustomButton
           containerStyles="border border-2 border-solid"
           title="+"
         />
-        {projects.map((project, index) => (
-          <button
-            key={index}
-            onClick={() => router.push(`projects/${project.projectId}`)}
-          >
-            {project.title}
-          </button>
-        ))}
+        <ul>
+          {filteredProjects.map(project => (
+            <button
+              key={project.projectId}
+              onClick={() => router.push(`projects/${project.projectId}`)}
+            >
+              {project.title}
+            </button>
+          ))}
+        </ul>
       </div>
     </div>
   );
