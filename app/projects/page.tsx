@@ -12,12 +12,14 @@ interface ProjectInforProps {
   projectId: string;
 }
 
-const getFilteredProjects = (search:string, projects:ProjectInforProps[]) => {
-  if (!search){
+const getFilteredProjects = (search: string, projects: ProjectInforProps[]) => {
+  if (!search) {
     return projects;
   }
-  return projects.filter((project) =>
-    project.title.toLowerCase().includes(search.toLowerCase()));
+
+  return projects.filter(project =>
+    project.title.toLowerCase().includes(search.toLowerCase()),
+  );
 };
 const Projects = () => {
   const [projects, setProjects] = useState<ProjectInforProps[]>([]);
@@ -51,20 +53,24 @@ const Projects = () => {
 
   return (
     <div className="flex flex-col justify-center p-8">
-      <div className={"flex justify-end w-screen"}>
+      <div className={'flex justify-end w-screen'}>
         <input
-          className={"rounded-full border-2 bg-gray-200 border-black text-black text-center font-semibold text-xl h-10 w-1/3 mr-40 "}
-          onChange={(e) => setSearch(e.target.value)}
+          className={
+            'rounded-full border-2 bg-gray-200 border-black text-black text-center font-semibold text-xl h-10 w-1/3 mr-40 '
+          }
+          onChange={e => setSearch(e.target.value)}
           placeholder={'Search project'}
           type={'text'}
           value={search}
         />
       </div>
       <div className="grid place-content-center">
-        <ul className={"space-x-10 space-y-10"}>
+        <ul className={'space-x-10 space-y-10'}>
           {filteredProjects.map(project => (
             <button
-              className={"w-72 h-48 bg-neutral-200 rounded-3xl border-2 border-black text-black text-3xl font-semibold font-['Montserrat'] my-5 mt-10"}
+              className={
+                "w-72 h-48 bg-neutral-200 rounded-3xl border-2 border-black text-black text-3xl font-semibold font-['Montserrat'] my-5 mt-10"
+              }
               key={project.projectId}
               onClick={() => router.push(`projects/${project.projectId}`)}
             >
@@ -76,7 +82,6 @@ const Projects = () => {
           containerStyles="border-2 border-solid border-black rounded-3xl bg-neutral-200 w-72 h-48 my-5 text-black text-6xl"
           title="+"
         />
-
       </div>
     </div>
   );
