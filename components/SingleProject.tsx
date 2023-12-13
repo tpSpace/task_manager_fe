@@ -1,6 +1,7 @@
 import React from 'react';
 
 import SingleStage from './SingleStage';
+import Tag from './Tag';
 
 import { ProjectProps } from '@/types';
 
@@ -14,9 +15,7 @@ const SingleProject = ({ project }: SingleProjectProps) => {
       <h1>{project.title}</h1>
 
       <div>
-        {project.tags?.map((tag, index) => (
-          <p key={index}>tag name: {tag.title}</p>
-        ))}
+        <Tag tags={project.tags} />
       </div>
 
       <div>
