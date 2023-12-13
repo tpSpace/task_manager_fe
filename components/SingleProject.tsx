@@ -5,6 +5,8 @@ import SingleStage from './SingleStage';
 
 import UserCard from '@/components/UserCard';
 import { ProjectProps } from '@/types';
+import Link from 'next/link';
+import { BsArrowLeft } from 'react-icons/bs';
 
 interface SingleProjectProps {
   project: ProjectProps;
@@ -39,11 +41,19 @@ const SingleProject = ({ project }: SingleProjectProps) => {
       </div>
       <div className="w-full h-full">
         <div className="bg-gray-100 h-20 flex items-center px-6 justify-between">
-          <div className=""> Back button </div>
+          <div className="flex">
+            {' '}
+            <Link
+              href={'/projects'}
+              className="bg-slate-800 text-white px-4 py-1 rounded-lg w-fit hover:bg-slate-200 hover:text-black"
+            >
+              <BsArrowLeft className="text-4xl" />
+            </Link>{' '}
+          </div>
           <div className="font-bold text-4xl">{project.title}</div>
           <div>Setting</div>
         </div>
-        <div className="relative top-20 left-20 flex flex-row h-screen space-x-20">
+        <div className="relative top-20 left-20 flex flex-row h-screen pt-5 space-x-20">
           {project.stages?.map((stage, index) => (
             <SingleStage key={index} stage={stage} />
           ))}
