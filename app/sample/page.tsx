@@ -17,9 +17,9 @@ interface ProjectDetailProps {
 const ProjectDetail = ({ params }: ProjectDetailProps) => {
   // This is the sample members in single project
   const members = [
-    { id: 1, userName: 'Huy' },
-    { id: 2, userName: 'Khang' },
-    { id: 3, userName: 'Khoi' },
+    { id: '1', userName: 'Huy' },
+    { id: '2', userName: 'Khang' },
+    { id: '3', userName: 'Khoi' },
   ];
   const stagesData: StageProps[] = [
     {
@@ -120,8 +120,8 @@ const ProjectDetail = ({ params }: ProjectDetailProps) => {
         <div className="relative flex flex-col w-40 h-screen top-40 items-center space-y-4">
           <div className="text-xl">Members ({members.length})</div>
           <div className="flex flex-col space-y-4">
-            {members.map(member => (
-              <UserCard key={member.id} {...member} />
+            {members.map((member, index) => (
+              <UserCard key={index} user={member} />
             ))}
           </div>
         </div>
