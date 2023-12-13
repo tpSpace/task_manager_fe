@@ -1,9 +1,10 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 
 import { Dialog, Transition } from '@headlessui/react';
 import Image from 'next/image';
 
 import SingleComment from './SingleComment';
+import TicketCreationForm from './TicketCreationForm';
 
 import { TicketProps } from '@/types';
 
@@ -14,10 +15,33 @@ interface SingleTicketProps {
 }
 
 const SingleTicket = ({ isOpen, ticket, closeModal }: SingleTicketProps) => {
+  const [isCreatingTicket, setIsCreatingTicket] = useState(false);
+
+  const openTicketCreationForm = () => {
+    setIsCreatingTicket(true);
+  };
+
+  const closeTicketCreationForm = () => {
+    setIsCreatingTicket(false);
+  };
+
   return (
     <>
       <Transition appear as={Fragment} show={isOpen}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
+          {/* Button to open the ticket creation form */}
+          <button
+            className="bg-primary-blue-500 text-white px-4 py-2 rounded-full hover:bg-primary-blue-600"
+            onClick={openTicketCreationForm}
+            type="button"
+          >
+            Create New Ticket
+          </button>
+
+          {/* Ticket creation form */}
+          {isCreatingTicket && (
+            <TicketCreationForm onClose={closeTicketCreationForm} stageId="" />
+          )}
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"

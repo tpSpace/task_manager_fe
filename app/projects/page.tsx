@@ -7,77 +7,54 @@ import { useRouter } from 'next/navigation';
 
 import CustomButton from '@/components/CustomButton';
 
-interface ProjectInfoProps {
-  projectName: string;
+interface ProjectInforProps {
+  title: string;
   projectId: string;
 }
-const getFilteredProjects = (search: string, projects: ProjectInfoProps[]) => {
-  if (!search) {
-    return projects;
-  }
-
-  return projects.filter(project =>
-    project.projectName.toLowerCase().includes(search.toLowerCase()),
-  );
-};
 
 const Projects = () => {
-  const [projects, setProjects] = useState<ProjectInfoProps[]>([]);
-  const [search, setSearch] = useState<string>('');
+  const [projects, setProjects] = useState<ProjectInforProps[]>([]);
 
+  // this hook is for dynamic routing (that's what youtube said, it's more complicated with more hooks required)
   const router = useRouter();
 
   useEffect(() => {
-    fetchProjects();
+    const token = localStorage.getItem('token');
+    fetchProjects(token);
   }, []);
 
-  const fetchProjects = async () => {
+  const fetchProjects = async (token: string | null) => {
     await axios
-      .get<ProjectInfoProps>(`http://localhost:3001/projects/get`)
+      .get(`http://localhost:3001/projects/get`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then(res => {
-        setProjects(setStateAction => [...setStateAction, res.data]);
+        console.log(res);
+        setProjects(res.data.projects);
+        console.log(projects);
       })
       .catch(err => {
         console.log(err);
       });
   };
 
-  const handleClick = () => {
-    router.push('projects/newProject');
-  };
-
-  const filteredProjects = getFilteredProjects(search, projects);
-
   return (
     <div className="flex flex-col justify-center">
-      <div className="Search">
-        <input
-          className="border-radius-1.875 w-36.875 h-3.125"
-          onChange={e => setSearch(e.target.value)}
-          placeholder="Search project"
-          type="text"
-          value={search}
-        />
-        <ul>
-          {filteredProjects.map((project: ProjectInfoProps) => (
-            <button
-              className={
-                'w-18.75 h-12.5 border-radius-1.5625 background-color-#E6E6E6'
-              }
-              key={project.projectId}
-              onClick={() => router.push(`projects/${project.projectId}`)}
-            >
-              {project.projectName}
-            </button>
-          ))}
-        </ul>
-      </div>
       <div className="grid place-content-center">
         <CustomButton
           containerStyles="border border-2 border-solid"
-          handleClick={() => handleClick}
           title="+"
         />
+        {projects.map((project, index) => (
+          <button
+            key={index}
+            onClick={() => router.push(`projects/${project.projectId}`)}
+          >
+            {project.title}
+          </button>
+        ))}
       </div>
     </div>
   );
