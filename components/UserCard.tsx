@@ -10,7 +10,7 @@ const UserCard = ({ user }: UserCardProps) => {
     <div className="bg-white rounded-lg p-4 flex items-center justify-center">
       <div className="text-xl">
         {' '}
-        {user.id} {user.userName}
+        {} {user.userName}
       </div>
     </div>
   );
