@@ -4,7 +4,7 @@ import React from 'react';
 
 import SingleStage from '@/components/SingleStage';
 import UserCard from '@/components/UserCard';
-import { StageProps } from '@/types';
+import { StageProps, UserProps } from '@/types';
 // import { ProjectProps } from '@/types';
 
 interface ProjectDetailProps {
@@ -16,7 +16,7 @@ interface ProjectDetailProps {
 
 const ProjectDetail = ({ params }: ProjectDetailProps) => {
   // This is the sample members in single project
-  const members = [
+  const members: UserProps[] = [
     { id: '1', userName: 'Huy' },
     { id: '2', userName: 'Khang' },
     { id: '3', userName: 'Khoi' },
