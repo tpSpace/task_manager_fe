@@ -1,171 +1,92 @@
 'use client';
+import React, { useState } from 'react';
 
-import React from 'react';
+import Link from 'next/link';
+import { BsArrowLeft } from 'react-icons/bs';
 
+import CustomButton from '@/components/CustomButton';
 import SingleStage from '@/components/SingleStage';
-import UserCard from '@/components/UserCard';
-import { StageProps, UserProps } from '@/types';
-// import { ProjectProps } from '@/types';
+//import Tag from './Tag';
 
-interface ProjectDetailProps {
-  params: {
-    projectId: string;
-  };
-  // project?: ProjectProps;
+import UserCard from '@/components/UserCard';
+import { ProjectProps, StageProps } from '@/types';
+
+interface SingleProjectProps {
+  project: ProjectProps;
 }
 
-const ProjectDetail = ({ params }: ProjectDetailProps) => {
-  // This is the sample members in single project
-  const members: UserProps[] = [
-    { id: '1', userName: 'Huy' },
-    { id: '2', userName: 'Khang' },
-    { id: '3', userName: 'Khoi' },
-  ];
-  const stagesData: StageProps[] = [
-    {
-      id: 'stage1',
-      title: 'To Do',
-      tickets: [
-        {
-          id: 'ticket1',
-          title: 'Implement Feature A',
-          description: 'Lorem ipsum dolor sit amet...',
-          creator: {
-            userName: 'JohnDoe',
-            id: 'user1',
-            avatar: 'url-to-avatar',
-            token: 'user-token',
-            email: 'asd',
-          },
-          // ... other TicketProps
-        },
-        {
-          id: 'ticket1',
-          title: 'Implement Feature A',
-          description: 'Lorem ipsum dolor sit amet...',
-          creator: {
-            userName: 'JohnDoe',
-            id: 'user1',
-            avatar: 'url-to-avatar',
-            token: 'user-token',
-            email: 'asd',
-          },
-          // ... other TicketProps
-        },
-        {
-          id: 'ticket1',
-          title: 'Implement Feature A',
-          description: 'Lorem ipsum dolor sit amet...',
-          creator: {
-            userName: 'JohnDoe',
-            id: 'user1',
-            avatar: 'url-to-avatar',
-            token: 'user-token',
-            email: 'asd',
-          },
-          // ... other TicketProps
-        },
-        {
-          id: 'ticket1',
-          title: 'Implement Feature A',
-          description: 'Lorem ipsum dolor sit amet...',
-          creator: {
-            userName: 'JohnDoe',
-            id: 'user1',
-            avatar: 'url-to-avatar',
-            token: 'user-token',
-            email: 'asd',
-          },
-          // ... other TicketProps
-        },
-        // ... other tickets in the "To Do" stage
-      ],
-    },
-    {
-      id: 'stage2',
-      title: 'In Progress',
-      tickets: [
-        {
-          id: 'ticket2',
-          title: 'Fix Bug B',
-          description: 'Lorem ipsum dolor sit amet...',
-          creator: {
-            userName: 'JaneDoe',
-            id: 'user2',
-            avatar: 'url-to-avatar',
-            token: 'user-token',
-            email: 'asd',
-          },
-          // ... other TicketProps
-        },
-        // ... other tickets in the "In Progress" stage
-      ],
-    },
-    // ... other stages
-    {
-      id: 'stage2',
-      title: 'In Progress',
-      tickets: [
-        {
-          id: 'ticket2',
-          title: 'Fix Bug B',
-          description: 'Lorem ipsum dolor sit amet...',
-          creator: {
-            userName: 'JaneDoe',
-            id: 'user2',
-            avatar: 'url-to-avatar',
-            token: 'user-token',
-            email: 'asd',
-          },
-          // ... other TicketProps
-        },
-        // ... other tickets in the "In Progress" stage
-      ],
-    },
-  ];
-
-  // You can add more stages or modify the existing ones according to your application requirements.
+const SingleProject = ({ project }: SingleProjectProps) => {
+  const [stages, setStages] = useState<StageProps[]>([]);
+  function createNewStage() {
+    const stageToAdd: StageProps = {
+      id: generateId(),
+      title: 'Stage',
+    };
+    setStages([...stages, stageToAdd]);
+    console.log(stages);
+  }
+  function generateId() {
+    return 'Hi';
+  }
 
   return (
-    <div className="flex flex-row max-h-screen">
-      <div className="flex items-center flex-col bg-gray-200 w-40">
-        <div className="relative border-2 border-black rounded-lg h-10 w-5/6 bg-black top-20 flex items-center justify-center hover:bg-white">
-          <div className="text-white text-xl hover:text-black">Task</div>
-        </div>
-        <br />
-        <div className="relative border-2 border-black rounded-lg h-10 w-5/6 bg-black flex top-20 items-center justify-center">
-          <div className="text-white text-xl">Timeline</div>
+    <div className="flex h-full w-full overflow-hidden">
+      <nav className="flex items-center flex-col bg-gray-200 w-40">
+        <div className="flex flex-col space-y-3 justify-start items-center py-20 w-32">
+          <div className="border-2 border-black rounded-full h-10 w-full bg-black flex items-center justify-center">
+            <div className="text-white text-xl">Task</div>
+          </div>
+          <div className="border-2 border-black rounded-full h-10 w-full bg-black flex items-center justify-center">
+            <div className="text-white text-xl">Timeline</div>
+          </div>
         </div>
         {/* display member */}
-        <div className="relative flex flex-col w-40 h-screen top-40 items-center space-y-4">
-          <div className="text-xl">Members ({members.length})</div>
+        <div className="flex flex-col w-40 max-h-64 items-center py-2 space-y-4 overflow-y-auto">
+          <div className="text-xl">Members ({project?.members.length})</div>
           <div className="flex flex-col space-y-4">
-            {members.map((member, index) => (
+            {project?.members.map((member, index) => (
               <UserCard key={index} user={member} />
             ))}
           </div>
         </div>
-        <div className="text-xl flex justify-center text-center pb-40">
+        <div className="text-xl text-center flex-wrap relative top-60">
           {' '}
-          Copy this code to add member #{params.projectId}
+          Copy this code <br /> to add member
+          <br /># 1234
         </div>
-      </div>
-      <div className="w-screen h-screen">
+      </nav>
+      <div className="w-[76rem] h-full] overflow-hidden">
         <div className="bg-gray-100 h-20 flex items-center px-6 justify-between">
-          <div className=""> Back button </div>
-          <div className="font-bold text-4xl">
-            Project Name {params.projectId}
+          <div className="flex">
+            {' '}
+            <Link
+              className="bg-slate-800 text-white px-4 py-1 rounded-lg w-fit hover:bg-slate-200 hover:text-black"
+              href={'/projects'}
+            >
+              <BsArrowLeft className="text-4xl" />
+            </Link>{' '}
           </div>
+          <div className="font-bold text-4xl">{project?.title}</div>
           <div>Setting</div>
         </div>
-        <div className="relative top-20 left-10 flex flex-row h-screen space-x-20">
-          {stagesData.map((stage, index) => (
+        <div className="flex flex-row pt-5 h-full w-full overflow-x-auto">
+          {
+            /* {project?.stages?.map((stage, index) => (
             <SingleStage key={index} stage={stage} />
-          ))}
+          ))} */
+            stages.map(stag => (
+              <SingleStage stage={stag} />
+            ))
+          }
+          <CustomButton
+            containerStyles="mt-20 mx-10 w-72 h-4/6 rounded-lg border border-black justify-between text-6xl"
+            handleClick={createNewStage}
+            title="+"
+          ></CustomButton>
         </div>
       </div>
     </div>
   );
 };
 
-export default ProjectDetail;
+export default SingleProject;
