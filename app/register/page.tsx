@@ -9,6 +9,7 @@ import axios from 'axios';
 import { registerSchema, registerSchemaType } from '../../types/inputValidate';
 
 const RegisterPage = () => {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const { register, handleSubmit } = useForm<registerSchemaType>({
     resolver: zodResolver(registerSchema),
   });
@@ -22,7 +23,7 @@ const RegisterPage = () => {
     }
 
     await axios
-      .post('http://localhost:3001/auth/register', {
+      .post(`${API_URL}/auth/register`, {
         name: data.username,
         email: data.email,
         password: data.password,

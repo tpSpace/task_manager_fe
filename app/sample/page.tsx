@@ -35,6 +35,9 @@ const ProjectDetail = ({ params }: ProjectDetailProps) => {
             id: 'user1',
             avatar: 'url-to-avatar',
             token: 'user-token',
+<<<<<<< HEAD
+            email: 'YourMom@gmail.com',
+=======
             email: 'asd',
           },
           // ... other TicketProps
@@ -75,6 +78,7 @@ const ProjectDetail = ({ params }: ProjectDetailProps) => {
             avatar: 'url-to-avatar',
             token: 'user-token',
             email: 'asd',
+>>>>>>> master
           },
           // ... other TicketProps
         },
@@ -94,7 +98,11 @@ const ProjectDetail = ({ params }: ProjectDetailProps) => {
             id: 'user2',
             avatar: 'url-to-avatar',
             token: 'user-token',
+<<<<<<< HEAD
+            email: '',
+=======
             email: 'asd',
+>>>>>>> master
           },
           // ... other TicketProps
         },
@@ -141,12 +149,15 @@ const ProjectDetail = ({ params }: ProjectDetailProps) => {
           <div className="text-xl">Members ({members.length})</div>
           <div className="flex flex-col space-y-4">
             {members.map((member, index) => (
+<<<<<<< HEAD
+              <UserCard user={member} key={index} />
+=======
               <UserCard key={index} user={member} />
+>>>>>>> master
             ))}
           </div>
         </div>
         <div className="text-xl flex justify-center text-center pb-40">
-          {' '}
           Copy this code to add member #{params.projectId}
         </div>
       </div>
