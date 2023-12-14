@@ -13,6 +13,7 @@ type LoginPageProps = {
 };
 
 const LoginPage = () => {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const schema: ZodType<LoginPageProps> = z.object({
     email: z.string().email().min(5).max(30),
     password: z.string().min(8).max(30),
@@ -25,7 +26,7 @@ const LoginPage = () => {
     // TODO: login
     // help me write a axious request to login to the server
     await axios
-      .post('http://localhost:3001/auth/login', {
+      .post(`${API_URL}/auth/login`, {
         email: data.email,
         password: data.password,
       })

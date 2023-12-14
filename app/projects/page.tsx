@@ -22,6 +22,7 @@ const getFilteredProjects = (search: string, projects: ProjectInforProps[]) => {
   );
 };
 const Projects = () => {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [projects, setProjects] = useState<ProjectInforProps[]>([]);
   const [search, setSearch] = useState<string>('');
 
@@ -36,7 +37,7 @@ const Projects = () => {
 
   const fetchProjects = async (token: string | null) => {
     await axios
-      .get(`http://localhost:3001/projects/get`, {
+      .get(`${API_URL}/projects/get`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
