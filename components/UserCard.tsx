@@ -1,5 +1,6 @@
-import { UserProps } from '@/types';
 import React from 'react';
+
+import { UserProps } from '@/types';
 
 interface UserCardProps {
   user: UserProps;
