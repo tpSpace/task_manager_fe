@@ -51,8 +51,9 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-[90%] w-full">
-      <div className="border-2 boder-solid border-black">
+    <div className="flex flex-col justify-center items-center h-[90%] w-full">
+      <h1 className="text-5xl font-bold">Sign Up</h1>
+      <div className="">
         <form
           className="flex flex-col m-4 gap-4"
           onSubmit={handleSubmit(submit)}
