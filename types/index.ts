@@ -10,6 +10,7 @@ export interface CustomLinkProps {
   title: string;
   containerStyles?: string;
   route: string;
+  click?: () => void;
 }
 
 export interface ProjectProps {
