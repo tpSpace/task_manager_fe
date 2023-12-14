@@ -48,13 +48,14 @@ const Header = () => {
             route="/projects"
             title="Projects"
           />
-          <button aria-hidden="true" onClick={logout}>
-            <CustomLink
-              containerStyles="border-2 border-solid border-black rounded-lg p-2 hover:bg-black hover:text-white"
-              route="/"
-              title="Logout"
-            />
-          </button>
+          {/* <button onClick={logout} > */}
+          <CustomLink
+            click={logout}
+            containerStyles="border-2 border-solid border-black rounded-lg p-2 hover:bg-black hover:text-white"
+            route="/"
+            title="Logout"
+          />
+          {/* </button> */}
         </div>
       )}
     </div>
