@@ -10,6 +10,7 @@ export interface CustomLinkProps {
   title: string;
   containerStyles?: string;
   route: string;
+  click?: () => void;
 }
 
 export interface ProjectProps {
@@ -25,9 +26,9 @@ export interface ProjectProps {
 export interface UserProps {
   userName: string;
   id: string;
-  email: string;
-  avatar: string;
-  token: string;
+  email?: string;
+  avatar?: string;
+  token?: string;
   projects?: ProjectProps[];
 }
 
