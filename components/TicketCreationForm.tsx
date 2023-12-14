@@ -49,17 +49,6 @@ const TicketCreationForm: React.FC<TicketCreationFormProps> = ({
             value={newTicket.title}
           />
         </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700">
-            Description:
-          </label>
-          <textarea
-            className="mt-1 p-2 border rounded-md w-full"
-            name="description"
-            onChange={handleInputChange}
-            value={newTicket.description}
-          />
-        </div>
         <button
           className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
           type="submit"

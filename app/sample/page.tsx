@@ -4,7 +4,7 @@ import React from 'react';
 
 import SingleStage from '@/components/SingleStage';
 import UserCard from '@/components/UserCard';
-import { StageProps } from '@/types';
+import { StageProps, UserProps } from '@/types';
 // import { ProjectProps } from '@/types';
 
 interface ProjectDetailProps {
@@ -16,10 +16,10 @@ interface ProjectDetailProps {
 
 const ProjectDetail = ({ params }: ProjectDetailProps) => {
   // This is the sample members in single project
-  const members = [
-    { id: 1, userName: 'Huy' },
-    { id: 2, userName: 'Khang' },
-    { id: 3, userName: 'Khoi' },
+  const members: UserProps[] = [
+    { id: '1', userName: 'Huy' },
+    { id: '2', userName: 'Khang' },
+    { id: '3', userName: 'Khoi' },
   ];
   const stagesData: StageProps[] = [
     {
@@ -35,7 +35,46 @@ const ProjectDetail = ({ params }: ProjectDetailProps) => {
             id: 'user1',
             avatar: 'url-to-avatar',
             token: 'user-token',
-            email: 'email',
+            email: 'asd',
+          },
+          // ... other TicketProps
+        },
+        {
+          id: 'ticket1',
+          title: 'Implement Feature A',
+          description: 'Lorem ipsum dolor sit amet...',
+          creator: {
+            userName: 'JohnDoe',
+            id: 'user1',
+            avatar: 'url-to-avatar',
+            token: 'user-token',
+            email: 'asd',
+          },
+          // ... other TicketProps
+        },
+        {
+          id: 'ticket1',
+          title: 'Implement Feature A',
+          description: 'Lorem ipsum dolor sit amet...',
+          creator: {
+            userName: 'JohnDoe',
+            id: 'user1',
+            avatar: 'url-to-avatar',
+            token: 'user-token',
+            email: 'asd',
+          },
+          // ... other TicketProps
+        },
+        {
+          id: 'ticket1',
+          title: 'Implement Feature A',
+          description: 'Lorem ipsum dolor sit amet...',
+          creator: {
+            userName: 'JohnDoe',
+            id: 'user1',
+            avatar: 'url-to-avatar',
+            token: 'user-token',
+            email: 'asd',
           },
           // ... other TicketProps
         },
@@ -55,6 +94,7 @@ const ProjectDetail = ({ params }: ProjectDetailProps) => {
             id: 'user2',
             avatar: 'url-to-avatar',
             token: 'user-token',
+            email: 'asd',
           },
           // ... other TicketProps
         },
@@ -62,6 +102,26 @@ const ProjectDetail = ({ params }: ProjectDetailProps) => {
       ],
     },
     // ... other stages
+    {
+      id: 'stage2',
+      title: 'In Progress',
+      tickets: [
+        {
+          id: 'ticket2',
+          title: 'Fix Bug B',
+          description: 'Lorem ipsum dolor sit amet...',
+          creator: {
+            userName: 'JaneDoe',
+            id: 'user2',
+            avatar: 'url-to-avatar',
+            token: 'user-token',
+            email: 'asd',
+          },
+          // ... other TicketProps
+        },
+        // ... other tickets in the "In Progress" stage
+      ],
+    },
   ];
 
   // You can add more stages or modify the existing ones according to your application requirements.
@@ -80,8 +140,8 @@ const ProjectDetail = ({ params }: ProjectDetailProps) => {
         <div className="relative flex flex-col w-40 h-screen top-40 items-center space-y-4">
           <div className="text-xl">Members ({members.length})</div>
           <div className="flex flex-col space-y-4">
-            {members.map(member => (
-              <UserCard key={member.id} {...member} />
+            {members.map((member, index) => (
+              <UserCard key={index} user={member} />
             ))}
           </div>
         </div>
