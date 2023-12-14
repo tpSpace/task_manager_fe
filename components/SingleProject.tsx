@@ -42,7 +42,7 @@ const SingleProject = ({ project }: SingleProjectProps) => {
         {/* display member */}
         <div className="flex flex-col w-40 items-center py-2 space-y-4">
           <div className="text-lg">Members ({project.members.length})</div>
-          <div className="flex flex-col space-y-4 max-h-44 overflow-scroll">
+          <div className="flex flex-col space-y-4 max-h-44 overflow-y-auto">
             {project.members.map((member, index) => (
               <UserCard key={index} user={member} />
             ))}
@@ -54,29 +54,32 @@ const SingleProject = ({ project }: SingleProjectProps) => {
           <br /># 1234
         </div>
       </nav>
-      <div className="w-full h-full] overflow-hidden">
-        <div className="bg-gray-100 h-20 flex items-center px-6 justify-between">
-          <div className="flex">
-            {' '}
-            <Link
-              className="bg-slate-800 text-white px-4 py-1 rounded-lg w-fit hover:bg-slate-200 hover:text-black"
-              href={'/projects'}
-            >
-              <BsArrowLeft className="text-4xl" />
-            </Link>{' '}
+      <div className="flex flex-row w-full h-full overflow-x-auto">
+        {' '}
+        <div className="w-full h-full">
+          <div className="bg-gray-100 h-20 flex items-center px-6 justify-between">
+            <div className="flex">
+              {' '}
+              <Link
+                className="bg-slate-800 text-white px-4 py-1 rounded-lg w-fit hover:bg-slate-200 hover:text-black"
+                href={'/projects'}
+              >
+                <BsArrowLeft className="text-4xl" />
+              </Link>{' '}
+            </div>
+            <div className="font-bold text-4xl">{project.title}</div>
+            <div>Setting</div>
+          </div>{' '}
+          <div className="flex flex-row pt-5 h-[42rem] w-full overflow-x-scroll">
+            {project.stages?.map((stage, index) => (
+              <SingleStage key={index} stage={stage} />
+            ))}
+            <CustomButton
+              containerStyles="mt-20 mx-10 min-w-[18%] h-[30rem] rounded-lg border border-black justify-between text-6xl"
+              handleClick={createNewStage}
+              title="+"
+            ></CustomButton>
           </div>
-          <div className="font-bold text-4xl">{project.title}</div>
-          <div>Setting</div>
-        </div>
-        <div className="flex flex-row pt-5 h-full overflow-x-scroll">
-          {project.stages?.map((stage, index) => (
-            <SingleStage key={index} stage={stage} />
-          ))}
-          <CustomButton
-            containerStyles="mt-20 mx-10 min-w-[18%] h-4/6 rounded-lg border border-black justify-between text-6xl"
-            handleClick={createNewStage}
-            title="+"
-          ></CustomButton>
         </div>
       </div>
     </div>
