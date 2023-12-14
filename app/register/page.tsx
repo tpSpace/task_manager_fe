@@ -9,6 +9,7 @@ import axios from 'axios';
 import { registerSchema, registerSchemaType } from '../../types/inputValidate';
 
 const RegisterPage = () => {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const { register, handleSubmit } = useForm<registerSchemaType>({
     resolver: zodResolver(registerSchema),
   });
@@ -22,7 +23,7 @@ const RegisterPage = () => {
     }
 
     await axios
-      .post('http://localhost:3001/auth/register', {
+      .post(`${API_URL}/auth/register`, {
         name: data.username,
         email: data.email,
         password: data.password,
@@ -51,8 +52,9 @@ const RegisterPage = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-[90%] w-full">
-      <div className="border-2 boder-solid border-black">
+    <div className="flex flex-col justify-center items-center h-[90%] w-full">
+      <h1 className="text-5xl font-bold">Sign Up</h1>
+      <div className="">
         <form
           className="flex flex-col m-4 gap-4"
           onSubmit={handleSubmit(submit)}

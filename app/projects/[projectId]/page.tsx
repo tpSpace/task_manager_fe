@@ -18,6 +18,7 @@ interface ProjectDetailProps {
 }
 
 const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   // state storing all the Ids return from backend
   const [projectData, setProjectData] = useState<ProjectDetailProps>({
     projectId: params.projectId,
@@ -84,14 +85,11 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
   }, [projectData]);
 
   const fetchProject = async (token: string | null) => {
-    const res = await axios.get(
-      `http://localhost:3001/projects/get/${params.projectId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+    const res = await axios.get(`${API_URL}/projects/get/${params.projectId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
       },
-    );
+    });
     console.log(res.data);
 
     return res.data.project;
@@ -99,7 +97,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
 
   const fetchAdmin = async (token: string | null) => {
     await axios
-      .get(`http://localhost:3001/auth/user/${projectData.adminId}`, {
+      .get(`${API_URL}/auth/user/${projectData.adminId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -124,7 +122,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
 
   const fetchMembers = async (token: string | null) => {
     const promises = projectData.memberIds.map(async memberId => {
-      return axios.get(`http://localhost:3001/auth/user/${memberId}`, {
+      return axios.get(`${API_URL}/auth/user/${memberId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -140,7 +138,6 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
       id: response.data.user.userId,
     }));
 
-    console.log('fetched members');
     setProject(prevProject => ({
       ...prevProject,
       members: members,
@@ -149,7 +146,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
 
   const fetchTags = async (token: string | null) => {
     await axios
-      .get(`http://localhost:3001/tags/get/${params.projectId}`, {
+      .get(`${API_URL}/tags/get/${params.projectId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -167,7 +164,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
 
   const fetchStages = async (token: string | null) => {
     await axios
-      .get(`http://localhost:3001/stages/getProject/${params.projectId}`, {
+      .get(`${API_URL}/stages/getProject/${params.projectId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -185,7 +182,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
   };
 
   return (
-    <div className="items-center h-[47rem] w-full">
+    <div className="items-center h-[47rem] w-screen">
       <SingleProject project={project} />
     </div>
   );
