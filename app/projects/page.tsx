@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
+import { IoMdSearch } from 'react-icons/io';
 
 import CustomButton from '@/components/CustomButton';
 
@@ -52,21 +53,28 @@ const Projects = () => {
       });
   };
 
+  const handleClick = () => {
+    console.log('add new project');
+  };
+
   return (
-    <div className="flex flex-col justify-center p-8">
-      <div className={'flex justify-end w-screen'}>
+    <div className="flex flex-col justify-center p-8 max-w-screen max-h-screen">
+      <div className={'flex justify-end w-screen relative'}>
         <input
           className={
-            'rounded-full border-2 bg-gray-200 border-black text-black text-center font-semibold text-xl h-10 w-1/3 mr-40 '
+            'rounded-full border-2 bg-gray-200 border-black text-black text-center font-semibold text-xl h-10 w-1/3 mr-20 '
           }
           onChange={e => setSearch(e.target.value)}
           placeholder={'Search project'}
           type={'text'}
           value={search}
         />
+        <div className={'pt-1 absolute pr-24 opacity-80'}>
+          <IoMdSearch className={'text-3xl'} />
+        </div>
       </div>
       <div className="grid place-content-center">
-        <ul className={'space-x-10 space-y-10'}>
+        <ul className={'space-x-10 space-y-10 flex flex-wrap'}>
           {filteredProjects.map(project => (
             <button
               className={
@@ -81,6 +89,7 @@ const Projects = () => {
         </ul>
         <CustomButton
           containerStyles="border-2 border-solid border-black rounded-3xl bg-neutral-200 w-72 h-48 my-5 text-black text-6xl"
+          handleClick={() => handleClick()}
           title="+"
         />
       </div>
