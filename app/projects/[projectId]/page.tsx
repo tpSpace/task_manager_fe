@@ -182,7 +182,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
   };
 
   return (
-    <div className="items-center h-[47rem] w-full">
+    <div className="items-center h-[55.5rem] w-screen">
       <SingleProject project={project} />
     </div>
   );
