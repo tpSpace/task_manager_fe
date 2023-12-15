@@ -78,7 +78,7 @@ const Projects = () => {
           {filteredProjects.map(project => (
             <button
               className={
-                "w-72 h-48 bg-neutral-200 rounded-3xl border-2 border-black text-black text-[50px] font-semibold font-['Montserrat'] my-5 mt-10"
+                "w-72 h-48 bg-neutral-200 rounded-3xl border-2 border-black text-black text-[40px] font-semibold font-['Montserrat'] my-5 mt-10"
               }
               key={project.projectId}
               onClick={() => router.push(`projects/${project.projectId}`)}
@@ -87,7 +87,7 @@ const Projects = () => {
             </button>
           ))}
           <CustomButton
-            containerStyles="border-2 border-solid border-black rounded-3xl bg-neutral-200 w-72 h-48 my-5 text-black  text-[65px]"
+            containerStyles="border-2 border-solid border-black rounded-3xl bg-neutral-200 w-72 h-48 my-5 text-black  text-[80px]"
             handleClick={() => handleClick()}
             title="+"
           />
