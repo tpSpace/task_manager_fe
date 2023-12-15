@@ -30,7 +30,7 @@ const SingleProject = ({ project }: SingleProjectProps) => {
 
   return (
     <div className="flex h-full w-full overflow-hidden">
-      <nav className="flex items-center flex-col bg-gray-200 w-40">
+      <nav className="flex items-center flex-col bg-gray-200 w-[15%]">
         <div className="flex flex-col space-y-3 justify-start items-center py-20 w-32">
           <div className="border-2 border-black rounded-full h-10 w-full bg-black flex items-center justify-center">
             <div className="text-white text-xl">Task</div>
@@ -54,10 +54,10 @@ const SingleProject = ({ project }: SingleProjectProps) => {
           <br /># 1234
         </div>
       </nav>
-      <div className="flex flex-row w-full h-full overflow-x-auto">
+      <div className="flex flex-row w-full h-full overflow-x-auto overflow-y-hidden">
         {' '}
         <div className="w-full h-full">
-          <div className="bg-gray-100 h-20 flex items-center px-6 justify-between">
+          <div className="bg-gray-100 h-[10%] flex items-center px-6 justify-between">
             <div className="flex">
               {' '}
               <Link
@@ -70,12 +70,12 @@ const SingleProject = ({ project }: SingleProjectProps) => {
             <div className="font-bold text-4xl">{project.title}</div>
             <div>Setting</div>
           </div>{' '}
-          <div className="flex flex-row pt-20 h-[50.5rem] w-full overflow-x-scroll">
+          <div className="flex flex-row py-10 h-[90%] w-full overflow-x-scroll">
             {project.stages?.map((stage, index) => (
               <SingleStage key={index} stage={stage} />
             ))}
             <CustomButton
-              containerStyles="mt-20 mx-10 min-w-[15%] h-[30rem] rounded-lg border border-black justify-between text-6xl"
+              containerStyles="mt-20 mx-10 min-w-[20%] h-[80%] rounded-lg border border-black justify-between text-6xl"
               handleClick={createNewStage}
               title="+"
             ></CustomButton>
