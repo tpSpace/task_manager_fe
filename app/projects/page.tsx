@@ -70,7 +70,7 @@ const Projects = () => {
           value={search}
         />
         <div className={'pt-1 absolute pr-24 opacity-80'}>
-          <IoMdSearch className={'text-3xl'} />
+          <IoMdSearch className={'text-[30px]'} />
         </div>
       </div>
       <div className="grid place-content-center">
@@ -78,7 +78,7 @@ const Projects = () => {
           {filteredProjects.map(project => (
             <button
               className={
-                "w-72 h-48 bg-neutral-200 rounded-3xl border-2 border-black text-black text-3xl font-semibold font-['Montserrat'] my-5 mt-10"
+                "w-72 h-48 bg-neutral-200 rounded-3xl border-2 border-black text-black text-[50px] font-semibold font-['Montserrat'] my-5 mt-10"
               }
               key={project.projectId}
               onClick={() => router.push(`projects/${project.projectId}`)}
@@ -86,12 +86,12 @@ const Projects = () => {
               {project.title}
             </button>
           ))}
+          <CustomButton
+            containerStyles="border-2 border-solid border-black rounded-3xl bg-neutral-200 w-72 h-48 my-5 text-black  text-[65px]"
+            handleClick={() => handleClick()}
+            title="+"
+          />
         </ul>
-        <CustomButton
-          containerStyles="border-2 border-solid border-black rounded-3xl bg-neutral-200 w-72 h-48 my-5 text-black text-6xl"
-          handleClick={() => handleClick()}
-          title="+"
-        />
       </div>
     </div>
   );
