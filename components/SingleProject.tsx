@@ -70,12 +70,12 @@ const SingleProject = ({ project }: SingleProjectProps) => {
             <div className="font-bold text-4xl">{project.title}</div>
             <div>Setting</div>
           </div>{' '}
-          <div className="flex flex-row pt-5 h-[42rem] w-full overflow-x-scroll">
+          <div className="flex flex-row pt-20 h-[50.5rem] w-full overflow-x-scroll">
             {project.stages?.map((stage, index) => (
               <SingleStage key={index} stage={stage} />
             ))}
             <CustomButton
-              containerStyles="mt-20 mx-10 min-w-[18%] h-[30rem] rounded-lg border border-black justify-between text-6xl"
+              containerStyles="mt-20 mx-10 min-w-[15%] h-[30rem] rounded-lg border border-black justify-between text-6xl"
               handleClick={createNewStage}
               title="+"
             ></CustomButton>
