@@ -44,9 +44,8 @@ const Projects = () => {
         },
       })
       .then(res => {
-        console.log(res);
+        console.log(res.data);
         setProjects(res.data.projects);
-        console.log(projects);
       })
       .catch(err => {
         console.log(err);
