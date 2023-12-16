@@ -35,21 +35,20 @@ const SingleProject = ({ project }: SingleProjectProps) => {
           </div>
         </div>
         <div className="text-xl text-center flex-wrap relative top-60">
-          {' '}
           Copy this code <br /> to add member
           <br /># 1234
         </div>
       </nav>
       <div className="w-[76rem] h-full] overflow-hidden">
         <div className="bg-gray-100 h-20 flex items-center px-6 justify-between">
+          {/* back button on the project title */}
           <div className="flex">
-            {' '}
             <Link
-              className="bg-slate-800 text-white px-4 py-1 rounded-lg w-fit hover:bg-slate-200 hover:text-black"
+              className="bg-black text-white px-4 py-1 rounded-lg w-fit hover:bg-slate-200 hover:text-black"
               href={'/projects'}
             >
               <BsArrowLeft className="text-4xl" />
-            </Link>{' '}
+            </Link>
           </div>
           <div className="font-bold text-4xl">{project.title}</div>
           <div>Setting</div>
