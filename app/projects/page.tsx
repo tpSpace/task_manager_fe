@@ -87,7 +87,7 @@ const Projects = () => {
             </button>
           ))}
           <CustomButton
-            containerStyles="border-2 border-solid border-black rounded-3xl bg-neutral-200 w-72 h-48 my-5 text-black  text-[80px]"
+            containerStyles="border-2 border-solid border-black rounded-3xl bg-neutral-200 w-72 h-48 my-5 text-black  text-5xl"
             handleClick={() => handleClick()}
             title="+"
           />
