@@ -21,13 +21,11 @@ const Header = () => {
   }
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-10 flex flex-row justify-between items-center overflow-hidden h-16 p-4 bg-white text-black">
+    <div className="flex flex-row justify-between items-center overflow-hidden h-[10%] p-4 bg-white text-black">
       <div className="flex flex-row items-center justify-center">
-        {!isLogged && (
-          <a className="" href="/">
-            <Image alt="Logo" height={88} src="/logo.svg" width={88} />
-          </a>
-        )}
+        <a className="" href="/">
+          <Image alt="Logo" height={88} src="/logo.svg" width={88} />
+        </a>
         {!isLogged && (
           <CustomLink
             containerStyles="font-bold text-2xl ml-2"
