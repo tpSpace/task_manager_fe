@@ -42,7 +42,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
   });
 
   const [stages, setStages] = useState<StageProps[]>([]);
-
+  console.log(stages);
   // main useEffect, use for fetching the whole project
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -192,6 +192,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
             title: stage.title,
             tickets: fetchedTickets,
           }));
+
           return stage;
         },
       );
@@ -216,10 +217,12 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
         },
       );
 
-      const tickets = responses.data.tickets;
+      const { tickets } = responses.data;
+
       return tickets;
     } catch (err) {
       console.log(err);
+
       return null;
     }
   };
