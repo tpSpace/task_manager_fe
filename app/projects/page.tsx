@@ -57,27 +57,27 @@ const Projects = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center p-8 max-w-screen max-h-screen">
+    <div className="flex flex-col justify-center max-w-screen overflow-x-hidden p-8">
       <div className={'flex justify-end w-screen relative'}>
         <input
           className={
-            'rounded-full border-2 bg-gray-200 border-black text-black text-center font-semibold text-xl h-10 w-1/3 mr-20 '
+            'rounded-full border-2 bg-gray-200 border-black text-black text-center font-semibold text-xl h-10 w-1/3 mr-36'
           }
           onChange={e => setSearch(e.target.value)}
           placeholder={'Search project'}
           type={'text'}
           value={search}
         />
-        <div className={'pt-1 absolute pr-24 opacity-80'}>
+        <div className={'pt-1 absolute pr-24 mr-16 opacity-80'}>
           <IoMdSearch className={'text-[30px]'} />
         </div>
       </div>
-      <div className="grid place-content-center">
-        <ul className={'space-x-10 space-y-10 flex flex-wrap'}>
+      <div>
+        <div className={'grid grid-cols-4 gap-3 mt-5 ml-10'}>
           {filteredProjects.map(project => (
             <button
               className={
-                "w-72 h-48 bg-neutral-200 rounded-3xl border-2 border-black text-black text-[50px] font-semibold font-['Montserrat'] my-5 mt-10"
+                "w-72 h-48 bg-neutral-200 rounded-3xl border-2 border-black text-black text-[40px] font-semibold font-['Montserrat']"
               }
               key={project.projectId}
               onClick={() => router.push(`projects/${project.projectId}`)}
@@ -86,11 +86,11 @@ const Projects = () => {
             </button>
           ))}
           <CustomButton
-            containerStyles="border-2 border-solid border-black rounded-3xl bg-neutral-200 w-72 h-48 my-5 text-black  text-[65px]"
+            containerStyles="border-2 border-solid border-black rounded-3xl bg-neutral-200 w-72 h-48 text-black text-5xl"
             handleClick={() => handleClick()}
             title="+"
           />
-        </ul>
+        </div>
       </div>
     </div>
   );
