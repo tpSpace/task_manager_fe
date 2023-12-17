@@ -38,6 +38,7 @@
     "plugin:@next/next/recommended"
   ],
   "rules": {
+    "no-unused-vars": "off",
     "no-undef": "off",
     "quotes": [
       "error",
