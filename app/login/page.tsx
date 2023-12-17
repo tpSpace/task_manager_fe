@@ -61,7 +61,7 @@ const LoginPage = () => {
           />
           <input
             autoComplete="password"
-            className="border-2 border-black p-1 bg-slate-400"
+            className="border-2 border-black p-1 bg-slate-100"
             placeholder="Enter your password"
             type="password"
             {...register('password')}
