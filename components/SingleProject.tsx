@@ -1,33 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import Link from 'next/link';
 import { BsArrowLeft } from 'react-icons/bs';
 
-import SingleStage from './SingleStage';
+import ListStages from './ListStages';
 
-import CustomButton from '@/components/CustomButton';
 //import Tag from './Tag';
 import UserCard from '@/components/UserCard';
-import { ProjectProps, StageProps } from '@/types';
+import { ProjectProps } from '@/types';
 
 interface SingleProjectProps {
   project: ProjectProps;
 }
 
 const SingleProject = ({ project }: SingleProjectProps) => {
-  const [stages, setStages] = useState<StageProps[]>([]);
-  function createNewStage() {
-    const stageToAdd: StageProps = {
-      id: generateId(),
-      title: 'Stage',
-    };
-    setStages([...stages, stageToAdd]);
-    console.log(stages);
-  }
-  function generateId() {
-    return 'Hi';
-  }
-
   return (
     <div className="flex h-full w-full overflow-hidden">
       <nav className="flex items-center flex-col bg-gray-200 w-[15%]">
@@ -70,16 +56,7 @@ const SingleProject = ({ project }: SingleProjectProps) => {
             <div className="font-bold text-4xl">{project.title}</div>
             <div>Setting</div>
           </div>{' '}
-          <div className="flex flex-row py-10 h-[90%] w-full overflow-x-scroll">
-            {project.stages?.map((stage, index) => (
-              <SingleStage key={index} stage={stage} />
-            ))}
-            <CustomButton
-              containerStyles="mt-20 mx-10 min-w-[20%] h-[80%] rounded-lg border border-black justify-between text-6xl"
-              handleClick={createNewStage}
-              title="+"
-            ></CustomButton>
-          </div>
+          <ListStages project={project} stages={project.stages} />
         </div>
       </div>
     </div>
