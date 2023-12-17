@@ -25,7 +25,7 @@ const Header = () => {
       <div className="flex flex-row items-center justify-center">
         {!isLogged && (
           <a className="" href="/">
-            <Image alt="Logo" height={88} src="/betterLogo.svg" width={88} />
+            <Image alt="Logo" height={88} src="/logo.svg" width={88} />
           </a>
         )}
         {!isLogged && (
