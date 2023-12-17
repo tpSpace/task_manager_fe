@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import SingleProject from '@/components/SingleProject';
-import { ProjectProps, StageProps, TicketProps } from '@/types';
+import { ProjectProps } from '@/types';
 
 interface ProjectDetailProps {
   projectId: string;
@@ -41,8 +41,6 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
     tags: [],
   });
 
-  const [stages, setStages] = useState<StageProps[]>([]);
-  console.log(stages);
   // main useEffect, use for fetching the whole project
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -82,7 +80,6 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
       updateStages(token);
     }
 
-    //fetchTickets(token, projectData.stageIds[0]);
     console.log(project);
   }, [projectData]);
 
@@ -146,7 +143,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
 
   const fetchTags = async (token: string | null) => {
     await axios
-      .get(`${API_URL}/tags/get/${params.projectId}`, {
+      .get(`${API_URL}/tags/get/project/${params.projectId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -164,7 +161,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
 
   const fetchStages = async (token: string | null) => {
     const response = await axios.get(
-      `${API_URL}/stages/getProject/${params.projectId}`,
+      `${API_URL}/stages/get/project/${params.projectId}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -176,34 +173,29 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
   };
 
   const updateStages = async (token: string | null) => {
-    const stages = await fetchStages(token);
-    if (stages) {
-      const promises = stages.map(
-        async (stage: {
-          stageId: string;
-          title: string;
-          tickets: TicketProps[];
-        }) => {
-          const fetchedTickets = await fetchTickets(token, stage.stageId);
+    const fetchedStages = await fetchStages(token);
 
-          setStages(prevStage => ({
-            ...prevStage,
-            id: stage.stageId,
-            title: stage.title,
-            tickets: fetchedTickets,
-          }));
+    const promises = fetchedStages.map(
+      async (stage: { stageId: string; title: string }) => {
+        const fetchedTickets = await fetchTickets(token, stage.stageId);
+        console.log(stage);
+        console.log(fetchedTickets);
 
-          return stage;
-        },
-      );
+        return {
+          id: stage.stageId,
+          title: stage.title,
+          tickets: fetchedTickets,
+        };
+      },
+    );
 
-      const updatedStages = await Promise.all(promises);
+    const updatedStages = await Promise.all(promises);
+    console.log(updatedStages);
 
-      setProject(prevProject => ({
-        ...prevProject,
-        stages: updatedStages,
-      }));
-    }
+    setProject(prevProject => ({
+      ...prevProject,
+      stages: updatedStages,
+    }));
   };
 
   const fetchTickets = async (token: string | null, stageId: string) => {
