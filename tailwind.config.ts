@@ -16,10 +16,6 @@ const config: Config = {
       maxHeight: {
         '128': '47rem',
       },
-      colors: {
-        mainBackgroundColor: '#0D1117',
-        columnBackgroundColor: '#161C22',
-      },
     },
   },
   plugins: [],
