@@ -101,20 +101,20 @@ function ColumnContainer({
         {...attributes}
         {...listeners}
         className="
-      bg-mainBackgroundColor
-      text-md
-      h-[60px]
-      cursor-grab
-      rounded-md
-      rounded-b-none
-      p-3
-      font-bold
-      border-columnBackgroundColor
-      border-4
-      flex
-      items-center
-      justify-between
-      "
+          bg-mainBackgroundColor
+          text-md
+          h-[60px]
+          cursor-grab
+          rounded-md
+          rounded-b-none
+          p-3
+          font-bold
+          border-columnBackgroundColor
+          border-4
+          flex
+          items-center
+          justify-between
+          "
         onClick={() => {
           setEditMode(true);
         }}
