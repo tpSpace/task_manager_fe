@@ -168,19 +168,21 @@ function KanbanBoard() {
                 border-2
                 border-columnBackgroundColor
                 p-4
+                text-white
                 ring-rose-500
                 hover:ring-2
                 flex
+                flex-row
+                justify-center
+                items-center
                 gap-2
                 "
             onClick={() => {
               createNewColumn();
             }}
           >
-            <div className="flex flex-row justify-center items-center">
-              <PlusIcon />
-              <span>Add Column</span>
-            </div>
+            <PlusIcon className="w-6 h-6 text-white" />
+            <p>Add column</p>
           </button>
         </div>
         {createPortal(

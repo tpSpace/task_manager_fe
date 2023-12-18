@@ -154,10 +154,10 @@ function ColumnContainer({
         stroke-gray-500
         hover:stroke-white
         hover:bg-columnBackgroundColor
-        rounded
-        px-1
-        py-2
-        "
+          rounded
+          px-1
+          py-2
+          "
           onClick={() => {
             deleteColumn(column.id);
           }}
@@ -186,10 +186,8 @@ function ColumnContainer({
           createTask(column.id);
         }}
       >
-        <div className="flex flex-row justify-between items-center text-white">
-          <PlusIcon />
-          <span>Add task</span>
-        </div>
+        <PlusIcon className="w-7 h-7" />
+        <p>Add task</p>
       </button>
     </div>
   );

@@ -1,7 +1,7 @@
-function PlusIcon() {
+function PlusIcon({ className }: { className?: string }) {
   return (
     <svg
-      className="w-6 h-6"
+      className={className}
       fill="none"
       stroke="currentColor"
       strokeWidth={1.5}
