@@ -1,3 +1,5 @@
+'use client';
+
 import { useMemo, useState } from 'react';
 
 import { SortableContext, useSortable } from '@dnd-kit/sortable';

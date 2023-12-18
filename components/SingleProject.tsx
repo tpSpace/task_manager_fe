@@ -44,7 +44,7 @@ const SingleProject = ({ project }: SingleProjectProps) => {
         </div>
 
         <div className="flex justify-content w-full h-[90%] border-2 border-blue-500">
-          <KanbanBoard />
+          <KanbanBoard project={project} />
         </div>
       </div>
     </div>

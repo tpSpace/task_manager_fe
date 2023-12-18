@@ -1,3 +1,5 @@
+'use client';
+
 import { useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -18,6 +20,12 @@ import TaskCard from './TaskCard';
 
 import PlusIcon from '../icons/PlusIcon';
 import { Column, Id, Task } from '../types/types';
+
+import { ProjectProps } from '@/types';
+
+interface ProjectDetailProps {
+  project: ProjectProps;
+}
 
 const defaultCols: Column[] = [
   {
@@ -103,7 +111,7 @@ const defaultTasks: Task[] = [
   },
 ];
 
-function KanbanBoard() {
+function KanbanBoard({ project }: ProjectDetailProps) {
   const [columns, setColumns] = useState<Column[]>(defaultCols);
   const columnsId = useMemo(() => columns.map(col => col.id), [columns]);
 
@@ -120,6 +128,8 @@ function KanbanBoard() {
       },
     }),
   );
+  // i want to print out the project name here
+  console.log(project);
 
   return (
     <div
