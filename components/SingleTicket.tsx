@@ -28,7 +28,7 @@ const SingleTicket = ({ isOpen, ticket, closeModal }: SingleTicketProps) => {
   return (
     <>
       <Transition appear as={Fragment} show={isOpen}>
-        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+        <Dialog as="div" className="z-10" onClose={closeModal}>
           {/* Button to open the ticket creation form */}
           <button
             className="bg-primary-blue-500 text-white px-4 py-2 rounded-full hover:bg-primary-blue-600"
@@ -54,18 +54,18 @@ const SingleTicket = ({ isOpen, ticket, closeModal }: SingleTicketProps) => {
             <div className="fixed inset-0 bg-black bg-opacity-25" />
           </Transition.Child>
 
-          <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+          <div className="fixed inset-0">
+            <div className="flex min-h-full items-center justify-center px-4">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
-                enterFrom="opacity-0 scale-95"
-                enterTo="opacity-100 scale-100"
+                enterFrom="opacity-0"
+                enterTo="opacity-100"
                 leave="ease-in duration-200"
-                leaveFrom="opacity-100 scale-100"
-                leaveTo="opacity-0 scale-95"
+                leaveFrom="opacity-100"
+                leaveTo="opacity-0"
               >
-                <Dialog.Panel className="relative w-full max-w-full max-h-[90vh] overflow-y-auto transform rounded-2xl bg-white p-6 text-left shadow-xl transition-all flex-col gap-5">
+                <Dialog.Panel className="w-full max-w-full h-[70vh] min-h-full max-h-[80vh] transform rounded-2xl bg-white p-6 text-left shadow-xl transition-all flex-col">
                   <button
                     className="absolute top-2 right-2 z-10 w-fit pt-2 bg-primary-blue-100 rounded-full"
                     onClick={closeModal}
@@ -80,7 +80,7 @@ const SingleTicket = ({ isOpen, ticket, closeModal }: SingleTicketProps) => {
                     />
                   </button>
 
-                  <div>
+                  <div className="text-2xl text-center font-semibold">
                     <h1>{ticket.title}</h1>
                   </div>
 

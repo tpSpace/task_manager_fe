@@ -178,8 +178,6 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
     const promises = fetchedStages.map(
       async (stage: { stageId: string; title: string }) => {
         const fetchedTickets = await fetchTickets(token, stage.stageId);
-        console.log(stage);
-        console.log(fetchedTickets);
 
         return {
           id: stage.stageId,
@@ -190,7 +188,6 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
     );
 
     const updatedStages = await Promise.all(promises);
-    console.log(updatedStages);
 
     setProject(prevProject => ({
       ...prevProject,

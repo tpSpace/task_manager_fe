@@ -15,7 +15,7 @@ interface SingleProjectProps {
 
 const SingleProject = ({ project }: SingleProjectProps) => {
   return (
-    <div className="flex h-full w-full overflow-hidden">
+    <div className="flex h-full w-full overflow-auto">
       <nav className="flex items-center flex-col bg-gray-200 w-[15%]">
         <div className="flex flex-col space-y-3 justify-start items-center py-20 w-32">
           <div className="border-2 border-black rounded-full h-10 w-full bg-black flex items-center justify-center">
