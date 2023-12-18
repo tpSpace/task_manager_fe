@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: 'TasKing',
-  description: 'An task manager app that is better than Jira',
+  description: 'A task manager app that is better than Jira',
 };
 
 export default function RootLayout({
