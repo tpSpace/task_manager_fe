@@ -73,7 +73,7 @@ const Projects = () => {
       .then(res => {
         console.log(res);
         fetchProjects(token);
-        router.push(`projects/${res.data.projectId}`);
+        //router.push(`projects/${res.data.projectId}`);
       })
       .catch(err => {
         console.log(err);
