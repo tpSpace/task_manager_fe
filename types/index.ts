@@ -39,7 +39,7 @@ export interface StageProps {
 }
 
 export interface TicketProps {
-  id: string;
+  ticketId: string;
   title: string;
   description: string;
   comments?: CommentProps[];

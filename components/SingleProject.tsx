@@ -11,11 +11,13 @@ import { ProjectProps } from '@/types';
 
 interface SingleProjectProps {
   project: ProjectProps;
+  flag: boolean;
+  setFlag: () => void;
 }
 
-const SingleProject = ({ project }: SingleProjectProps) => {
+const SingleProject = ({ project, flag, setFlag }: SingleProjectProps) => {
   return (
-    <div className="flex h-full w-full overflow-auto">
+    <div className="flex h-full w-full">
       <nav className="flex items-center flex-col bg-gray-200 w-[15%]">
         <div className="flex flex-col space-y-3 justify-start items-center py-20 w-32">
           <div className="border-2 border-black rounded-full h-10 w-full bg-black flex items-center justify-center">
@@ -34,29 +36,32 @@ const SingleProject = ({ project }: SingleProjectProps) => {
             ))}
           </div>
         </div>
-        <div className="text-lg text-center flex-wrap flex flex-end mt-40">
+        <div className="text-lg text-center flex-wrap flex flex-end mt-10">
           {' '}
           Copy this code <br /> to add member
           <br /># 1234
         </div>
       </nav>
       <div className="flex flex-row w-full h-full overflow-x-auto overflow-y-hidden">
-        {' '}
         <div className="w-full h-full">
           <div className="bg-gray-100 h-[10%] flex items-center px-6 justify-between">
             <div className="flex">
-              {' '}
               <Link
                 className="bg-slate-800 text-white px-4 py-1 rounded-lg w-fit hover:bg-slate-200 hover:text-black"
                 href={'/projects'}
               >
                 <BsArrowLeft className="text-4xl" />
-              </Link>{' '}
+              </Link>
             </div>
             <div className="font-bold text-4xl">{project.title}</div>
             <div>Setting</div>
-          </div>{' '}
-          <ListStages project={project} stages={project.stages} />
+          </div>
+          <ListStages
+            project={project}
+            stages={project.stages}
+            flag={flag}
+            setFlag={setFlag}
+          />
         </div>
       </div>
     </div>

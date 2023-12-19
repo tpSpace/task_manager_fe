@@ -24,6 +24,8 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
     adminId: '',
   });
 
+  const [flag, setFlag] = useState<boolean>(true);
+
   // the actual state to store the project
   const [project, setProject] = useState<ProjectProps>({
     id: params.projectId,
@@ -62,7 +64,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
       }));
     });
     fetchTags(token);
-    console.log(project);
+    updateStages(token);
   }, []);
 
   // second useEffect, use for fetching data that required Ids from the first fetching
@@ -79,9 +81,14 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
     if (projectData.stageIds) {
       updateStages(token);
     }
-
-    console.log(project);
   }, [projectData]);
+
+  // third useEffect, used to update data when something is updated in the page
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    updateStages(token);
+  }, [flag]);
 
   const fetchProject = async (token: string | null) => {
     const res = await axios.get(`${API_URL}/projects/get/${params.projectId}`, {
@@ -178,7 +185,6 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
     const promises = fetchedStages.map(
       async (stage: { stageId: string; title: string }) => {
         const fetchedTickets = await fetchTickets(token, stage.stageId);
-
         return {
           id: stage.stageId,
           title: stage.title,
@@ -193,6 +199,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
       ...prevProject,
       stages: updatedStages,
     }));
+    console.log('updated Stages');
   };
 
   const fetchTickets = async (token: string | null, stageId: string) => {
@@ -217,8 +224,12 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
   };
 
   return (
-    <div className="items-center h-[90%] w-full">
-      <SingleProject project={project} />
+    <div className="h-[90%] w-full">
+      <SingleProject
+        project={project}
+        flag={flag}
+        setFlag={() => setFlag(!flag)}
+      />
     </div>
   );
 };
