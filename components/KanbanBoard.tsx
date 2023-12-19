@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import {
@@ -27,20 +27,10 @@ interface ProjectDetailProps {
   project: ProjectProps;
 }
 
-const defaultCols: Column[] = [
-  {
-    id: 'todo',
-    title: 'Todo',
-  },
-  {
-    id: 'doing',
-    title: 'Work in progress',
-  },
-  {
-    id: 'done',
-    title: 'Done',
-  },
-];
+interface ColumnData {
+  id: string;
+  title: string;
+}
 
 const defaultTasks: Task[] = [
   {
@@ -112,14 +102,25 @@ const defaultTasks: Task[] = [
 ];
 
 function KanbanBoard({ project }: ProjectDetailProps) {
-  const [columns, setColumns] = useState<Column[]>(defaultCols);
-  const columnsId = useMemo(() => columns.map(col => col.id), [columns]);
+  const [columns, setColumns] = useState<Column[]>([]);
+  const columnsId = useMemo(() => columns?.map(col => col.id), [columns]);
 
   const [tasks, setTasks] = useState<Task[]>(defaultTasks);
 
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
 
   const [activeTask, setActiveTask] = useState<Task | null>(null);
+
+  useEffect(() => {
+    const columns: ColumnData[] = [];
+    project.stages.forEach(col => {
+      columns.push({
+        id: col.id,
+        title: col.title,
+      } as ColumnData);
+    });
+    setColumns(columns);
+  }, [project]);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
