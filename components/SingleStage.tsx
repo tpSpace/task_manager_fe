@@ -9,9 +9,11 @@ import { StageProps } from '@/types';
 
 interface SingleStageProps {
   stage: StageProps;
+  flag: boolean;
+  setFlag: () => void;
 }
 
-const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
+const SingleStage: React.FC<SingleStageProps> = ({ stage, flag, setFlag }) => {
   const [isTicketFormOpen, setIsTicketFormOpen] = useState(false);
 
   const openTicketForm = () => {
@@ -29,7 +31,12 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
       </div>
       <div className="flex flex-col justify-between items-center overflow-x-hidden overflow-y-auto max-h-96">
         {stage.tickets?.map((ticket, index) => (
-          <TicketCard key={index} ticket={ticket} />
+          <TicketCard
+            key={index}
+            ticket={ticket}
+            flag={flag}
+            setFlag={setFlag}
+          />
         ))}
       </div>
       <div className="h-20 p-2 flex items-center justify-center">

@@ -8,8 +8,10 @@ import { ProjectProps, StageProps } from '@/types';
 interface ListStagesProps {
   stages: StageProps[];
   project: ProjectProps;
+  flag: boolean;
+  setFlag: () => void;
 }
-const ListStages = ({ project }: ListStagesProps) => {
+const ListStages = ({ project, flag, setFlag }: ListStagesProps) => {
   // const addNewStage =async (params:type) => {
 
   //         const newStagesData = {
@@ -34,7 +36,7 @@ const ListStages = ({ project }: ListStagesProps) => {
   return (
     <div className="flex flex-row py-10 h-[90%] w-full overflow-x-scroll">
       {project.stages?.map((stage, index) => (
-        <SingleStage key={index} stage={stage} />
+        <SingleStage key={index} stage={stage} flag={flag} setFlag={setFlag} />
       ))}
       <CustomButton
         containerStyles="mt-20 mx-10 min-w-[20%] h-[80%] rounded-lg border border-black justify-between text-6xl"

@@ -42,6 +42,7 @@ const TicketCreationForm: React.FC<TicketCreationFormProps> = ({
             Title:
           </label>
           <input
+            autoFocus
             className="mt-1 p-2 border rounded-md w-full"
             name="title"
             onChange={handleInputChange}
