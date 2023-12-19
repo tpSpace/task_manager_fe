@@ -9,12 +9,9 @@ import { ProjectProps } from '@/types';
 
 interface ProjectDetailProps {
   projectId: string;
-  title: string;
   stageIds: string[];
   memberIds: string[];
   adminId: string;
-  history: string[];
-  tagIds: string[];
 }
 
 const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
@@ -22,12 +19,9 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
   // state storing all the Ids return from backend
   const [projectData, setProjectData] = useState<ProjectDetailProps>({
     projectId: params.projectId,
-    title: '',
     stageIds: [],
     memberIds: [],
     adminId: '',
-    history: [],
-    tagIds: [],
   });
 
   // the actual state to store the project
@@ -58,7 +52,6 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
         stageIds: res.stageIds,
         memberIds: res.userIds,
         adminId: res.adminId,
-        tagIds: res.tagIds,
       }));
 
       // get the title and the history
@@ -69,7 +62,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
       }));
     });
     fetchTags(token);
-    fetchStages(token);
+    console.log(project);
   }, []);
 
   // second useEffect, use for fetching data that required Ids from the first fetching
@@ -82,6 +75,12 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
     if (projectData.memberIds) {
       fetchMembers(token);
     }
+
+    if (projectData.stageIds) {
+      updateStages(token);
+    }
+
+    console.log(project);
   }, [projectData]);
 
   const fetchProject = async (token: string | null) => {
@@ -90,7 +89,6 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
         Authorization: `Bearer ${token}`,
       },
     });
-    console.log(res.data);
 
     return res.data.project;
   };
@@ -103,7 +101,6 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
         },
       })
       .then(res => {
-        console.log(res.data);
         setProject(prevProject => ({
           ...prevProject,
           admin: {
@@ -146,7 +143,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
 
   const fetchTags = async (token: string | null) => {
     await axios
-      .get(`${API_URL}/tags/get/${params.projectId}`, {
+      .get(`${API_URL}/tags/get/project/${params.projectId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -163,26 +160,67 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
   };
 
   const fetchStages = async (token: string | null) => {
-    await axios
-      .get(`${API_URL}/stages/getProject/${params.projectId}`, {
+    const response = await axios.get(
+      `${API_URL}/stages/get/project/${params.projectId}`,
+      {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      })
-      .then(res => {
-        console.log(res.data);
-        setProject(prevProject => ({
-          ...prevProject,
-          stages: res.data.stages,
-        }));
-      })
-      .catch(err => {
-        console.log(err);
-      });
+      },
+    );
+
+    return response.data.stages;
+  };
+
+  const updateStages = async (token: string | null) => {
+    const fetchedStages = await fetchStages(token);
+
+    const promises = fetchedStages.map(
+      async (stage: { stageId: string; title: string }) => {
+        const fetchedTickets = await fetchTickets(token, stage.stageId);
+        console.log(stage);
+        console.log(fetchedTickets);
+
+        return {
+          id: stage.stageId,
+          title: stage.title,
+          tickets: fetchedTickets,
+        };
+      },
+    );
+
+    const updatedStages = await Promise.all(promises);
+    console.log(updatedStages);
+
+    setProject(prevProject => ({
+      ...prevProject,
+      stages: updatedStages,
+    }));
+  };
+
+  const fetchTickets = async (token: string | null, stageId: string) => {
+    try {
+      const responses = await axios.get(
+        `${API_URL}/tickets/get/stage/${stageId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      const { tickets } = responses.data;
+
+      return tickets;
+    } catch (err) {
+      console.log(err);
+
+      return null;
+    }
   };
 
   return (
-    <div className="items-center h-[55.5rem] w-screen">
+    <div className="items-center h-[90%] w-full">
       <SingleProject project={project} />
     </div>
   );
