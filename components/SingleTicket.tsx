@@ -1,13 +1,13 @@
 import React, { Fragment, useEffect, useState } from 'react';
 
 import { Dialog, Transition } from '@headlessui/react';
+import axios from 'axios';
 import Image from 'next/image';
 
 import SingleComment from './SingleComment';
 import TicketCreationForm from './TicketCreationForm';
 
 import { TicketProps } from '@/types';
-import axios from 'axios';
 
 interface SingleTicketProps {
   isOpen: boolean;
@@ -139,11 +139,11 @@ const SingleTicket = ({
                   <div className="flex justify-center bg-gray-200">
                     <input
                       className="text-2xl text-center font-semibold bg-gray-200"
-                      onChange={e => handleChangeTitle(e.target.value)}
                       onBlur={e => {
                         setFlag();
                         handleChangeTitle(e.target.value);
                       }}
+                      onChange={e => handleChangeTitle(e.target.value)}
                       value={updatedTicket.title}
                     />
                   </div>

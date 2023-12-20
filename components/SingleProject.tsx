@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
+import axios from 'axios';
 import Link from 'next/link';
 import { BsArrowLeft } from 'react-icons/bs';
 
@@ -7,7 +8,7 @@ import ListStages from './ListStages';
 
 //import Tag from './Tag';
 import UserCard from '@/components/UserCard';
-import { ProjectProps } from '@/types';
+import { ProjectProps, StageProps } from '@/types';
 
 interface SingleProjectProps {
   project: ProjectProps;
@@ -57,10 +58,10 @@ const SingleProject = ({ project, flag, setFlag }: SingleProjectProps) => {
             <div>Setting</div>
           </div>
           <ListStages
-            project={project}
-            stages={project.stages}
             flag={flag}
+            project={project}
             setFlag={setFlag}
+            stages={project.stages}
           />
         </div>
       </div>
