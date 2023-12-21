@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { IoMdSearch } from 'react-icons/io';
-import { MdDelete } from "react-icons/md";
+import { MdDelete } from 'react-icons/md';
 
 import AddProjectPopUp from '@/components/AddProjectPopUp';
 import CustomButton from '@/components/CustomButton';
@@ -84,9 +84,10 @@ const Projects = () => {
   const handleJoinProject = async () => {
     const token = localStorage.getItem('token');
     await axios
-      .post(`${API_URL}/projects/join/${ProjectCode}`,
+      .post(
+        `${API_URL}/projects/join/${ProjectCode}`,
         {
-          projectId: ProjectCode
+          projectId: ProjectCode,
         },
         {
           headers: {
@@ -102,25 +103,23 @@ const Projects = () => {
         console.log(err);
       });
   };
-  const handleDelete = async (projectId:string) => {
+  const handleDelete = async (projectId: string) => {
     const token = localStorage.getItem('token');
     await axios
-      .delete(`${API_URL}/projects/delete/${projectId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+      .delete(`${API_URL}/projects/delete/${projectId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      )
+      })
       .then(res => {
         console.log(res);
-        console.log("Delete project successfully");
+        console.log('Delete project successfully');
         fetchProjects(token);
       })
       .catch(err => {
         console.log(err);
       });
-  }
+  };
 
   return (
     <div className="flex flex-col justify-center max-w-screen overflow-x-hidden p-8">
@@ -148,9 +147,10 @@ const Projects = () => {
           }
         >
           {filteredProjects.map(project => (
+            // eslint-disable-next-line react/jsx-key
             <div className={'flex'}>
               <MdDelete
-                className ={'text-2xl mt-5 ml-60 absolute z-10 hover:text-3xl'}
+                className={'text-2xl mt-5 ml-60 absolute z-10 hover:text-3xl'}
                 onClick={() => handleDelete(project.projectId)}
               />
               <button
