@@ -186,6 +186,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
     const promises = fetchedStages.map(
       async (stage: { stageId: string; title: string }) => {
         const fetchedTickets = await fetchTickets(token, stage.stageId);
+
         return {
           id: stage.stageId,
           title: stage.title,
@@ -227,8 +228,8 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
   return (
     <div className="h-[90%] w-full">
       <SingleProject
-        project={project}
         flag={flag}
+        project={project}
         setFlag={() => setFlag(!flag)}
       />
     </div>

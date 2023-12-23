@@ -1,9 +1,12 @@
 // SingleStage.tsx
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+import axios from 'axios';
 
 import TicketCard from './TicketCard';
 import TicketCreationForm from './TicketCreationForm';
 
+import ProjectDetail from '@/app/projects/[projectId]/page';
 import CustomButton from '@/components/CustomButton';
 import { StageProps } from '@/types';
 
@@ -14,6 +17,39 @@ interface SingleStageProps {
 }
 
 const SingleStage: React.FC<SingleStageProps> = ({ stage, flag, setFlag }) => {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+  const [updateStage, setUpdatedStage] = useState<StageProps>({
+    id: stage.id,
+    title: stage.title,
+    tickets: stage.tickets,
+  });
+  useEffect(() => {
+    loadStage();
+  }, [flag]);
+  const loadStage = async () => {
+    const token = localStorage.getItem('token');
+    await axios
+      .put(`${API_URL}/stages/updateTitle/${stage.id}`, updateStage, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(res => {
+        console.log(res.data.updateStage);
+        const newStage = res.data.updateStage;
+        setUpdatedStage({
+          ...updateStage,
+          id: newStage.id,
+          title: newStage.title,
+          tickets: newStage.tickets,
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   const [isTicketFormOpen, setIsTicketFormOpen] = useState(false);
 
   const openTicketForm = () => {
@@ -32,10 +68,10 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage, flag, setFlag }) => {
       <div className="flex flex-col justify-between items-center overflow-x-hidden overflow-y-auto max-h-96">
         {stage.tickets?.map((ticket, index) => (
           <TicketCard
-            key={index}
-            ticket={ticket}
             flag={flag}
+            key={index}
             setFlag={setFlag}
+            ticket={ticket}
           />
         ))}
       </div>

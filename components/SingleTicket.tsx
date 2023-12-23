@@ -1,13 +1,13 @@
 import React, { Fragment, useEffect, useState } from 'react';
 
 import { Dialog, Transition } from '@headlessui/react';
+import axios from 'axios';
 import Image from 'next/image';
 
 import SingleComment from './SingleComment';
 import TicketCreationForm from './TicketCreationForm';
 
 import { TicketProps } from '@/types';
-import axios from 'axios';
 
 interface SingleTicketProps {
   isOpen: boolean;

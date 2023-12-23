@@ -32,10 +32,10 @@ const TicketCard = ({ ticket, flag, setFlag }: TicketCardProps) => {
 
       <SingleTicket
         closeModal={() => setIsOpen(false)}
-        isOpen={isOpen}
-        ticket={ticket}
         flag={flag}
+        isOpen={isOpen}
         setFlag={setFlag}
+        ticket={ticket}
       />
     </div>
   );
