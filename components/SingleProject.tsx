@@ -1,21 +1,23 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
+import axios from 'axios';
 import Link from 'next/link';
 import { BsArrowLeft } from 'react-icons/bs';
 
-import CustomButton from './CustomButton';
 import KanbanBoard from './KanbanBoard';
 import ListStages from './ListStages';
 
 //import Tag from './Tag';
 import UserCard from '@/components/UserCard';
-import { ProjectProps } from '@/types';
+import { ProjectProps, StageProps } from '@/types';
 
 interface SingleProjectProps {
   project: ProjectProps;
+  flag: boolean;
+  setFlag: () => void;
 }
 
-const SingleProject = ({ project }: SingleProjectProps) => {
+const SingleProject = ({ project, flag, setFlag }: SingleProjectProps) => {
   return (
     <div className="w-full h-full flex flex-row border-2">
       <div className="w-[15%] min-w-[150px] h-full flex flex-col border border-black-100">
@@ -36,21 +38,26 @@ const SingleProject = ({ project }: SingleProjectProps) => {
             ))}
           </div>
         </div>
-      </div>
-
-      <div className="w-full h-full flex flex-col overflow-x-hidden border border-blue-500">
-        <div className="flex flex-row justify-between items-center w-full h-[10%] px-4 border-2">
-          <Link
-            className="bg-slate-800 text-white px-4 py-1 rounded-lg w-fit hover:bg-slate-200 hover:text-black"
-            href={'/projects'}
-          >
-            <BsArrowLeft className="text-3xl" />
-          </Link>
-          <div className="font-bold text-3xl">{project.title}</div>
-          <div>Setting</div>
+        <div className="text-lg text-center flex-wrap flex flex-end mt-10">
+          {' '}
+          Copy this code <br /> to add member
+          <br /># 1234
         </div>
-
-        <div className="flex justify-content w-full h-[90%] border-2 border-blue-500">
+      </div>
+      <div className="flex flex-row w-full h-full overflow-x-auto overflow-y-hidden">
+        <div className="w-full h-full">
+          <div className="bg-gray-100 h-[10%] flex items-center px-6 justify-between">
+            <div className="flex">
+              <Link
+                className="bg-slate-800 text-white px-4 py-1 rounded-lg w-fit hover:bg-slate-200 hover:text-black"
+                href={'/projects'}
+              >
+                <BsArrowLeft className="text-4xl" />
+              </Link>
+            </div>
+            <div className="font-bold text-4xl">{project.title}</div>
+            <div>Setting</div>
+          </div>
           <KanbanBoard project={project} />
         </div>
       </div>

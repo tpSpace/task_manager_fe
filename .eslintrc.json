@@ -15,6 +15,7 @@
     "react": {
       "version": "detect"
     },
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": true, "peerDependencies": true}],
     "import/resolver": {
       "node": {
         "extensions": [
@@ -40,6 +41,7 @@
   "rules": {
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": "off",
+    "@next/next/no-page-custom-font": "off",
     "no-undef": "off",
     "quotes": [
       "error",

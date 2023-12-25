@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { SortableContext, useSortable } from '@dnd-kit/sortable';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { CSS } from '@dnd-kit/utilities';
@@ -14,12 +15,12 @@ import { Column, Id, Task } from '../types/types';
 
 interface Props {
   column: Column;
-  deleteColumn: (id: Id) => void;
-  updateColumn: (id: Id, title: string) => void;
+  deleteColumn: (id: string) => void;
+  updateColumn: (id: string, title: string) => void;
 
-  createTask: (columnId: Id) => void;
-  updateTask: (id: Id, content: string) => void;
-  deleteTask: (id: Id) => void;
+  createTask: (columnId: string) => void;
+  updateTask: (id: string, content: string) => void;
+  deleteTask: (id: string) => void;
   tasks: Task[];
 }
 
@@ -63,18 +64,18 @@ function ColumnContainer({
     return (
       <div
         className="
-      bg-columnBackgroundColor
-      opacity-40
-      border-2
-      border-pink-500
-      w-[350px]
-      h-[500px]
-      max-h-[500px]
-      rounded-md
-      flex
-      flex-col
-      text-white
-      "
+          bg-columnBackgroundColor
+          opacity-40
+          border-2
+        border-pink-500
+          w-[350px]
+          h-[500px]
+          max-h-[500px]
+          rounded-md
+          flex
+          flex-col
+        text-white
+        "
         ref={setNodeRef}
         style={style}
       ></div>
@@ -152,17 +153,19 @@ function ColumnContainer({
           )}
         </div>
         <button
+          aria-label="Delete column"
           className="
-        stroke-gray-500
-        hover:stroke-white
-        hover:bg-columnBackgroundColor
-          rounded
-          px-1
-          py-2
+          stroke-gray-500
+          hover:stroke-white
+            hover:bg-columnBackgroundColor
+            rounded
+            px-1
+            py-2
           "
           onClick={() => {
             deleteColumn(column.id);
           }}
+          type="button"
         >
           <TrashIcon />
         </button>

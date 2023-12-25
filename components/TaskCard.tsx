@@ -11,8 +11,8 @@ import { Id, Task } from '../types/types';
 
 interface Props {
   task: Task;
-  deleteTask: (id: Id) => void;
-  updateTask: (id: Id, content: string) => void;
+  deleteTask: (id: string) => void;
+  updateTask: (id: string, content: string) => void;
 }
 
 function TaskCard({ task, deleteTask, updateTask }: Props) {
@@ -112,6 +112,7 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
           onClick={() => {
             deleteTask(task.id);
           }}
+          type="button"
         >
           <TrashIcon />
         </button>

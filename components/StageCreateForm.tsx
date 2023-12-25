@@ -1,35 +1,50 @@
-// TicketCreationForm.tsx
 import React, { ChangeEvent, useState } from 'react';
 
-interface TicketCreationFormProps {
+import axios from 'axios';
+
+import { ProjectProps, StageProps } from '@/types';
+
+interface StageCreationFormProps {
   onClose: () => void;
-  stageId: string;
+  projectId: ProjectProps;
 }
 
-const TicketCreationForm: React.FC<TicketCreationFormProps> = ({
+const TicketCreationForm: React.FC<StageCreationFormProps> = ({
   onClose,
-  //stageId,
+  projectId,
 }) => {
-  const [newTicket, setNewTicket] = useState({
-    title: '',
-    description: '',
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const [newStage, setNewStage] = useState<StageProps>({
+    id: projectId.id,
+    title: ' ',
   });
 
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    const { name, value } = e.target;
-    setNewTicket(prevTicket => ({
-      ...prevTicket,
-      [name]: value,
+    const { value } = e.target;
+    setNewStage(prevStage => ({
+      ...prevStage,
+      [e.target.name]: value,
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: any) => {
+    const token = localStorage.getItem('token');
     e.preventDefault();
-    // Your form submission logic here
-    console.log('New Ticket:', newTicket);
-    // Close the form
+    const stageData = {
+      id: projectId.id,
+      title: newStage.title,
+    };
+    axios
+      .post(`${API_URL}/stages/create/${projectId.id}`, stageData, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(response => {
+        console.log(response.status, response.data.token);
+      });
     onClose();
   };
 
@@ -47,14 +62,14 @@ const TicketCreationForm: React.FC<TicketCreationFormProps> = ({
             name="title"
             onChange={handleInputChange}
             type="text"
-            value={newTicket.title}
+            value={newStage.title}
           />
         </div>
         <button
           className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
           type="submit"
         >
-          Create Ticket
+          Create Stage
         </button>
       </form>
     </div>

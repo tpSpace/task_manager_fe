@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 
+// eslint-disable-next-line import/no-extraneous-dependencies
 import {
   DndContext,
   DragEndEvent,
@@ -13,6 +14,7 @@ import {
   useSensor,
   useSensors,
 } from '@dnd-kit/core';
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
 
 import ColumnContainer from './ColumnContainer';
@@ -191,42 +193,43 @@ function KanbanBoard({ project }: ProjectDetailProps) {
             onClick={() => {
               createNewColumn();
             }}
+            type="button"
           >
             <PlusIcon className="w-6 h-6 text-white" />
             <p>Add column</p>
           </button>
         </div>
-        {createPortal(
-          <DragOverlay>
-            {activeColumn && (
-              <ColumnContainer
-                column={activeColumn}
-                createTask={createTask}
-                deleteColumn={deleteColumn}
-                deleteTask={deleteTask}
-                tasks={tasks.filter(task => task.columnId === activeColumn.id)}
-                updateColumn={updateColumn}
-                updateTask={updateTask}
-              />
-            )}
-            {activeTask && (
-              <TaskCard
-                deleteTask={deleteTask}
-                task={activeTask}
-                updateTask={updateTask}
-              />
-            )}
-          </DragOverlay>,
-          document.body,
-        )}
+        createPortal(
+        <DragOverlay>
+          {activeColumn && (
+            <ColumnContainer
+              column={activeColumn}
+              createTask={createTask}
+              deleteColumn={deleteColumn}
+              deleteTask={deleteTask}
+              tasks={tasks.filter(task => task.columnId === activeColumn.id)}
+              updateColumn={updateColumn}
+              updateTask={updateTask}
+            />
+          )}
+          {activeTask && (
+            <TaskCard
+              deleteTask={deleteTask}
+              task={activeTask}
+              updateTask={updateTask}
+            />
+          )}
+        </DragOverlay>
+        , document.body // This is the container into which the child will be
+        rendered );
       </DndContext>
     </div>
   );
 
-  function createTask(columnId: Id) {
+  function createTask(columnId: string) {
     const newTask: Task = {
       id: generateId(),
-      columnId,
+      columnId: columnId,
       content: `Task ${tasks.length + 1}`,
     };
 
@@ -257,7 +260,7 @@ function KanbanBoard({ project }: ProjectDetailProps) {
     setColumns([...columns, columnToAdd]);
   }
 
-  function deleteColumn(id: Id) {
+  function deleteColumn(id: string) {
     const filteredColumns = columns.filter(col => col.id !== id);
     setColumns(filteredColumns);
 
@@ -265,7 +268,7 @@ function KanbanBoard({ project }: ProjectDetailProps) {
     setTasks(newTasks);
   }
 
-  function updateColumn(id: Id, title: string) {
+  function updateColumn(id: string, title: string) {
     const newColumns = columns.map(col => {
       if (col.id !== id) return col;
 
@@ -353,7 +356,7 @@ function KanbanBoard({ project }: ProjectDetailProps) {
       setTasks(tasks => {
         const activeIndex = tasks.findIndex(t => t.id === activeId);
 
-        tasks[activeIndex].columnId = overId;
+        tasks[activeIndex].columnId = overId.toString();
         console.log('DROPPING TASK OVER COLUMN', { activeIndex });
 
         return arrayMove(tasks, activeIndex, activeIndex);
@@ -364,7 +367,7 @@ function KanbanBoard({ project }: ProjectDetailProps) {
 
 function generateId() {
   /* Generate a random number between 0 and 10000 */
-  return Math.floor(Math.random() * 10001);
+  return Math.floor(Math.random() * 10001).toString();
 }
 
 export default KanbanBoard;
