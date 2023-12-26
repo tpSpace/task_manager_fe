@@ -147,6 +147,7 @@ const Projects = () => {
           }
         >
           {filteredProjects.map(project => (
+            // eslint-disable-next-line react/jsx-key
             <div className={'flex'}>
               <MdDelete
                 className={'text-2xl mt-5 ml-60 absolute z-10 hover:text-3xl'}
