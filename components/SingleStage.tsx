@@ -29,25 +29,34 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage, flag, setFlag }) => {
   }, [flag]);
   const loadStage = async () => {
     const token = localStorage.getItem('token');
-    await axios
-      .put(`${API_URL}/stages/updateTitle/${stage.id}`, updateStage, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+
+    try {
+      await axios.put(
+        `${API_URL}/stages/updateTitle/${stage.id}`,
+        updateStage,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      })
-      .then(res => {
-        console.log(res.data.updateStage);
-        const newStage = res.data.updateStage;
-        setUpdatedStage({
-          ...updateStage,
-          id: newStage.id,
-          title: newStage.title,
-          tickets: newStage.tickets,
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+      );
+    } catch (err) {
+      console.log(err);
+    }
+
+    // .then(res => {
+    //   console.log(res.data.updateStage);
+    //   const newStage = res.data.updateStage;
+    //   setUpdatedStage({
+    //     ...updateStage,
+    //     id: newStage.id,
+    //     title: newStage.title,
+    //     tickets: newStage.tickets,
+    //   });
+    // })
+    // .catch(err => {
+    //   console.log(err);
+    // });
   };
 
   const [isTicketFormOpen, setIsTicketFormOpen] = useState(false);

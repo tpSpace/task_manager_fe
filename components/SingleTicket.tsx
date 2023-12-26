@@ -56,34 +56,28 @@ const SingleTicket = ({
     }));
   };
 
+  const handleChangeDescription = async (description: string) => {
+    setUpdatedTicket(prevTicket => ({
+      ...prevTicket,
+      description: description,
+    }));
+  };
+
   const loadTicket = async () => {
     const token = localStorage.getItem('token');
-    await axios
-      .put(`${API_URL}/tickets/update/${ticket.ticketId}`, updatedTicket, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+    try {
+      await axios.put(
+        `${API_URL}/tickets/update/${ticket.ticketId}`,
+        updatedTicket,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      })
-      .then(res => {
-        console.log(res.data.updatedTicket);
-        const newTicket = res.data.updatedTicket;
-        setUpdatedTicket({
-          ...updatedTicket,
-          ticketId: newTicket.ticketId,
-          title: newTicket.title,
-          description: newTicket.description,
-          comments: newTicket.comments,
-          assignees: newTicket.assignees,
-          tag: newTicket.tag,
-          parent: newTicket.parent,
-          children: newTicket.children,
-          deadline: newTicket.deadline,
-          creator: newTicket.creator,
-        });
-      })
-      .catch(err => {
-        console.log(err);
-      });
+      );
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -138,12 +132,12 @@ const SingleTicket = ({
                     </button>
                     <div className="self-center">Created by </div>
                     <input
-                      className="text-4xl text-center font-bold overflow-auto"
-                      onChange={e => handleChangeTitle(e.target.value)}
+                      className="text-3xl self-center font-bold focus:outline-0"
                       onBlur={e => {
                         setFlag();
                         handleChangeTitle(e.target.value);
                       }}
+                      onChange={e => handleChangeTitle(e.target.value)}
                       value={updatedTicket.title}
                     />
                   </div>
@@ -168,7 +162,17 @@ const SingleTicket = ({
                           <h1 className="text-3xl font-semibold text-center">
                             Description
                           </h1>
-                          <p>{updatedTicket.description}</p>
+                          <input
+                            className="w-full h-fit bg-gray-200 focus:outline-0"
+                            onBlur={e => {
+                              setFlag();
+                              handleChangeDescription(e.target.value);
+                            }}
+                            onChange={e =>
+                              handleChangeDescription(e.target.value)
+                            }
+                            value={updatedTicket.description}
+                          />
                         </div>
 
                         <div className="mr-1 ml-4 mt-1 mb-2 bg-gray-200 border-black border-2 rounded-2xl">
