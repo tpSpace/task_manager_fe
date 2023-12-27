@@ -148,7 +148,15 @@ const Projects = () => {
           }
         >
           {filteredProjects.map(project => (
-            <div className={'flex relative'}>
+            <button
+            className={
+            'w-72 h-48 bg-neutral-200 rounded-3xl border-[3px] border-black text-black text-[35px] ' +
+            "font-semibold font-['Montserrat'] hover:text-[40px] hover:border-[4px] shadow shadow-black" +
+            'hover:ease-out hover:duration-200'
+          }
+            key={project.projectId}
+            onClick={() => router.push(`projects/${project.projectId}`)}
+            >
               <MdDelete
                 className={
                   'text-2xl z-10 hover:text-3xl absolute top-4 right-24 ' +
@@ -156,18 +164,8 @@ const Projects = () => {
                 }
                 onClick={() => handleDelete(project.projectId)}
               />
-              <button
-                className={
-                  'w-72 h-48 bg-neutral-200 rounded-3xl border-[3px] border-black text-black text-[35px] ' +
-                  "font-semibold font-['Montserrat'] hover:text-[40px] hover:border-[4px] shadow shadow-black" +
-                  'hover:ease-out hover:duration-200'
-                }
-                key={project.projectId}
-                onClick={() => router.push(`projects/${project.projectId}`)}
-              >
-                {project.title}
-              </button>
-            </div>
+          {project.title}
+        </button>
           ))}
           <CustomButton
             containerStyles="border-[3px] border-solid border-black rounded-3xl bg-neutral-200
