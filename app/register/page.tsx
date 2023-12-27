@@ -10,9 +10,17 @@ import { registerSchema, registerSchemaType } from '../../types/inputValidate';
 
 const RegisterPage = () => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
-  const { register, handleSubmit } = useForm<registerSchemaType>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+  } = useForm<registerSchemaType>({
     resolver: zodResolver(registerSchema),
   });
+
+  const watchUsername = watch('username');
+  const watchEmail = watch('email');
 
   const submit = async (data: registerSchemaType) => {
     console.log(data);
@@ -59,12 +67,17 @@ const RegisterPage = () => {
           className="flex flex-col m-4 gap-4"
           onSubmit={handleSubmit(submit)}
         >
-          <input
-            {...register('username')}
-            className="border-2 border-black p-1"
-            placeholder="username"
-            type="text"
-          />
+          {/* // make an alert for error */}
+          <>
+            {watchEmail && errors.username && <p>{errors.username.message}</p>}
+            <input
+              {...register('username')}
+              className="border-2 border-black p-1"
+              onChange={() => console.log(watchEmail)}
+              placeholder="username"
+              type="text"
+            />
+          </>
           <input
             {...register('email')}
             className="border-2 border-black p-1"

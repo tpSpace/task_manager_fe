@@ -20,7 +20,11 @@ export const loginSchema = z.object({
 });
 
 export const registerSchema = z.object({
-  username: z.string().min(3).max(255),
+  username: z
+    .string()
+    .min(3, { message: 'Username must be at least 3 characters long' })
+    .max(255)
+    .refine(value => !value.includes(' '), 'Username cannot contain spaces'),
   email: z.string().email().trim(),
   password: z.string().min(8).max(100).trim(),
   confirmPassword: z.string().min(8).max(100).trim(),
