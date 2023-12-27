@@ -101,6 +101,7 @@ const Projects = () => {
       })
       .catch(err => {
         console.log(err);
+        alert('Project code is not valid');
       });
   };
   const handleDelete = async (projectId: string) => {
@@ -118,17 +119,18 @@ const Projects = () => {
       })
       .catch(err => {
         console.log(err);
+        alert('Delete project failed');
       });
   };
 
   return (
-    <div className="flex flex-col justify-center max-w-screen overflow-x-hidden p-8">
-      <div className={'flex justify-end w-screen relative'}>
+    <div className=" flex flex-col justify-center max-w-screen overflow-x-hidden p-8 ">
+      <div className={' flex justify-end w-screen relative '}>
         <input
           className={
-            'text-black text-center border-black rounded-full border-[3px] bg-gray-50' +
-            'text-l h-10 w-1/4 mr-36 ' +
-            'shadow shadow-black hover:ease-out hover:duration-500 hover:text-xl hover:font-semibold hover:w-1/3 focus:text-xl focus:font-semibold focus:w-1/3'
+            ' text-black text-center border-black rounded-full border-[3px] bg-gray-50 ' +
+            ' text-l h-10 w-1/4 mr-36 ' +
+            ' shadow shadow-black hover:ease-out hover:duration-500 hover:text-xl hover:font-semibold hover:w-1/3 focus:text-xl focus:font-semibold focus:w-1/3 '
           }
           onChange={e => {
             setSearch(e.target.value);
@@ -137,41 +139,41 @@ const Projects = () => {
           type={'text'}
           value={search}
         />
-        <div className={'pt-1 absolute pr-24 mr-16 opacity-80'}>
-          <IoMdSearch className={'text-[30px]'} />
+        <div className={' pt-1 absolute pr-24 mr-16 opacity-80 '}>
+          <IoMdSearch className={' text-[30px] '} />
         </div>
       </div>
       <div>
         <div
           className={
-            'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mt-5 ml-10'
+            ' grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 mt-5 ml-10 '
           }
         >
           {filteredProjects.map(project => (
-            <div className={'flex relative'}>
+            <button
+              className={
+                ' flex relative w-72 h-48 bg-neutral-100 rounded-3xl border-[3px] border-black text-black text-[35px] font-semibold ' +
+                ' hover:border-[4px] shadow shadow-black hover:ease-out hover:duration-100 hover:bg-neutral-200 ' +
+                " font-['Montserrat'] "
+              }
+              key={project.projectId}
+              onClick={() => router.push(`projects/${project.projectId}`)}
+            >
               <MdDelete
                 className={
-                  'text-2xl z-10 hover:text-3xl absolute top-4 right-24 ' +
-                  'sm:right-10 md:right-40 lg:right-24 xl:right-16 cursor-pointer hover:ease-out hover:duration-200'
+                  ' text-2xl z-10 hover:text-3xl absolute top-3 right-3 ' +
+                  ' cursor-pointer hover:ease-out hover:duration-200 '
                 }
                 onClick={() => handleDelete(project.projectId)}
               />
-              <button
-                className={
-                  'w-72 h-48 bg-neutral-200 rounded-3xl border-[3px] border-black text-black text-[35px] ' +
-                  "font-semibold font-['Montserrat'] hover:text-[40px] hover:border-[4px] shadow shadow-black" +
-                  'hover:ease-out hover:duration-200'
-                }
-                key={project.projectId}
-                onClick={() => router.push(`projects/${project.projectId}`)}
-              >
+              <span className={' absolute inset-x-7 inset-y-16 truncate '}>
                 {project.title}
-              </button>
-            </div>
+              </span>
+            </button>
           ))}
           <CustomButton
-            containerStyles="border-[3px] border-solid border-black rounded-3xl bg-neutral-200
-              w-72 h-48 text-black text-6xl hover:text-8xl relative hover:border-[4px] shadow shadow-black hover:ease-out hover:duration-200"
+            containerStyles=" border-[3px] border-solid border-black rounded-3xl bg-neutral-100
+              w-72 h-48 text-black text-6xl hover:text-8xl relative hover:border-[4px] shadow shadow-black hover:ease-out hover:duration-200 hover:bg-neutral-200 pb-3 hover:pb-5 "
             handleClick={() => setPopup(true)}
             title="+"
           />
@@ -180,13 +182,13 @@ const Projects = () => {
               <div className="bg-white w-[320px] h-[480px] rounded-tl-[20px] rounded-bl-[20px] flex flex-col border-none">
                 <span
                   className="font-['Montserrat'] text-[35px] text-center font-medium w-[290px] h-[3.125rem]
-                mt-[2.69rem] bg-black text-white rounded-[20px] ml-3.5"
+                mt-[2.69rem] bg-black text-white rounded-[20px] ml-3.5 "
                 >
                   Create a project
                 </span>
                 <button
-                  className="flex items-center justify-center w-[10rem] h-[10rem] bg-white text-black border-4 rounded-[20px] text-[60px] hover:text-[80px]
-                 mt-[4.12rem] ml-[5rem] border-black font-medium hover:ease-out hover:duration-300"
+                  className=" flex items-center justify-center w-[10rem] h-[10rem] bg-white text-black border-4 rounded-[20px] text-[60px] hover:text-[80px]
+                 mt-[4.12rem] ml-[5rem] border-black font-medium hover:ease-out hover:duration-300 pb-3 hover:pb-4 "
                   onClick={() => {
                     handleCreateProject();
                     setPopup(false);
