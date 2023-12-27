@@ -152,9 +152,8 @@ const Projects = () => {
           {filteredProjects.map(project => (
             <button
               className={
-                ' flex relative w-72 h-48 bg-neutral-100 rounded-3xl border-[3px] border-black text-black text-[35px] font-semibold ' +
-                ' hover:border-[4px] shadow shadow-black hover:ease-out hover:duration-100 hover:bg-neutral-200 ' +
-                " font-['Montserrat'] "
+                ' flex relative w-72 h-48 bg-neutral-100 rounded-3xl border-[3px] border-black ' +
+                ' hover:border-[4px] shadow shadow-black hover:ease-out hover:duration-100 hover:bg-neutral-200 '
               }
               key={project.projectId}
               onClick={() => router.push(`projects/${project.projectId}`)}
@@ -166,14 +165,15 @@ const Projects = () => {
                 }
                 onClick={() => handleDelete(project.projectId)}
               />
-              <span className={' absolute inset-x-7 inset-y-16 truncate '}>
+              <span className={' absolute inset-x-7 inset-y-16 truncate ' +
+                " text-black text-[35px] font-semibold font-['Montserrat'] "}>
                 {project.title}
               </span>
             </button>
           ))}
           <CustomButton
             containerStyles=" border-[3px] border-solid border-black rounded-3xl bg-neutral-100
-              w-72 h-48 text-black text-6xl hover:text-8xl relative hover:border-[4px] shadow shadow-black hover:ease-out hover:duration-200 hover:bg-neutral-200 pb-3 hover:pb-5 "
+              w-72 h-48 text-black text-6xl relative hover:border-[4px] shadow shadow-black hover:ease-out hover:duration-200 hover:bg-neutral-200 pb-3 "
             handleClick={() => setPopup(true)}
             title="+"
           />
