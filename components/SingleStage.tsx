@@ -93,22 +93,24 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage, flag, setFlag }) => {
   };
 
   return (
-    <div className="mt-20 mx-10 min-w-[20%] h-[80%] rounded-lg border border-black flex justify-between flex-col">
-      <div className="h-12 relative -top-5 flex items-center justify-center border rounded-full bg-black text-white text-2xl">
-        <input
-          className="absolute h-12 px-4 border rounded-full bg-black text-white text-2xl"
-          onBlur={e => {
-            setFlag();
-            handleChangeStage(e.target.value);
-          }}
-          onChange={e => handleChangeStage(e.target.value)}
-          value={updateStage.title}
-        />
-        <div className="relative left-[120px]">
-          <MdDelete
-            className="text-2xl hover:text-3xl cursor-pointer text-white"
-            onClick={deleteStage}
+    <div className="mt-20 mx-10 w-[20%] h-[80%] rounded-lg border border-black flex justify-between flex-col">
+      <div className="w-full h-12 relative -top-5 flex items-center justify-center border bg-black rounded-full">
+        <div className='mx-1 flex bg-inherit w-full rounded-full'>
+          <input
+            className="text-white bg-inherit w-full ml-1 text-2xl rounded-full" 
+            onBlur={e => {
+              setFlag();
+              handleChangeStage(e.target.value);
+            }}
+            onChange={e => handleChangeStage(e.target.value)}
+            value={updateStage.title}
           />
+          <div>
+            <MdDelete
+              className="mr-1 text-3xl hover:text-4xl cursor-pointer text-white"
+              onClick={deleteStage}
+            />
+          </div>
         </div>
       </div>
       <div className="flex flex-col justify-between items-center overflow-x-hidden overflow-y-auto max-h-96">
