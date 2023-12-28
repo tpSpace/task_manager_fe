@@ -85,14 +85,14 @@ function ColumnContainer({
   return (
     <div
       className="
-      bg-columnBackgroundColor
+      bg-mainBackgroundColor
         w-[350px]
         h-[500px]
         max-h-[500px]
         rounded-md
         flex
         flex-col
-        text-white
+      text-white
       "
       ref={setNodeRef}
       style={style}

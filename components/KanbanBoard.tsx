@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { ReactNode, useEffect, useMemo, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -199,29 +199,29 @@ function KanbanBoard({ project }: ProjectDetailProps) {
             <p>Add column</p>
           </button>
         </div>
-        createPortal(
-        <DragOverlay>
-          {activeColumn && (
-            <ColumnContainer
-              column={activeColumn}
-              createTask={createTask}
-              deleteColumn={deleteColumn}
-              deleteTask={deleteTask}
-              tasks={tasks.filter(task => task.columnId === activeColumn.id)}
-              updateColumn={updateColumn}
-              updateTask={updateTask}
-            />
-          )}
-          {activeTask && (
-            <TaskCard
-              deleteTask={deleteTask}
-              task={activeTask}
-              updateTask={updateTask}
-            />
-          )}
-        </DragOverlay>
-        , document.body // This is the container into which the child will be
-        rendered );
+        {createPortal(
+          <DragOverlay>
+            {activeColumn && (
+              <ColumnContainer
+                column={activeColumn}
+                createTask={createTask}
+                deleteColumn={deleteColumn}
+                deleteTask={deleteTask}
+                tasks={tasks.filter(task => task.columnId === activeColumn.id)}
+                updateColumn={updateColumn}
+                updateTask={updateTask}
+              />
+            )}
+            {activeTask && (
+              <TaskCard
+                deleteTask={deleteTask}
+                task={activeTask}
+                updateTask={updateTask}
+              />
+            )}
+          </DragOverlay>,
+          document.body,
+        )}
       </DndContext>
     </div>
   );
