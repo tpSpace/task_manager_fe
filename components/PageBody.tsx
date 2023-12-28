@@ -165,8 +165,8 @@ items-center justify-between text-white mt-20"
 
         <div>
           <div className="text-white font-bold text-center py-44 text-xl sm:text-2xl md:text-3xl lg:text-3xl xl:text-4xl">
-            "We got rid of nearly a dozen different tools because of <br />
-            what Tasking does for us."
+            We got rid of nearly a dozen different tools because of <br />
+            what Tasking does for us.
           </div>
         </div>
       </div>
