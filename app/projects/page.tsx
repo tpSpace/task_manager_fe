@@ -157,6 +157,7 @@ const Projects = () => {
               }
               key={project.projectId}
               onClick={() => router.push(`projects/${project.projectId}`)}
+              type="button"
             >
               <MdDelete
                 className={
@@ -165,8 +166,12 @@ const Projects = () => {
                 }
                 onClick={() => handleDelete(project.projectId)}
               />
-              <span className={' absolute inset-x-7 inset-y-16 truncate ' +
-                " text-black text-[35px] font-semibold font-['Montserrat'] "}>
+              <span
+                className={
+                  ' absolute inset-x-7 inset-y-16 truncate ' +
+                  " text-black text-[35px] font-semibold font-['Montserrat'] "
+                }
+              >
                 {project.title}
               </span>
             </button>
@@ -193,6 +198,7 @@ const Projects = () => {
                     handleCreateProject();
                     setPopup(false);
                   }}
+                  type="button"
                 >
                   +
                 </button>
@@ -226,6 +232,7 @@ const Projects = () => {
                     setPopup(false);
                     setProjectCode('');
                   }}
+                  type="button"
                 >
                   Join
                 </button>

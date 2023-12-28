@@ -95,9 +95,9 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage, flag, setFlag }) => {
   return (
     <div className="mt-20 mx-10 w-[20%] h-[80%] rounded-lg border border-black flex justify-between flex-col">
       <div className="w-full h-12 relative -top-5 flex items-center justify-center border bg-black rounded-full">
-        <div className='mx-1 flex bg-inherit w-full rounded-full'>
+        <div className="mx-1 flex bg-inherit w-full rounded-full">
           <input
-            className="text-white bg-inherit w-full ml-1 text-2xl rounded-full" 
+            className="text-white bg-inherit w-full ml-1 text-2xl rounded-full"
             onBlur={e => {
               setFlag();
               handleChangeStage(e.target.value);

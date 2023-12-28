@@ -165,8 +165,8 @@ items-center justify-between text-white mt-20"
 
         <div>
           <div className="text-white font-bold text-center py-44 text-xl sm:text-2xl md:text-3xl lg:text-3xl xl:text-4xl">
-            We got rid of nearly a dozen different tools because of <br />
-            what Tasking does for us.
+            &quot;We got rid of nearly a dozen different tools because of <br />
+            what Tasking does for us.&quot;
           </div>
         </div>
       </div>
@@ -185,8 +185,14 @@ items-center justify-between text-white mt-20"
               }`}
               key={index}
               onClick={() => handleButtonClick(index + 1)}
+              type="button"
             >
-              <img alt={`Icon ${index + 1}`} className="w-20 h-20" src={icon} />
+              <Image
+                alt={`Icon ${index + 1}`}
+                height={20}
+                src="/logo"
+                width={20}
+              />
             </button>
           ))}
         </div>
