@@ -90,6 +90,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
     updateStages(token);
   }, [flag]);
 
+  // fetch all the Ids of all stages, members, and admin
   const fetchProject = async (token: string | null) => {
     const res = await axios.get(`${API_URL}/projects/get/${params.projectId}`, {
       headers: {
