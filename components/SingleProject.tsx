@@ -58,7 +58,13 @@ const SingleProject = ({ project, flag, setFlag }: SingleProjectProps) => {
             <div className="font-bold text-4xl">{project.title}</div>
             <div>Setting</div>
           </div>
-          <KanbanBoard project={project} />
+          <ListStages
+            flag={flag}
+            project={project}
+            setFlag={setFlag}
+            stages={project.stages}
+          />
+          {/* <KanbanBoard project={project} /> */}
         </div>
       </div>
     </div>
