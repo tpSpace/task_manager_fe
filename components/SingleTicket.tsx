@@ -26,8 +26,6 @@ const SingleTicket = ({
 }: SingleTicketProps) => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-  const [isCreatingTicket, setIsCreatingTicket] = useState(false);
-
   const [updatedTicket, setUpdatedTicket] = useState<TicketProps>({
     ticketId: ticket.ticketId,
     title: ticket.title,
@@ -44,10 +42,6 @@ const SingleTicket = ({
   useEffect(() => {
     loadTicket();
   }, [flag]);
-
-  const closeTicketCreationForm = () => {
-    setIsCreatingTicket(false);
-  };
 
   const handleChangeTitle = async (title: string) => {
     setUpdatedTicket(prevTicket => ({
@@ -88,10 +82,6 @@ const SingleTicket = ({
           className="relative z-10 h-0 inset-0"
           onClose={closeModal}
         >
-          {/* Ticket creation form */}
-          {isCreatingTicket && (
-            <TicketCreationForm onClose={closeTicketCreationForm} stageId="" />
-          )}
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"

@@ -6,20 +6,19 @@ import axios from 'axios';
 import TicketCard from './TicketCard';
 import TicketCreationForm from './TicketCreationForm';
 
-import ProjectDetail from '@/app/projects/[projectId]/page';
 import CustomButton from '@/components/CustomButton';
 import { StageProps } from '@/types';
 
 interface SingleStageProps {
   stage: StageProps;
-  flag: boolean;
-  setFlag: () => void;
 }
 
-const SingleStage: React.FC<SingleStageProps> = ({ stage, flag, setFlag }) => {
+const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-  const [updateStage, setUpdatedStage] = useState<StageProps>({
+  const [flag, setFlag] = useState<boolean>(true);
+
+  const [updatedStage, setUpdatedStage] = useState<StageProps>({
     id: stage.id,
     title: stage.title,
     tickets: stage.tickets,
@@ -27,7 +26,7 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage, flag, setFlag }) => {
   useEffect(() => {
     loadStage();
   }, [flag]);
-  const loadStage = async () => {
+  const updateStage = async () => {
     const token = localStorage.getItem('token');
 
     try {
@@ -59,6 +58,8 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage, flag, setFlag }) => {
     // });
   };
 
+  const loadStage = async () => {};
+
   const [isTicketFormOpen, setIsTicketFormOpen] = useState(false);
 
   const openTicketForm = () => {
@@ -79,7 +80,7 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage, flag, setFlag }) => {
           <TicketCard
             flag={flag}
             key={index}
-            setFlag={setFlag}
+            setFlag={() => setFlag(!flag)}
             ticket={ticket}
           />
         ))}
@@ -93,7 +94,11 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage, flag, setFlag }) => {
       </div>
       {/* Ticket Creation Form */}
       {isTicketFormOpen && (
-        <TicketCreationForm onClose={closeTicketForm} stageId={stage.id} />
+        <TicketCreationForm
+          onClose={closeTicketForm}
+          stageId={stage.id}
+          setFlag={() => setFlag(!flag)}
+        />
       )}
     </div>
   );

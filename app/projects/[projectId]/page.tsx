@@ -24,8 +24,6 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
     adminId: '',
   });
 
-  const [flag, setFlag] = useState<boolean>(true);
-
   // the actual state to store the project
   const [project, setProject] = useState<ProjectProps>({
     id: params.projectId,
@@ -82,13 +80,6 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
       updateStages(token);
     }
   }, [projectData]);
-
-  // third useEffect, used to update data when something is updated in the page
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-
-    updateStages(token);
-  }, [flag]);
 
   // fetch all the Ids of all stages, members, and admin
   const fetchProject = async (token: string | null) => {
@@ -227,11 +218,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
 
   return (
     <div className="h-[90%] w-full">
-      <SingleProject
-        flag={flag}
-        project={project}
-        setFlag={() => setFlag(!flag)}
-      />
+      <SingleProject project={project} />
     </div>
   );
 };

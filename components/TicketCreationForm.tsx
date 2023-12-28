@@ -1,15 +1,19 @@
 // TicketCreationForm.tsx
+import axios from 'axios';
 import React, { ChangeEvent, useState } from 'react';
 
 interface TicketCreationFormProps {
   onClose: () => void;
   stageId: string;
+  setFlag: () => void;
 }
 
 const TicketCreationForm: React.FC<TicketCreationFormProps> = ({
   onClose,
-  //stageId,
+  stageId,
+  setFlag,
 }) => {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [newTicket, setNewTicket] = useState({
     title: '',
     description: '',
@@ -25,9 +29,21 @@ const TicketCreationForm: React.FC<TicketCreationFormProps> = ({
     }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Your form submission logic here
+    try {
+      const token = localStorage.getItem('token');
+      await axios.post(`${API_URL}/tickets/create/${stageId}`, newTicket, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+
+    setFlag();
     console.log('New Ticket:', newTicket);
     // Close the form
     onClose();
