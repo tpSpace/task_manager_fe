@@ -131,8 +131,6 @@ function KanbanBoard({ project }: ProjectDetailProps) {
       },
     }),
   );
-  // i want to print out the project name here
-  console.log(project);
 
   return (
     <div
@@ -274,7 +272,6 @@ function KanbanBoard({ project }: ProjectDetailProps) {
 
       return { ...col, title };
     });
-
     setColumns(newColumns);
   }
 

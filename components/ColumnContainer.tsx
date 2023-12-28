@@ -6,6 +6,7 @@ import { useMemo, useState } from 'react';
 import { SortableContext, useSortable } from '@dnd-kit/sortable';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { CSS } from '@dnd-kit/utilities';
+import axios from 'axios';
 
 import TaskCard from './TaskCard';
 
@@ -23,6 +24,11 @@ interface Props {
   deleteTask: (id: string) => void;
   tasks: Task[];
 }
+
+const token = localStorage.getItem('token');
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+let newTitle = '';
 
 function ColumnContainer({
   column,
@@ -143,9 +149,29 @@ function ColumnContainer({
               onBlur={() => {
                 setEditMode(false);
               }}
-              onChange={e => updateColumn(column.id, e.target.value)}
+              onChange={e => {
+                updateColumn(column.id, e.target.value);
+                newTitle = e.target.value;
+              }}
               onKeyDown={e => {
                 if (e.key !== 'Enter') return;
+
+                const data = {
+                  title: newTitle,
+                };
+                async function updateColumnTitle() {
+                  await axios.put(
+                    `${API_URL}/stages/updateTitle/${column.id}`,
+                    data,
+                    {
+                      headers: {
+                        Authorization: `Bearer ${token}`,
+                      },
+                    },
+                  );
+                  console.log('update column title');
+                }
+                updateColumnTitle();
                 setEditMode(false);
               }}
               value={column.title}
