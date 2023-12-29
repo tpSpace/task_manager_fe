@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { BsArrowLeft } from 'react-icons/bs';
 
+import KanbanBoard from './KanbanBoard';
 import ListStages from './ListStages';
 
 //import Tag from './Tag';
@@ -15,20 +16,20 @@ interface SingleProjectProps {
 
 const SingleProject = ({ project }: SingleProjectProps) => {
   return (
-    <div className="flex h-full w-full">
-      <nav className="flex items-center flex-col bg-gray-200 w-[15%]">
-        <div className="flex flex-col space-y-3 justify-start items-center py-20 w-32">
+    <div className="w-full h-full flex flex-row border-2">
+      <div className="w-[15%] min-w-[150px] h-full flex flex-col border border-black-100">
+        <div className="flex flex-col space-y-3 justify-center items-center h-30 mt-20">
           <div className="border-2 border-black rounded-full h-10 w-full bg-black flex items-center justify-center">
-            <div className="text-white text-xl">Task</div>
+            <p className="text-white text-xl">Task</p>
           </div>
           <div className="border-2 border-black rounded-full h-10 w-full bg-black flex items-center justify-center">
-            <div className="text-white text-xl">Timeline</div>
+            <p className="text-white text-xl">Timeline</p>
           </div>
         </div>
-        {/* display member */}
-        <div className="flex flex-col w-40 items-center py-2 space-y-4">
+
+        <div className="flex flex-col justify-center items-center py-2 space-y-4 mt-20">
           <div className="text-lg">Members ({project.members.length})</div>
-          <div className="flex flex-col space-y-4 max-h-44 overflow-y-auto">
+          <div className="flex flex-col space-y-4  ">
             {project.members.map((member, index) => (
               <UserCard key={index} user={member} />
             ))}
@@ -39,7 +40,7 @@ const SingleProject = ({ project }: SingleProjectProps) => {
           Copy this code <br /> to add member
           <br /># 1234
         </div>
-      </nav>
+      </div>
       <div className="flex flex-row w-full h-full overflow-x-auto overflow-y-hidden">
         <div className="w-full h-full">
           <div className="bg-gray-100 h-[10%] flex items-center px-6 justify-between">
@@ -55,6 +56,7 @@ const SingleProject = ({ project }: SingleProjectProps) => {
             <div>Setting</div>
           </div>
           <ListStages project={project} />
+          {/* <KanbanBoard project={project} /> */}
         </div>
       </div>
     </div>

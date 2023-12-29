@@ -14,6 +14,7 @@ type LoginPageProps = {
 
 const LoginPage = () => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   const schema: ZodType<LoginPageProps> = z.object({
     email: z.string().email().min(5).max(30),
     password: z.string().min(8).max(30),
@@ -53,7 +54,7 @@ const LoginPage = () => {
           onSubmit={handleSubmit(submit)}
         >
           <input
-            autoComplete="email"
+            autoComplete="off"
             className="border-2 border-black p-1 bg-slate-100"
             placeholder="Enter your email"
             type="text"

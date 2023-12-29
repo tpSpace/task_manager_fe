@@ -157,6 +157,7 @@ const Projects = () => {
               }
               key={project.projectId}
               onClick={() => router.push(`projects/${project.projectId}`)}
+              type="button"
             >
               <MdDelete
                 className={
@@ -197,6 +198,7 @@ const Projects = () => {
                     handleCreateProject();
                     setPopup(false);
                   }}
+                  type="button"
                 >
                   +
                 </button>
@@ -230,6 +232,7 @@ const Projects = () => {
                     setPopup(false);
                     setProjectCode('');
                   }}
+                  type="button"
                 >
                   Join
                 </button>
