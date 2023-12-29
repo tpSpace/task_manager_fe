@@ -153,7 +153,7 @@ const SingleTicket = ({
                             Description
                           </h1>
                           <input
-                            className="w-full h-fit bg-gray-200 focus:outline-0"
+                            className="w-full h-fit bg-gray-200 focus:outline-0 pl-1"
                             onBlur={e => {
                               setFlag();
                               handleChangeDescription(e.target.value);
@@ -161,6 +161,7 @@ const SingleTicket = ({
                             onChange={e =>
                               handleChangeDescription(e.target.value)
                             }
+                            placeholder="Some descriptions for the task"
                             value={updatedTicket.description}
                           />
                         </div>

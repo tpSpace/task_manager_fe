@@ -62,7 +62,6 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
       }));
     });
     fetchTags(token);
-    updateStages(token);
   }, []);
 
   // second useEffect, use for fetching data that required Ids from the first fetching
@@ -206,7 +205,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
         },
       );
 
-      const { tickets } = responses.data;
+      const { tickets } = responses.data.tickets;
 
       return tickets;
     } catch (err) {

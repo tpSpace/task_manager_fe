@@ -19,6 +19,8 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
 
   const [flag, setFlag] = useState<boolean>(true);
 
+  const [isTicketFormOpen, setIsTicketFormOpen] = useState(false);
+
   const [updatedStage, setUpdatedStage] = useState<StageProps>({
     id: stage.id,
     title: stage.title,
@@ -26,8 +28,9 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
   });
 
   useEffect(() => {
-    loadStage();
-  }, [flag]);
+    const token = localStorage.getItem('token');
+    reloadTickets(token, stage.id);
+  }, [flag, updatedStage]);
 
   const deleteStage = async () => {
     const token = localStorage.getItem('token');
@@ -71,30 +74,7 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
     }
   };
 
-  const loadStage = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      const response = await axios.get(
-        `${API_URL}/stages/get/stage/${stage.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      const fetchedStage = response.data;
-      const Tickets = loadTickets(token, stage.id);
-      setUpdatedStage(prevStage => ({
-        ...prevStage,
-        title: fetchedStage.title,
-        tickets: Tickets,
-      }));
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const loadTickets = async (token: string | null, stageId: string) => {
+  const reloadTickets = async (token: string | null, stageId: string) => {
     try {
       const responses = await axios.get(
         `${API_URL}/tickets/get/stage/${stageId}`,
@@ -107,14 +87,14 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
 
       const { tickets } = responses.data;
 
-      return tickets;
+      setUpdatedStage(prevStage => ({
+        ...prevStage,
+        tickets: tickets,
+      }));
     } catch (err) {
       console.log(err);
-      return undefined;
     }
   };
-
-  const [isTicketFormOpen, setIsTicketFormOpen] = useState(false);
 
   const openTicketForm = () => {
     setIsTicketFormOpen(true);
@@ -133,6 +113,7 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
             onBlur={e => {
               setFlag(!flag);
               handleChangeStage(e.target.value);
+              updateStage();
             }}
             onChange={e => handleChangeStage(e.target.value)}
             value={updatedStage.title}
@@ -146,7 +127,7 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
         </div>
       </div>
       <div className="flex flex-col justify-between items-center overflow-x-hidden overflow-y-auto max-h-96">
-        {stage.tickets?.map((ticket, index) => (
+        {updatedStage.tickets?.map((ticket, index) => (
           <TicketCard
             flag={flag}
             key={index}
@@ -166,8 +147,8 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
       {isTicketFormOpen && (
         <TicketCreationForm
           onClose={closeTicketForm}
-          stageId={stage.id}
           setFlag={() => setFlag(!flag)}
+          stageId={stage.id}
         />
       )}
     </div>

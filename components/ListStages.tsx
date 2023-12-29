@@ -7,7 +7,6 @@ import CustomButton from '@/components/CustomButton';
 import { ProjectProps, StageProps } from '@/types';
 
 interface ListStagesProps {
-  stages: StageProps[];
   project: ProjectProps;
 }
 const ListStages = ({ project }: ListStagesProps) => {
