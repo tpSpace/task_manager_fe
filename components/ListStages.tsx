@@ -7,12 +7,9 @@ import CustomButton from '@/components/CustomButton';
 import { ProjectProps, StageProps } from '@/types';
 
 interface ListStagesProps {
-  stages: StageProps[];
   project: ProjectProps;
-  flag: boolean;
-  setFlag: () => void;
 }
-const ListStages = ({ project, flag, setFlag }: ListStagesProps) => {
+const ListStages = ({ project }: ListStagesProps) => {
   const [isStageFormOpen, setIsStageFormOpen] = useState(false);
 
   const openStageForm = () => {
@@ -26,7 +23,7 @@ const ListStages = ({ project, flag, setFlag }: ListStagesProps) => {
   return (
     <div className="flex flex-row py-10 h-[90%] w-full overflow-x-scroll">
       {project.stages?.map((stage, index) => (
-        <SingleStage flag={flag} key={index} setFlag={setFlag} stage={stage} />
+        <SingleStage key={index} stage={stage} />
       ))}
       <CustomButton
         containerStyles="mt-20 mx-10 min-w-[20%] h-[80%] rounded-lg border border-black justify-between text-6xl"
