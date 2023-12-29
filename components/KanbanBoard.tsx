@@ -16,6 +16,7 @@ import {
 } from '@dnd-kit/core';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
+import axios from 'axios';
 
 import ColumnContainer from './ColumnContainer';
 import TaskCard from './TaskCard';
@@ -33,6 +34,9 @@ interface ColumnData {
   id: string;
   title: string;
 }
+
+const token = localStorage.getItem('token');
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 const defaultTasks: Task[] = [
   {
@@ -254,7 +258,20 @@ function KanbanBoard({ project }: ProjectDetailProps) {
       id: generateId(),
       title: `Column ${columns.length + 1}`,
     };
-
+    async function createColumn() {
+      await axios.post(
+        `${API_URL}/stages/create/${project.id}`,
+        {
+          title: columnToAdd.title,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+    }
+    createColumn();
     setColumns([...columns, columnToAdd]);
   }
 

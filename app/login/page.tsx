@@ -54,14 +54,14 @@ const LoginPage = () => {
           onSubmit={handleSubmit(submit)}
         >
           <input
-            autoComplete="off"
+            autoComplete="email"
             className="border-2 border-black p-1 bg-slate-100"
             placeholder="Enter your email"
             type="text"
             {...register('email')}
           />
           <input
-            autoComplete="password"
+            autoComplete="current-password"
             className="border-2 border-black p-1 bg-slate-100"
             placeholder="Enter your password"
             type="password"
