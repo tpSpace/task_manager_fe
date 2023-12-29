@@ -8,7 +8,7 @@ import TicketCard from './TicketCard';
 import TicketCreationForm from './TicketCreationForm';
 
 import CustomButton from '@/components/CustomButton';
-import { StageProps, TicketProps } from '@/types';
+import { StageProps } from '@/types';
 
 interface SingleStageProps {
   stage: StageProps;
@@ -85,7 +85,7 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
         },
       );
 
-      const { tickets } = responses.data;
+      const tickets = responses.data.tickets;
 
       setUpdatedStage(prevStage => ({
         ...prevStage,
