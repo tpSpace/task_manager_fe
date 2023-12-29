@@ -23,9 +23,15 @@ const Header = () => {
   return (
     <div className="flex flex-row justify-between items-center overflow-hidden h-[10%] p-4 bg-white text-black">
       <div className="flex flex-row items-center justify-center">
-        <a className="" href="/">
-          <Image alt="Logo" height={88} src="/logo.svg" width={88} />
-        </a>
+        <Image
+          alt="Logo"
+          height={88}
+          onClick={() => {
+            window.location.href = '/';
+          }}
+          src="/logo.svg"
+          width={88}
+        />
         {!isLogged && (
           <CustomLink
             containerStyles="font-bold text-2xl ml-2"

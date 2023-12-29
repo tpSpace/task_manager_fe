@@ -216,6 +216,7 @@ function ColumnContainer({
         onClick={() => {
           createTask(column.id);
         }}
+        type="button"
       >
         <PlusIcon className="w-7 h-7" />
         <p>Add task</p>

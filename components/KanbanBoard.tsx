@@ -281,6 +281,22 @@ function KanbanBoard({ project }: ProjectDetailProps) {
 
     const newTasks = tasks.filter(t => t.columnId !== id);
     setTasks(newTasks);
+    async function deleteColumn() {
+      await axios
+        .delete(`${API_URL}/stages/delete/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(res => {
+          console.log(res.data);
+          console.log('Delete stage successfully');
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+    deleteColumn();
   }
 
   function updateColumn(id: string, title: string) {

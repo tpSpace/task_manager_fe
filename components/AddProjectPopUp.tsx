@@ -13,6 +13,7 @@ const AddProjectPopUp = (props: PopupProps) => {
         <button
           className="absolute top-[16px] right-[16px] border-none bg-transparent text-white h-[25px] w-[25px] text-[20px] font-bold -mt-[10px] hover:text-[25px] hover:ease-out hover:duration-200"
           onClick={() => props.setTrigger(false)}
+          type="button"
         >
           X
         </button>

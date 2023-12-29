@@ -53,8 +53,8 @@ const SingleProject = ({ project }: SingleProjectProps) => {
             <div className="font-bold text-4xl">{project.title}</div>
             <div>Setting</div>
           </div>
-          <ListStages project={project} />
-          {/* <KanbanBoard project={project} /> */}
+          {/* <ListStages project={project} /> */}
+          <KanbanBoard project={project} />
         </div>
       </div>
     </div>
