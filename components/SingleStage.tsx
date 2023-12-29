@@ -12,17 +12,25 @@ import { StageProps } from '@/types';
 
 interface SingleStageProps {
   stage: StageProps;
-  flag: boolean;
-  setFlag: () => void;
 }
 
-const SingleStage: React.FC<SingleStageProps> = ({ stage, flag, setFlag }) => {
+const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
-  const [updateStage, setUpdatedStage] = useState<StageProps>({
+
+  const [flag, setFlag] = useState<boolean>(true);
+
+  const [isTicketFormOpen, setIsTicketFormOpen] = useState(false);
+
+  const [updatedStage, setUpdatedStage] = useState<StageProps>({
     id: stage.id,
     title: stage.title,
     tickets: stage.tickets,
   });
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    reloadTickets(token, stage.id);
+  }, [flag]);
 
   const deleteStage = async () => {
     const token = localStorage.getItem('token');
@@ -47,16 +55,14 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage, flag, setFlag }) => {
       title: title,
     }));
   };
-  useEffect(() => {
-    loadStage();
-  }, [flag]);
-  const loadStage = async () => {
+
+  const updateStage = async () => {
     const token = localStorage.getItem('token');
 
     try {
       await axios.put(
         `${API_URL}/stages/updateTitle/${stage.id}`,
-        updateStage,
+        updatedStage,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -66,23 +72,29 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage, flag, setFlag }) => {
     } catch (err) {
       console.log(err);
     }
-
-    // .then(res => {
-    //   console.log(res.data.updateStage);
-    //   const newStage = res.data.updateStage;
-    //   setUpdatedStage({
-    //     ...updateStage,
-    //     id: newStage.id,
-    //     title: newStage.title,
-    //     tickets: newStage.tickets,
-    //   });
-    // })
-    // .catch(err => {
-    //   console.log(err);
-    // });
   };
 
-  const [isTicketFormOpen, setIsTicketFormOpen] = useState(false);
+  const reloadTickets = async (token: string | null, stageId: string) => {
+    try {
+      const responses = await axios.get(
+        `${API_URL}/tickets/get/stage/${stageId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+
+      const { tickets } = responses.data;
+
+      setUpdatedStage(prevStage => ({
+        ...prevStage,
+        tickets: tickets,
+      }));
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   const openTicketForm = () => {
     setIsTicketFormOpen(true);
@@ -99,11 +111,12 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage, flag, setFlag }) => {
           <input
             className="text-white bg-inherit w-full ml-1 text-2xl rounded-full"
             onBlur={e => {
-              setFlag();
+              setFlag(!flag);
               handleChangeStage(e.target.value);
+              updateStage();
             }}
             onChange={e => handleChangeStage(e.target.value)}
-            value={updateStage.title}
+            value={updatedStage.title}
           />
           <div>
             <MdDelete
@@ -114,11 +127,11 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage, flag, setFlag }) => {
         </div>
       </div>
       <div className="flex flex-col justify-between items-center overflow-x-hidden overflow-y-auto max-h-96">
-        {stage.tickets?.map((ticket, index) => (
+        {updatedStage.tickets?.map((ticket, index) => (
           <TicketCard
             flag={flag}
             key={index}
-            setFlag={setFlag}
+            setFlag={() => setFlag(!flag)}
             ticket={ticket}
           />
         ))}
@@ -132,7 +145,11 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage, flag, setFlag }) => {
       </div>
       {/* Ticket Creation Form */}
       {isTicketFormOpen && (
-        <TicketCreationForm onClose={closeTicketForm} stageId={stage.id} />
+        <TicketCreationForm
+          onClose={closeTicketForm}
+          setFlag={() => setFlag(!flag)}
+          stageId={stage.id}
+        />
       )}
     </div>
   );

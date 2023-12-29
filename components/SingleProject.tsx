@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-import axios from 'axios';
 import Link from 'next/link';
 import { BsArrowLeft } from 'react-icons/bs';
 
@@ -9,15 +8,13 @@ import ListStages from './ListStages';
 
 //import Tag from './Tag';
 import UserCard from '@/components/UserCard';
-import { ProjectProps, StageProps } from '@/types';
+import { ProjectProps } from '@/types';
 
 interface SingleProjectProps {
   project: ProjectProps;
-  flag: boolean;
-  setFlag: () => void;
 }
 
-const SingleProject = ({ project, flag, setFlag }: SingleProjectProps) => {
+const SingleProject = ({ project }: SingleProjectProps) => {
   return (
     <div className="w-full h-full flex flex-row border-2">
       <div className="w-[15%] min-w-[150px] h-full flex flex-col border border-black-100">
@@ -58,13 +55,8 @@ const SingleProject = ({ project, flag, setFlag }: SingleProjectProps) => {
             <div className="font-bold text-4xl">{project.title}</div>
             <div>Setting</div>
           </div>
-          {/* <ListStages
-            flag={flag}
-            project={project}
-            setFlag={setFlag}
-            stages={project.stages}
-          /> */}
-          <KanbanBoard project={project} />
+          <ListStages project={project} />
+          {/* <KanbanBoard project={project} /> */}
         </div>
       </div>
     </div>
