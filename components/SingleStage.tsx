@@ -30,7 +30,7 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     reloadTickets(token, stage.id);
-  }, [flag, updatedStage]);
+  }, [flag]);
 
   const deleteStage = async () => {
     const token = localStorage.getItem('token');
