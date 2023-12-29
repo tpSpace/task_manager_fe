@@ -85,11 +85,10 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
         },
       );
 
-      const { tickets } = responses.data;
-
+      console.log(`Stage ${stage.title}'s tickets reloaded`);
       setUpdatedStage(prevStage => ({
         ...prevStage,
-        tickets: tickets,
+        tickets: responses.data.tickets,
       }));
     } catch (err) {
       console.log(err);

@@ -8,7 +8,6 @@ import SingleProject from '@/components/SingleProject';
 import { ProjectProps } from '@/types';
 
 interface ProjectDetailProps {
-  projectId: string;
   stageIds: string[];
   memberIds: string[];
   adminId: string;
@@ -20,7 +19,6 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   // state storing all the Ids return from backend
   const [projectData, setProjectData] = useState<ProjectDetailProps>({
-    projectId: params.projectId,
     stageIds: [],
     memberIds: [],
     adminId: '',
@@ -205,9 +203,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
         },
       );
 
-      const { tickets } = responses.data;
-
-      return tickets;
+      return responses.data.tickets;
     } catch (err) {
       console.log(err);
 
