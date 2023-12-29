@@ -28,8 +28,7 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
   });
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    reloadTickets(token, stage.id);
+    reloadTickets();
   }, [flag]);
 
   const deleteStage = async () => {
@@ -74,10 +73,11 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
     }
   };
 
-  const reloadTickets = async (token: string | null, stageId: string) => {
+  const reloadTickets = async () => {
+    const token = localStorage.getItem('token');
     try {
       const responses = await axios.get(
-        `${API_URL}/tickets/get/stage/${stageId}`,
+        `${API_URL}/tickets/get/stage/${stage.id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -85,7 +85,7 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
         },
       );
 
-      const tickets = responses.data.tickets;
+      const { tickets } = responses.data;
 
       setUpdatedStage(prevStage => ({
         ...prevStage,

@@ -205,7 +205,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
         },
       );
 
-      const tickets = responses.data.tickets;
+      const { tickets } = responses.data;
 
       return tickets;
     } catch (err) {
