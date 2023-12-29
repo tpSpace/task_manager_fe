@@ -3,6 +3,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import axios from 'axios';
 import Image from 'next/image';
+import { MdDelete } from 'react-icons/md';
 
 import SingleComment from './SingleComment';
 import TicketCreationForm from './TicketCreationForm';
@@ -57,6 +58,22 @@ const SingleTicket = ({
     }));
   };
 
+  const handleDeleteTicket = async () => {
+    const token = localStorage.getItem('token');
+    try {
+      axios.delete(`${API_URL}/tickets/delete/${ticket.ticketId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log('Ticket deleted successfully');
+      setFlag();
+      closeModal();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   const loadTicket = async () => {
     const token = localStorage.getItem('token');
     try {
@@ -107,22 +124,9 @@ const SingleTicket = ({
               >
                 <Dialog.Panel className="relative w-full max-w-full h-[70vh] min-h-full max-h-[80vh] transform rounded-2xl bg-white text-left shadow-xl transition-all flex-col">
                   <div className="grid grid-cols-3 pt-2 px-2 border-black border-b-2 min-h-[10%]">
-                    <button
-                      className="absolute top-2 right-2 pt-2 z-10 bg-primary-blue-100 rounded-full"
-                      onClick={closeModal}
-                      type="button"
-                    >
-                      <Image
-                        alt="close"
-                        className="object-contain"
-                        height={20}
-                        src="/close.svg"
-                        width={20}
-                      />
-                    </button>
                     <div className="self-center">Created by </div>
                     <input
-                      className="text-3xl self-center font-bold focus:outline-0"
+                      className="text-3xl text-center font-bold focus:outline-0"
                       onBlur={e => {
                         setFlag();
                         handleChangeTitle(e.target.value);
@@ -130,6 +134,25 @@ const SingleTicket = ({
                       onChange={e => handleChangeTitle(e.target.value)}
                       value={updatedTicket.title}
                     />
+                    <div className="flex flex-row justify-end items-center">
+                      <MdDelete
+                        className="mx-2 z-10 text-2xl hover:text-4xl cursor-pointer text-black"
+                        onClick={handleDeleteTicket}
+                      />
+                      <button
+                        className="px-2 z-10 rounded-full"
+                        onClick={closeModal}
+                        type="button"
+                      >
+                        <Image
+                          alt="close"
+                          className="object-contain"
+                          height={20}
+                          src="/close.svg"
+                          width={20}
+                        />
+                      </button>
+                    </div>
                   </div>
 
                   <div className="border-black border-t-2 grid grid-cols-3 px-2 min-h-[10%]">
@@ -152,8 +175,8 @@ const SingleTicket = ({
                           <h1 className="text-3xl font-semibold text-center">
                             Description
                           </h1>
-                          <input
-                            className="w-full h-fit bg-gray-200 focus:outline-0 pl-1"
+                          <textarea
+                            className="w-full h-[80%] bg-gray-200 focus:outline-0 pl-1"
                             onBlur={e => {
                               setFlag();
                               handleChangeDescription(e.target.value);

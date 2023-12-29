@@ -1,5 +1,3 @@
-import React, { useEffect, useState } from 'react';
-
 import Link from 'next/link';
 import { BsArrowLeft } from 'react-icons/bs';
 
