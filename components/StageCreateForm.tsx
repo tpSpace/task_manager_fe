@@ -7,11 +7,13 @@ import { ProjectProps, StageProps } from '@/types';
 interface StageCreationFormProps {
   onClose: () => void;
   projectId: ProjectProps;
+  setStageChangingFlag: () => void;
 }
 
-const TicketCreationForm: React.FC<StageCreationFormProps> = ({
+const StageCreationForm: React.FC<StageCreationFormProps> = ({
   onClose,
   projectId,
+  setStageChangingFlag,
 }) => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [newStage, setNewStage] = useState<StageProps>({
@@ -22,10 +24,9 @@ const TicketCreationForm: React.FC<StageCreationFormProps> = ({
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    const { value } = e.target;
     setNewStage(prevStage => ({
       ...prevStage,
-      [e.target.name]: value,
+      title: e.target.value,
     }));
   };
 
@@ -43,7 +44,11 @@ const TicketCreationForm: React.FC<StageCreationFormProps> = ({
         },
       })
       .then(response => {
+        setStageChangingFlag();
         console.log(response.status, response.data.token);
+      })
+      .catch(err => {
+        console.log(err);
       });
     onClose();
   };
@@ -76,4 +81,4 @@ const TicketCreationForm: React.FC<StageCreationFormProps> = ({
   );
 };
 
-export default TicketCreationForm;
+export default StageCreationForm;
