@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { MdDelete } from 'react-icons/md';
 
 import SingleComment from './SingleComment';
-import TicketCreationForm from './TicketCreationForm';
 
 import { TicketProps } from '@/types';
 
@@ -14,7 +13,6 @@ interface SingleTicketProps {
   isOpen: boolean;
   closeModal: () => void;
   ticket: TicketProps;
-  flag: boolean;
   setFlag: () => void;
 }
 
@@ -22,7 +20,6 @@ const SingleTicket = ({
   isOpen,
   ticket,
   closeModal,
-  flag,
   setFlag,
 }: SingleTicketProps) => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -39,10 +36,6 @@ const SingleTicket = ({
     deadline: ticket.deadline,
     creator: ticket.creator,
   });
-
-  useEffect(() => {
-    loadTicket();
-  }, [flag]);
 
   const handleChangeTitle = async (title: string) => {
     setUpdatedTicket(prevTicket => ({
@@ -86,6 +79,7 @@ const SingleTicket = ({
           },
         },
       );
+      setFlag();
     } catch (err) {
       console.log(err);
     }
@@ -127,9 +121,8 @@ const SingleTicket = ({
                     <div className="self-center">Created by </div>
                     <input
                       className="text-3xl text-center font-bold focus:outline-0"
-                      onBlur={e => {
-                        setFlag();
-                        handleChangeTitle(e.target.value);
+                      onBlur={() => {
+                        loadTicket();
                       }}
                       onChange={e => handleChangeTitle(e.target.value)}
                       value={updatedTicket.title}
@@ -178,8 +171,7 @@ const SingleTicket = ({
                           <textarea
                             className="w-full h-[80%] bg-gray-200 focus:outline-0 pl-1"
                             onBlur={e => {
-                              setFlag();
-                              handleChangeDescription(e.target.value);
+                              loadTicket();
                             }}
                             onChange={e =>
                               handleChangeDescription(e.target.value)

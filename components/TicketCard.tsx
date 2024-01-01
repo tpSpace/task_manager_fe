@@ -7,11 +7,10 @@ import { TicketProps } from '@/types';
 
 interface TicketCardProps {
   ticket: TicketProps;
-  flag: boolean;
   setFlag: () => void;
 }
 
-const TicketCard = ({ ticket, flag, setFlag }: TicketCardProps) => {
+const TicketCard = ({ ticket, setFlag }: TicketCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -32,7 +31,6 @@ const TicketCard = ({ ticket, flag, setFlag }: TicketCardProps) => {
 
       <SingleTicket
         closeModal={() => setIsOpen(false)}
-        flag={flag}
         isOpen={isOpen}
         setFlag={setFlag}
         ticket={ticket}

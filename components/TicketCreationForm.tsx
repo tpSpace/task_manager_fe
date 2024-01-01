@@ -23,10 +23,9 @@ const TicketCreationForm: React.FC<TicketCreationFormProps> = ({
   const handleInputChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    const { name, value } = e.target;
     setNewTicket(prevTicket => ({
       ...prevTicket,
-      [name]: value,
+      title: e.target.value,
     }));
   };
 
@@ -40,11 +39,11 @@ const TicketCreationForm: React.FC<TicketCreationFormProps> = ({
           Authorization: `Bearer ${token}`,
         },
       });
+      setFlag();
     } catch (err) {
       console.log(err);
     }
 
-    setFlag();
     console.log('New Ticket:', newTicket);
     // Close the form
     onClose();

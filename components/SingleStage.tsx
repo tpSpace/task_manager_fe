@@ -12,9 +12,13 @@ import { StageProps } from '@/types';
 
 interface SingleStageProps {
   stage: StageProps;
+  setStageChangingFlag: () => void;
 }
 
-const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
+const SingleStage: React.FC<SingleStageProps> = ({
+  stage,
+  setStageChangingFlag,
+}) => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const [flag, setFlag] = useState<boolean>(true);
@@ -42,6 +46,7 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
       .then(res => {
         console.log(res.data);
         console.log('Delete stage successfully');
+        setStageChangingFlag();
       })
       .catch(err => {
         console.log(err);
@@ -128,7 +133,6 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
       <div className="flex flex-col justify-between items-center overflow-x-hidden overflow-y-auto max-h-96">
         {updatedStage.tickets?.map((ticket, index) => (
           <TicketCard
-            flag={flag}
             key={index}
             setFlag={() => setFlag(!flag)}
             ticket={ticket}
