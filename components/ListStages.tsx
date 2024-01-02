@@ -28,6 +28,7 @@ const ListStages = ({ project, setStageChangingFlag }: ListStagesProps) => {
           key={index}
           setStageChangingFlag={setStageChangingFlag}
           stage={stage}
+          tags={project.tags}
         />
       ))}
       <CustomButton
