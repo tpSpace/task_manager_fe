@@ -13,6 +13,8 @@ import CustomButton from '@/components/CustomButton';
 interface ProjectInforProps {
   title: string;
   projectId: string;
+  adminId: string;
+  adminName: string;
 }
 
 const getFilteredProjects = (search: string, projects: ProjectInforProps[]) => {
@@ -50,13 +52,11 @@ const Projects = () => {
       .then(res => {
         console.log(res);
         setProjects(res.data.projects);
-        console.log(projects);
       })
       .catch(err => {
         console.log(err);
       });
   };
-
   const handleCreateProject = async () => {
     const token = localStorage.getItem('token');
     await axios
@@ -123,6 +123,34 @@ const Projects = () => {
       });
   };
 
+  const getAdminName = async (adminId: string, projectId: string) => {
+    const token = localStorage.getItem('token');
+    await axios
+      .get(`${API_URL}/auth/user/${adminId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(res => {
+        projects.map(project => {
+          if (project.projectId === projectId) {
+            // setProjects(prev => [...prev, project.adminName=res.data.user.name]);
+            project.adminName = res.data.user.name;
+            console.log(project);
+          }
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  const getProjectAdminName = () =>{
+    projects.map(project => {
+      getAdminName(project.adminId, project.projectId);
+    });
+  }
+  getProjectAdminName();
   return (
     <div className=" flex flex-col justify-center max-w-screen overflow-x-hidden p-8 ">
       <div className={' flex justify-end w-screen relative '}>
@@ -173,6 +201,11 @@ const Projects = () => {
                 }
               >
                 {project.title}
+              </span>
+              <span
+                className={" absolute bottom-2 left-2 font-semibold font-['Montserrat'] text-black "}
+              >
+                Created by: {project.adminName}
               </span>
             </button>
           ))}
