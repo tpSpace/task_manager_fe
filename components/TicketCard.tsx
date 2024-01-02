@@ -34,6 +34,7 @@ const TicketCard = ({ ticket, setFlag }: TicketCardProps) => {
         isOpen={isOpen}
         setFlag={setFlag}
         ticket={ticket}
+        tags={[]}
       />
     </div>
   );
