@@ -150,9 +150,10 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
         },
       })
       .then(res => {
+        console.log(res.data.tags);
         setProject(prevProject => ({
           ...prevProject,
-          tags: res.data.tag,
+          tags: res.data.tags,
         }));
       })
       .catch(err => {
