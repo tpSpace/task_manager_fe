@@ -152,7 +152,7 @@ const Projects = () => {
           {filteredProjects.map(project => (
             <button
               className={
-                ' flex relative w-72 h-48 bg-neutral-100 rounded-3xl border-[3px] border-black ' +
+                ' flex relative w-72 h-48 bg-neutral-100 rounded-3xl border-[3px] border-black hover:scale-105' +
                 ' hover:border-[4px] shadow shadow-black hover:ease-out hover:duration-100 hover:bg-neutral-200 '
               }
               key={project.projectId}
@@ -161,7 +161,7 @@ const Projects = () => {
             >
               <MdDelete
                 className={
-                  ' text-2xl z-10 hover:text-3xl absolute top-3 right-3 ' +
+                  ' text-2xl z-10 hover:scale-125 absolute top-3 right-3 ' +
                   ' cursor-pointer hover:ease-out hover:duration-200 '
                 }
                 onClick={() => handleDelete(project.projectId)}
@@ -177,7 +177,7 @@ const Projects = () => {
             </button>
           ))}
           <CustomButton
-            containerStyles=" border-[3px] border-solid border-black rounded-3xl bg-neutral-100
+            containerStyles=" border-[3px] border-solid border-black rounded-3xl bg-neutral-100 hover:scale-105
               w-72 h-48 text-black text-6xl relative hover:border-[4px] shadow shadow-black hover:ease-out hover:duration-200 hover:bg-neutral-200 pb-3 "
             handleClick={() => setPopup(true)}
             title="+"
@@ -192,7 +192,7 @@ const Projects = () => {
                   Create a project
                 </span>
                 <button
-                  className=" flex items-center justify-center w-[10rem] h-[10rem] bg-white text-black border-4 rounded-[20px] text-[60px] hover:text-[80px]
+                  className=" flex items-center justify-center w-[10rem] h-[10rem] bg-white text-black border-4 rounded-[20px] text-[60px] hover:scale-105
                  mt-[4.12rem] ml-[5rem] border-black font-medium hover:ease-out hover:duration-300 pb-3 hover:pb-4 "
                   onClick={() => {
                     handleCreateProject();
