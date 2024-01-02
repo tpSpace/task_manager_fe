@@ -77,7 +77,7 @@ const SingleTicket = ({
     }
   };
 
-  const handleSelect = (selected: string) => {
+  const handleSelectTag = (selected: string) => {
     // replace with your actual handle select function
     console.log(selected);
   };
@@ -170,7 +170,6 @@ const SingleTicket = ({
                       <input
                         onBlur={() => {
                           loadTicket();
-                          setFlag();
                         }}
                         onChange={e =>
                           handleChangeDeadline(e.target.valueAsDate!)
@@ -181,7 +180,7 @@ const SingleTicket = ({
                     </div>
                     <div className="place-self-center">
                       {/* Display tag title as a select menu */}
-                      <Tag handleSelect={handleSelect} tags={tags} />
+                      <Tag handleSelect={handleSelectTag} tags={tags} />
                     </div>
                   </div>
 
@@ -194,7 +193,7 @@ const SingleTicket = ({
                           </h1>
                           <textarea
                             className="w-full h-[80%] bg-gray-200 focus:outline-0 pl-1 resize-none"
-                            onBlur={e => {
+                            onBlur={() => {
                               loadTicket();
                             }}
                             onChange={e =>
