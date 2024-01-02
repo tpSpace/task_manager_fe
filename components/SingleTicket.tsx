@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { MdDelete } from 'react-icons/md';
 
 import SingleComment from './SingleComment';
-
 import Tag from './Tag';
 
 import { TagProps, TicketProps } from '@/types';
@@ -41,17 +40,24 @@ const SingleTicket = ({
     creator: ticket.creator,
   });
 
-  const handleChangeTitle = async (title: string) => {
+  const handleChangeTitle = (title: string) => {
     setUpdatedTicket(prevTicket => ({
       ...prevTicket,
       title: title,
     }));
   };
 
-  const handleChangeDescription = async (description: string) => {
+  const handleChangeDescription = (description: string) => {
     setUpdatedTicket(prevTicket => ({
       ...prevTicket,
       description: description,
+    }));
+  };
+
+  const handleChangeDeadline = (date: Date) => {
+    setUpdatedTicket(prevTicket => ({
+      ...prevTicket,
+      deadline: date.toISOString(),
     }));
   };
 
@@ -72,7 +78,8 @@ const SingleTicket = ({
   };
 
   const handleSelect = (selected: string) => {
-    console.log(selected); // replace with your actual handle select function
+    // replace with your actual handle select function
+    console.log(selected);
   };
 
   const loadTicket = async () => {
@@ -160,18 +167,21 @@ const SingleTicket = ({
                     <div className="self-center">Assignees: </div>
                     <div className="place-self-center">
                       Deadline:
-                      {updatedTicket.deadline ? (
-                        <span> 20-12-2023</span>
-                      ) : (
-                        <span> none</span>
-                      )}
+                      <input
+                        onBlur={() => {
+                          loadTicket();
+                          setFlag();
+                        }}
+                        onChange={e =>
+                          handleChangeDeadline(e.target.valueAsDate!)
+                        }
+                        type="date"
+                        value={`${updatedTicket.deadline?.slice(0, 10)}`}
+                      />
                     </div>
                     <div className="place-self-center">
                       {/* Display tag title as a select menu */}
-                      <Tag
-                        handleSelect={handleSelect}
-                        tags={tags}
-                      />
+                      <Tag handleSelect={handleSelect} tags={tags} />
                     </div>
                   </div>
 
@@ -183,7 +193,7 @@ const SingleTicket = ({
                             Description
                           </h1>
                           <textarea
-                            className="w-full h-[80%] bg-gray-200 focus:outline-0 pl-1"
+                            className="w-full h-[80%] bg-gray-200 focus:outline-0 pl-1 resize-none"
                             onBlur={e => {
                               loadTicket();
                             }}
