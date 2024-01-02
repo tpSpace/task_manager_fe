@@ -210,7 +210,7 @@ const SingleTicket = ({
                     <div className="place-self-center">
                       {/* Display tag title as a select menu */}
                       <Tag handleSelect={handleSelect} tags={tags} selectedTag={selectedTag} />
-                      {selectedTag && <div>Tag: {selectedTag}</div>}
+                      {/* {selectedTag && <div>Tag: {selectedTag}</div>} */}
                     </div>
                   </div>
 
