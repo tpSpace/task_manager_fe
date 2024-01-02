@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { MdDelete } from 'react-icons/md';
 
 import SingleComment from './SingleComment';
-
 import Tag from './Tag';
 
 import { TagProps, TicketProps } from '@/types';
@@ -79,7 +78,8 @@ const SingleTicket = ({
   };
 
   const handleSelect = (selected: string) => {
-    console.log(selected); // replace with your actual handle select function
+    // replace with your actual handle select function
+    console.log(selected);
   };
 
   const loadTicket = async () => {
@@ -168,23 +168,20 @@ const SingleTicket = ({
                     <div className="place-self-center">
                       Deadline:
                       <input
-                        value={`${updatedTicket.deadline?.slice(0, 10)}`}
-                        type="date"
-                        onChange={e =>
-                          handleChangeDeadline(e.target.valueAsDate!)
-                        }
                         onBlur={() => {
                           loadTicket();
                           setFlag();
                         }}
+                        onChange={e =>
+                          handleChangeDeadline(e.target.valueAsDate!)
+                        }
+                        type="date"
+                        value={`${updatedTicket.deadline?.slice(0, 10)}`}
                       />
                     </div>
                     <div className="place-self-center">
                       {/* Display tag title as a select menu */}
-                      <Tag
-                        handleSelect={handleSelect}
-                        tags={tags}
-                      />
+                      <Tag handleSelect={handleSelect} tags={tags} />
                     </div>
                   </div>
 

@@ -33,6 +33,7 @@ const TicketCard = ({ ticket, setFlag }: TicketCardProps) => {
         closeModal={() => setIsOpen(false)}
         isOpen={isOpen}
         setFlag={setFlag}
+        tags={[]}
         ticket={ticket}
       />
     </div>
