@@ -23,7 +23,7 @@ const TicketCard = ({ ticket, setFlag, tags }: TicketCardProps) => {
           title={ticket.title}
         />
       </div>
-      <div>{ticket.tag?.title}</div>
+      {/* <div>{ticket.tag?.title}</div> */}
       <div>
         {/* {ticket.assignees?.map((assignee, index) => (
             {assignee.avatar}
