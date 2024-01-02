@@ -5,31 +5,31 @@ import { TagProps } from '@/types';
 interface TagDetailProps {
   tags: TagProps[];
   handleSelect: (selected: string) => void;
+  selectedTag: string | null;
 }
 
-const Tag: React.FC<TagDetailProps> = ({ tags, handleSelect }) => {
+const Tag: React.FC<TagDetailProps> = ({ tags, handleSelect, selectedTag }) => {
+  let sortedTags = tags;
+  if (selectedTag) {
+    const selectedIndex = tags.findIndex(tag => tag.title === selectedTag);
+    if (selectedIndex !== -1) {
+      sortedTags = [
+        tags[selectedIndex],
+        ...tags.slice(0, selectedIndex),
+        ...tags.slice(selectedIndex + 1)
+      ];
+    }
+  }
   return (
-    <select onChange={e => handleSelect(e.target.value)}>
+    <select value={selectedTag || ''} onChange={e => handleSelect(e.target.value)}>
       <option value="">Select a tag</option>
-      {/* Asking if the array existed */}
-      {tags &&
-        tags.map((tag, index) => (
-          <option key={index} value={tag.title}>
-            {tag.title}
-          </option>
+      {sortedTags &&
+        sortedTags
+          .map((tag) => (
+            tag && <option key={tag.title} value={tag.title}>
+              {tag.title}
+            </option>
         ))}
-      {/* Asking if the array was empty */}
-      {/* {tags?.map((tag, index) => (
-        <option key={index} value={tag.title}>
-          {tag.title}
-        </option>
-      ))} */}
-      {/* Asking if the array was null */}
-      {/* {tags.map((tag, index) => (
-        <option key={index} value={tag.title}>
-          {tag.title}
-        </option>
-      ))} */}
     </select>
   );
 };
