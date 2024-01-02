@@ -96,8 +96,14 @@ const PageBody: React.FC = () => {
               automation.
               <br />
               <br />
-              TasKing is your one-stop shop to project management with the
-              simplest design, making it easily accessible.
+              Arrange your tasks and responsibilities with the aid of <br />
+              TasKing. Increase productivity and limit human errors <br />
+              with systematic automation.
+              <br />
+              <br />
+              TasKing is your one-stop shop to project management. <br />
+              We want to bring to you the latest features <br />
+              with the simplest design, making it easily accessible.
             </p>
           </div>
           {/* Image 1 */}
