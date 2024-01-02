@@ -8,7 +8,7 @@ const SingleComment = ({ comment }: SingleCommentProps) => {
   return (
     <div>
       <h1>{comment.commenter.userName}</h1>
-      <p>{comment.content}</p>
+      <input value={comment.content} />
     </div>
   );
 };
