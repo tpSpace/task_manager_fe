@@ -8,12 +8,10 @@ import { TagProps, TicketProps } from '@/types';
 interface TicketCardProps {
   ticket: TicketProps;
   setFlag: () => void;
-  project: {
-    tags: TagProps[];
-  };
+  tags: TagProps[];
 }
 
-const TicketCard = ({ ticket, setFlag, project }: TicketCardProps) => {
+const TicketCard = ({ ticket, setFlag, tags }: TicketCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -36,8 +34,8 @@ const TicketCard = ({ ticket, setFlag, project }: TicketCardProps) => {
         closeModal={() => setIsOpen(false)}
         isOpen={isOpen}
         setFlag={setFlag}
+        tags={tags}
         ticket={ticket}
-        tags={project.tags}
       />
     </div>
   );

@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { MdDelete } from 'react-icons/md';
 
 import SingleComment from './SingleComment';
-
 import Tag from './Tag';
 
 import { TagProps, TicketProps } from '@/types';
@@ -72,7 +71,8 @@ const SingleTicket = ({
   };
 
   const handleSelect = (selected: string) => {
-    console.log(selected); // replace with your actual handle select function
+    // replace with your actual handle select function
+    console.log(selected);
   };
 
   const loadTicket = async () => {
@@ -168,10 +168,7 @@ const SingleTicket = ({
                     </div>
                     <div className="place-self-center">
                       {/* Display tag title as a select menu */}
-                      <Tag
-                        handleSelect={handleSelect}
-                        tags={tags}
-                      />
+                      <Tag handleSelect={handleSelect} tags={tags} />
                     </div>
                   </div>
 

@@ -9,14 +9,15 @@ interface TagDetailProps {
 
 const Tag: React.FC<TagDetailProps> = ({ tags, handleSelect }) => {
   return (
-    <select onChange={(e) => handleSelect(e.target.value)}>
+    <select onChange={e => handleSelect(e.target.value)}>
       <option value="">Select a tag</option>
       {/* Asking if the array existed */}
-      {tags && tags.map((tag, index) => (
-        <option key={index} value={tag.title}>
-          {tag.title}
-        </option>
-      ))}
+      {tags &&
+        tags.map((tag, index) => (
+          <option key={index} value={tag.title}>
+            {tag.title}
+          </option>
+        ))}
       {/* Asking if the array was empty */}
       {/* {tags?.map((tag, index) => (
         <option key={index} value={tag.title}>

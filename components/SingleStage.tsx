@@ -8,8 +8,7 @@ import TicketCard from './TicketCard';
 import TicketCreationForm from './TicketCreationForm';
 
 import CustomButton from '@/components/CustomButton';
-import { ProjectProps, StageProps, TagProps } from '@/types';
-import Projects from '@/app/projects/page';
+import { StageProps, TagProps } from '@/types';
 
 interface SingleStageProps {
   stage: StageProps;
@@ -20,6 +19,7 @@ interface SingleStageProps {
 const SingleStage: React.FC<SingleStageProps> = ({
   stage,
   setStageChangingFlag,
+  tags,
 }) => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -137,8 +137,8 @@ const SingleStage: React.FC<SingleStageProps> = ({
           <TicketCard
             key={index}
             setFlag={() => setFlag(!flag)}
+            tags={tags}
             ticket={ticket}
-            project={{ tags: [] }}
           />
         ))}
       </div>
