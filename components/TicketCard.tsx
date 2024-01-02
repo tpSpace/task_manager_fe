@@ -3,14 +3,17 @@ import { useState } from 'react';
 import CustomButton from './CustomButton';
 import SingleTicket from './SingleTicket';
 
-import { TicketProps } from '@/types';
+import { TagProps, TicketProps } from '@/types';
 
 interface TicketCardProps {
   ticket: TicketProps;
   setFlag: () => void;
+  project: {
+    tags: TagProps[];
+  };
 }
 
-const TicketCard = ({ ticket, setFlag }: TicketCardProps) => {
+const TicketCard = ({ ticket, setFlag, project }: TicketCardProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -34,7 +37,7 @@ const TicketCard = ({ ticket, setFlag }: TicketCardProps) => {
         isOpen={isOpen}
         setFlag={setFlag}
         ticket={ticket}
-        tags={[]}
+        tags={project.tags}
       />
     </div>
   );

@@ -8,11 +8,13 @@ import TicketCard from './TicketCard';
 import TicketCreationForm from './TicketCreationForm';
 
 import CustomButton from '@/components/CustomButton';
-import { StageProps } from '@/types';
+import { ProjectProps, StageProps, TagProps } from '@/types';
+import Projects from '@/app/projects/page';
 
 interface SingleStageProps {
   stage: StageProps;
   setStageChangingFlag: () => void;
+  tags: TagProps[];
 }
 
 const SingleStage: React.FC<SingleStageProps> = ({
@@ -136,6 +138,7 @@ const SingleStage: React.FC<SingleStageProps> = ({
             key={index}
             setFlag={() => setFlag(!flag)}
             ticket={ticket}
+            project={{ tags: [] }}
           />
         ))}
       </div>
