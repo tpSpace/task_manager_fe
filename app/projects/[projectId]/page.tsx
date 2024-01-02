@@ -209,6 +209,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
       );
 
       console.log(responses.data.tickets[0]);
+
       return responses.data.tickets;
     } catch (err) {
       console.log(err);
