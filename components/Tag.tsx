@@ -4,15 +4,32 @@ import { TagProps } from '@/types';
 
 interface TagDetailProps {
   tags: TagProps[];
+  handleSelect: (selected: string) => void;
 }
 
-const Tag = ({ tags }: TagDetailProps) => {
+const Tag: React.FC<TagDetailProps> = ({ tags, handleSelect }) => {
   return (
-    <div>
-      {tags.map((tag, index) => (
-        <span key={index}>{tag.title}</span>
+    <select onChange={(e) => handleSelect(e.target.value)}>
+      <option value="">Select a tag</option>
+      {/* Asking if the array existed */}
+      {tags && tags.map((tag, index) => (
+        <option key={index} value={tag.title}>
+          {tag.title}
+        </option>
       ))}
-    </div>
+      {/* Asking if the array was empty */}
+      {/* {tags?.map((tag, index) => (
+        <option key={index} value={tag.title}>
+          {tag.title}
+        </option>
+      ))} */}
+      {/* Asking if the array was null */}
+      {/* {tags.map((tag, index) => (
+        <option key={index} value={tag.title}>
+          {tag.title}
+        </option>
+      ))} */}
+    </select>
   );
 };
 

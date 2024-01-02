@@ -7,13 +7,16 @@ import { MdDelete } from 'react-icons/md';
 
 import SingleComment from './SingleComment';
 
-import { TicketProps } from '@/types';
+import Tag from './Tag';
+
+import { TagProps, TicketProps } from '@/types';
 
 interface SingleTicketProps {
   isOpen: boolean;
   closeModal: () => void;
   ticket: TicketProps;
   setFlag: () => void;
+  tags: TagProps[];
 }
 
 const SingleTicket = ({
@@ -21,6 +24,7 @@ const SingleTicket = ({
   ticket,
   closeModal,
   setFlag,
+  tags,
 }: SingleTicketProps) => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -65,6 +69,10 @@ const SingleTicket = ({
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleSelect = (selected: string) => {
+    console.log(selected); // replace with your actual handle select function
   };
 
   const loadTicket = async () => {
@@ -158,7 +166,13 @@ const SingleTicket = ({
                         <span> none</span>
                       )}
                     </div>
-                    <div className="place-self-center">GAM</div>
+                    <div className="place-self-center">
+                      {/* Display tag title as a select menu */}
+                      <Tag
+                        handleSelect={handleSelect}
+                        tags={tags}
+                      />
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-3 w-full min-h-[80%]">
