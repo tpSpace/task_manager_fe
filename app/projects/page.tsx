@@ -52,6 +52,7 @@ const Projects = () => {
       .then(res => {
         console.log(res.data);
         setProjects(res.data.projects);
+        getProjectAdminName(res.data.projects);
       })
       .catch(err => {
         console.log(err);
@@ -113,7 +114,6 @@ const Projects = () => {
         },
       })
       .then(res => {
-        console.log(res);
         console.log('Delete project successfully');
         fetchProjects(token);
       })
@@ -132,28 +132,26 @@ const Projects = () => {
         },
       })
       .then(res => {
-        projects.map(project => {
-          if (project.projectId === projectId) {
-            // setProjects(prev => [...prev, project.adminName=res.data.user.name]);
-            project.adminName = res.data.user.name;
-            console.log(project.adminName);
-          }
-        });
+        console.log(res);
+        setProjects(tempProjects =>
+          tempProjects.map(project =>
+            project.projectId === projectId
+              ? { ...project, adminName: res.data.user.name }
+              : project,
+          ),
+        );
       })
+
       .catch(err => {
         console.log(err);
       });
   };
 
-  const getProjectAdminName = () => {
-    projects.map(project => {
+  const getProjectAdminName = (tempProjects: ProjectInforProps[]) => {
+    tempProjects.map(project => {
       getAdminName(project.adminId, project.projectId);
     });
   };
-
-  if (projects) {
-    getProjectAdminName();
-  }
 
   return (
     <div className=" flex flex-col justify-center max-w-screen overflow-x-hidden p-8 ">
