@@ -3,6 +3,7 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import axios from 'axios';
 import Image from 'next/image';
+import { AiOutlineEnter } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
 
 import SingleComment from './SingleComment';
@@ -223,17 +224,17 @@ const SingleTicket = ({
                       {/* Display tag title as a select menu */}
                       <Tag
                         handleSelect={handleSelect}
-                        tags={tags}
                         selectedTag={selectedTag}
+                        tags={tags}
                       />
                       {/* {selectedTag && <div>Tag: {selectedTag}</div>} */}
                     </div>
                   </div>
 
                   <div className="grid grid-cols-3 w-full min-h-[80%]">
-                    <div className="col-span-2">
-                      <div className="grid grid-rows-3 min-h-full">
-                        <div className="row-span-2 mr-1 ml-4 my-1 bg-gray-200 border-black border-2 rounded-2xl">
+                    <div className="col-span-2 p-0 m-0">
+                      <div className="grid grid-rows-5 min-h-full">
+                        <div className="row-span-3 mr-1 ml-4 my-1 bg-gray-200 border-black border-2 rounded-2xl">
                           <h1 className="text-2xl font-semibold text-center">
                             Description
                           </h1>
@@ -250,34 +251,37 @@ const SingleTicket = ({
                           />
                         </div>
 
-                        <div className="flex flex-col items-center mr-1 ml-4 mt-1 mb-2 bg-gray-200 border-black border-2 rounded-2xl overflow-y-auto">
-                          <h1 className="text-2xl font-semibold">Comments</h1>
-                          <div className="min-h-[70%]">
-                            {updatedTicket.comments?.map((comment, index) => (
-                              <SingleComment comment={comment} key={index} />
-                            ))}
-                          </div>
+                        <div className="row-span-2 h-[90%] mr-1 ml-4 mt-1 mb-4">
+                          <div className="h-full grid grid-rows-4 place-items-center bg-gray-200 border-black border-2 rounded-2xl">
+                            <h1 className="text-2xl font-semibold text-center max-h-[60%]">
+                              Comments
+                            </h1>
+                            <div className="row-span-2 min-h-[full] overflow-y-auto">
+                              {updatedTicket.comments?.map((comment, index) => (
+                                <SingleComment comment={comment} key={index} />
+                              ))}
+                            </div>
 
-                          <form className="w-full flex justify-center px-2 place-self-end">
-                            <textarea
-                              className="resize-none h-8 w-full border-black border-2 rounded-3xl"
-                              onChange={e => handleComment(e.target.value)}
-                              placeholder="Add a comment"
-                            />
-                            <button
-                              className="border-black border-2 rounded-3xl"
-                              type="submit"
-                              value="submit"
-                            >
-                              submit
-                            </button>
-                          </form>
+                            <form className="w-[80%] flex justify-center px-2">
+                              <textarea
+                                className="w-[80%] resize-none h-8 border-black border-2 rounded-3xl px-2"
+                                onChange={e => handleComment(e.target.value)}
+                                placeholder="Add a comment"
+                              />
+                              <button
+                                className="border-black border-2 rounded-full max-w-[10%] h-full self-center hover:bg-black hover:text-white"
+                                type="submit"
+                              >
+                                <AiOutlineEnter classname="w-full h-full" />
+                              </button>
+                            </form>
+                          </div>
                         </div>
                       </div>
                     </div>
 
-                    <div className="ml-1 mr-4 mt-1 mb-2 bg-gray-200 border-black border-2 rounded-2xl">
-                      <h1 className="text-3xl font-semibold text-center">
+                    <div className="h-[96%] ml-1 mr-4 mt-1 mb-3 bg-gray-200 border-black border-2 rounded-2xl">
+                      <h1 className="text-2xl font-semibold text-center">
                         Relationship tree
                       </h1>
                     </div>
