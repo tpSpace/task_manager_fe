@@ -8,7 +8,7 @@ import { MdDelete } from 'react-icons/md';
 import SingleComment from './SingleComment';
 import Tag from './Tag';
 
-import { TagProps, TicketProps } from '@/types';
+import { CommentProps, TagProps, TicketProps } from '@/types';
 
 interface SingleTicketProps {
   isOpen: boolean;
@@ -39,6 +39,17 @@ const SingleTicket = ({
     deadline: ticket.deadline,
     creator: ticket.creator,
   });
+
+  const [comment, setComment] = useState<CommentProps>({
+    id: '',
+    commenter: {
+      userName: '',
+      id: '',
+    },
+    content: '',
+  });
+
+  const [comments, setComments] = useState<CommentProps[]>([]);
 
   const handleChangeTitle = (title: string) => {
     setUpdatedTicket(prevTicket => ({
@@ -77,9 +88,16 @@ const SingleTicket = ({
     }
   };
 
-  const handleSelectTag = (selected: string) => {
+  const handleSelectTag = (selectedTag: any) => {
     // replace with your actual handle select function
-    console.log(selected);
+    console.log(selectedTag);
+  };
+
+  const handleComment = (content: string) => {
+    setComment(prevComment => ({
+      ...prevComment,
+      content: content,
+    }));
   };
 
   const loadTicket = async () => {
@@ -188,7 +206,7 @@ const SingleTicket = ({
                     <div className="col-span-2">
                       <div className="grid grid-rows-3 min-h-full">
                         <div className="row-span-2 mr-1 ml-4 my-1 bg-gray-200 border-black border-2 rounded-2xl">
-                          <h1 className="text-3xl font-semibold text-center">
+                          <h1 className="text-2xl font-semibold text-center">
                             Description
                           </h1>
                           <textarea
@@ -204,13 +222,28 @@ const SingleTicket = ({
                           />
                         </div>
 
-                        <div className="mr-1 ml-4 mt-1 mb-2 bg-gray-200 border-black border-2 rounded-2xl">
-                          <h1 className="text-3xl font-semibold text-center">
-                            Comments
-                          </h1>
-                          {updatedTicket.comments?.map((comment, index) => (
-                            <SingleComment comment={comment} key={index} />
-                          ))}
+                        <div className="flex flex-col items-center mr-1 ml-4 mt-1 mb-2 bg-gray-200 border-black border-2 rounded-2xl overflow-y-auto">
+                          <h1 className="text-2xl font-semibold">Comments</h1>
+                          <div className="min-h-[70%]">
+                            {updatedTicket.comments?.map((comment, index) => (
+                              <SingleComment comment={comment} key={index} />
+                            ))}
+                          </div>
+
+                          <form className="w-full flex justify-center px-2 place-self-end">
+                            <textarea
+                              className="resize-none h-8 w-full border-black border-2 rounded-3xl"
+                              onChange={e => handleComment(e.target.value)}
+                              placeholder="Add a comment"
+                            />
+                            <button
+                              className="border-black border-2 rounded-3xl"
+                              type="submit"
+                              value="submit"
+                            >
+                              submit
+                            </button>
+                          </form>
                         </div>
                       </div>
                     </div>

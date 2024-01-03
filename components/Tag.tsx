@@ -4,7 +4,7 @@ import { TagProps } from '@/types';
 
 interface TagDetailProps {
   tags: TagProps[];
-  handleSelect: (selected: string) => void;
+  handleSelect: (selected: any) => void;
 }
 
 const Tag: React.FC<TagDetailProps> = ({ tags, handleSelect }) => {

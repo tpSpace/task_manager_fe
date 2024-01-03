@@ -76,6 +76,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
     }
   }, [projectData.adminId, projectData.memberIds]);
 
+  // third useEffect, use for re-render stages when something change in stages
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (projectData.stageIds) {
@@ -150,7 +151,6 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
         },
       })
       .then(res => {
-        console.log(res.data.tags);
         setProject(prevProject => ({
           ...prevProject,
           tags: res.data.tags,
