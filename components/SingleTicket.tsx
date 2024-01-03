@@ -27,6 +27,8 @@ const SingleTicket = ({
 }: SingleTicketProps) => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+
   const [updatedTicket, setUpdatedTicket] = useState<TicketProps>({
     ticketId: ticket.ticketId,
     title: ticket.title,
@@ -88,17 +90,38 @@ const SingleTicket = ({
     }
   };
 
-  const handleSelectTag = (selectedTag: any) => {
+  const handleSelect = async (selected: string) => {
     // replace with your actual handle select function
-    console.log(selectedTag);
+    const token = localStorage.getItem('token');
+    try {
+      await axios.put(
+        `${API_URL}/tickets/update/${ticket.ticketId}`,
+        {
+          tag: selected, // update the tag
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      console.log('Ticket updated successfully');
+      setSelectedTag(selected); // update the selected tag in the state
+      localStorage.setItem(`selectedTag-${ticket.ticketId}`, selected); // save the selected tag in localStorage
+    } catch (err) {
+      console.log(err);
+    }
+    console.log(selected);
   };
 
-  const handleComment = (content: string) => {
-    setComment(prevComment => ({
-      ...prevComment,
-      content: content,
-    }));
-  };
+  useEffect(() => {
+    const savedTag = localStorage.getItem(`selectedTag-${ticket.ticketId}`);
+    if (savedTag) {
+      setSelectedTag(savedTag);
+    }
+  }, [ticket.ticketId]);
+
+  const handleComment = (content: string) => {};
 
   const loadTicket = async () => {
     const token = localStorage.getItem('token');
@@ -198,7 +221,12 @@ const SingleTicket = ({
                     </div>
                     <div className="place-self-center">
                       {/* Display tag title as a select menu */}
-                      <Tag handleSelect={handleSelectTag} tags={tags} />
+                      <Tag
+                        handleSelect={handleSelect}
+                        tags={tags}
+                        selectedTag={selectedTag}
+                      />
+                      {/* {selectedTag && <div>Tag: {selectedTag}</div>} */}
                     </div>
                   </div>
 
