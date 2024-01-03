@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { MdDelete } from 'react-icons/md';
 
 import SingleComment from './SingleComment';
-
 import Tag from './Tag';
 
 import { TagProps, TicketProps } from '@/types';
@@ -28,6 +27,8 @@ const SingleTicket = ({
 }: SingleTicketProps) => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
+  const [selectedTag, setSelectedTag] = useState<string | null>(null);
+
   const [updatedTicket, setUpdatedTicket] = useState<TicketProps>({
     ticketId: ticket.ticketId,
     title: ticket.title,
@@ -41,17 +42,24 @@ const SingleTicket = ({
     creator: ticket.creator,
   });
 
-  const handleChangeTitle = async (title: string) => {
+  const handleChangeTitle = (title: string) => {
     setUpdatedTicket(prevTicket => ({
       ...prevTicket,
       title: title,
     }));
   };
 
-  const handleChangeDescription = async (description: string) => {
+  const handleChangeDescription = (description: string) => {
     setUpdatedTicket(prevTicket => ({
       ...prevTicket,
       description: description,
+    }));
+  };
+
+  const handleChangeDeadline = (date: Date) => {
+    setUpdatedTicket(prevTicket => ({
+      ...prevTicket,
+      deadline: date.toISOString(),
     }));
   };
 
@@ -71,9 +79,36 @@ const SingleTicket = ({
     }
   };
 
-  const handleSelect = (selected: string) => {
-    console.log(selected); // replace with your actual handle select function
+  const handleSelect = async (selected: string) => {
+    // replace with your actual handle select function
+    const token = localStorage.getItem('token');
+    try {
+      await axios.put(
+        `${API_URL}/tickets/update/${ticket.ticketId}`,
+        {
+          tag: selected, // update the tag
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      );
+      console.log('Ticket updated successfully');
+      setSelectedTag(selected); // update the selected tag in the state
+      localStorage.setItem(`selectedTag-${ticket.ticketId}`, selected); // save the selected tag in localStorage
+    } catch (err) {
+      console.log(err);
+    }
+    console.log(selected);
   };
+
+  useEffect(() => {
+    const savedTag = localStorage.getItem(`selectedTag-${ticket.ticketId}`);
+    if (savedTag) {
+      setSelectedTag(savedTag);
+    }
+  }, [ticket.ticketId]);
 
   const loadTicket = async () => {
     const token = localStorage.getItem('token');
@@ -160,18 +195,26 @@ const SingleTicket = ({
                     <div className="self-center">Assignees: </div>
                     <div className="place-self-center">
                       Deadline:
-                      {updatedTicket.deadline ? (
-                        <span> 20-12-2023</span>
-                      ) : (
-                        <span> none</span>
-                      )}
+                      <input
+                        onBlur={() => {
+                          loadTicket();
+                          setFlag();
+                        }}
+                        onChange={e =>
+                          handleChangeDeadline(e.target.valueAsDate!)
+                        }
+                        type="date"
+                        value={`${updatedTicket.deadline?.slice(0, 10)}`}
+                      />
                     </div>
                     <div className="place-self-center">
                       {/* Display tag title as a select menu */}
                       <Tag
                         handleSelect={handleSelect}
+                        selectedTag={selectedTag}
                         tags={tags}
                       />
+                      {/* {selectedTag && <div>Tag: {selectedTag}</div>} */}
                     </div>
                   </div>
 
@@ -183,7 +226,7 @@ const SingleTicket = ({
                             Description
                           </h1>
                           <textarea
-                            className="w-full h-[80%] bg-gray-200 focus:outline-0 pl-1"
+                            className="w-full h-[80%] bg-gray-200 focus:outline-0 pl-1 resize-none"
                             onBlur={e => {
                               loadTicket();
                             }}
