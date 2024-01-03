@@ -8,8 +8,9 @@ import { ProjectProps, StageProps } from '@/types';
 
 interface ListStagesProps {
   project: ProjectProps;
+  setStageChangingFlag: () => void;
 }
-const ListStages = ({ project }: ListStagesProps) => {
+const ListStages = ({ project, setStageChangingFlag }: ListStagesProps) => {
   const [isStageFormOpen, setIsStageFormOpen] = useState(false);
 
   const openStageForm = () => {
@@ -23,7 +24,12 @@ const ListStages = ({ project }: ListStagesProps) => {
   return (
     <div className="flex flex-row py-10 h-[90%] w-full overflow-x-scroll">
       {project.stages?.map((stage, index) => (
-        <SingleStage key={index} stage={stage} />
+        <SingleStage
+          key={index}
+          setStageChangingFlag={setStageChangingFlag}
+          stage={stage}
+          tags={project.tags}
+        />
       ))}
       <CustomButton
         containerStyles="mt-20 mx-10 min-w-[20%] h-[80%] rounded-lg border border-black justify-between text-6xl"
@@ -31,7 +37,11 @@ const ListStages = ({ project }: ListStagesProps) => {
         title="+"
       ></CustomButton>
       {isStageFormOpen && (
-        <StageCreationForm onClose={closeStageForm} projectId={project} />
+        <StageCreationForm
+          onClose={closeStageForm}
+          projectId={project}
+          setStageChangingFlag={setStageChangingFlag}
+        />
       )}
     </div>
   );

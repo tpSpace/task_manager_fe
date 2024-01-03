@@ -8,13 +8,19 @@ import TicketCard from './TicketCard';
 import TicketCreationForm from './TicketCreationForm';
 
 import CustomButton from '@/components/CustomButton';
-import { StageProps } from '@/types';
+import { StageProps, TagProps } from '@/types';
 
 interface SingleStageProps {
   stage: StageProps;
+  setStageChangingFlag: () => void;
+  tags: TagProps[];
 }
 
-const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
+const SingleStage: React.FC<SingleStageProps> = ({
+  stage,
+  setStageChangingFlag,
+  tags,
+}) => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const [flag, setFlag] = useState<boolean>(true);
@@ -42,6 +48,7 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
       .then(res => {
         console.log(res.data);
         console.log('Delete stage successfully');
+        setStageChangingFlag();
       })
       .catch(err => {
         console.log(err);
@@ -128,9 +135,9 @@ const SingleStage: React.FC<SingleStageProps> = ({ stage }) => {
       <div className="flex flex-col justify-between items-center overflow-x-hidden overflow-y-auto max-h-96">
         {updatedStage.tickets?.map((ticket, index) => (
           <TicketCard
-            flag={flag}
             key={index}
             setFlag={() => setFlag(!flag)}
+            tags={tags}
             ticket={ticket}
           />
         ))}

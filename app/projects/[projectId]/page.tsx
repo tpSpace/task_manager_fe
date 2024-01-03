@@ -41,6 +41,8 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
     tags: [],
   });
 
+  const [stageChangingFlag, setStageChangingFlag] = useState<boolean>(true);
+
   // main useEffect, use for fetching the whole project
   useEffect(() => {
     fetchProject(token).then(res => {
@@ -72,11 +74,14 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
     if (projectData.memberIds) {
       fetchMembers(token);
     }
+  }, [projectData.adminId, projectData.memberIds]);
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
     if (projectData.stageIds) {
       updateStages(token);
     }
-  }, [projectData]);
+  }, [projectData.stageIds, stageChangingFlag]);
 
   // fetch all the Ids of all stages, members, and admin
   const fetchProject = async (token: string | null) => {
@@ -145,9 +150,10 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
         },
       })
       .then(res => {
+        console.log(res.data.tags);
         setProject(prevProject => ({
           ...prevProject,
-          tags: res.data.tag,
+          tags: res.data.tags,
         }));
       })
       .catch(err => {
@@ -213,7 +219,10 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
 
   return (
     <div className="h-[90%] w-full">
-      <SingleProject project={project} />
+      <SingleProject
+        project={project}
+        setStageChangingFlag={() => setStageChangingFlag(!stageChangingFlag)}
+      />
     </div>
   );
 };

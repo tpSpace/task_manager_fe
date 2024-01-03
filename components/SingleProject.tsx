@@ -10,9 +10,13 @@ import { ProjectProps } from '@/types';
 
 interface SingleProjectProps {
   project: ProjectProps;
+  setStageChangingFlag: () => void;
 }
 
-const SingleProject = ({ project }: SingleProjectProps) => {
+const SingleProject = ({
+  project,
+  setStageChangingFlag,
+}: SingleProjectProps) => {
   return (
     <div className="w-full h-full flex flex-row border-2">
       <div className="w-[15%] min-w-[150px] h-full flex flex-col border border-black-100">
@@ -53,7 +57,10 @@ const SingleProject = ({ project }: SingleProjectProps) => {
             <div className="font-bold text-4xl">{project.title}</div>
             <div>Setting</div>
           </div>
-          <ListStages project={project} />
+          <ListStages
+            project={project}
+            setStageChangingFlag={setStageChangingFlag}
+          />
           {/* <KanbanBoard project={project} /> */}
         </div>
       </div>
