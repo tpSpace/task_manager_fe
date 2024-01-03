@@ -190,6 +190,7 @@ items-center justify-between text-white mt-20"
               <Image
                 alt={`Icon ${index + 1}`}
                 height={20}
+                priority={true}
                 src="/logo"
                 width={20}
               />
