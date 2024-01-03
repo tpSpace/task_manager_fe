@@ -143,14 +143,15 @@ const Projects = () => {
       .catch(err => {
         console.log(err);
       });
-  }
+  };
 
-  const getProjectAdminName = () =>{
+  const getProjectAdminName = () => {
     projects.map(project => {
       getAdminName(project.adminId, project.projectId);
     });
-  }
+  };
   getProjectAdminName();
+
   return (
     <div className=" flex flex-col justify-center max-w-screen overflow-x-hidden p-8 ">
       <div className={' flex justify-end w-screen relative '}>
@@ -203,7 +204,9 @@ const Projects = () => {
                 {project.title}
               </span>
               <span
-                className={" absolute bottom-2 left-2 font-semibold font-['Montserrat'] text-black "}
+                className={
+                  " absolute bottom-2 left-2 font-semibold font-['Montserrat'] text-black "
+                }
               >
                 Created by: {project.adminName}
               </span>

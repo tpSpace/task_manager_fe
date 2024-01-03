@@ -16,13 +16,13 @@ const Tag: React.FC<TagDetailProps> = ({ tags, handleSelect, selectedTag }) => {
       sortedTags = [
         tags[selectedIndex],
         ...tags.slice(0, selectedIndex),
-        ...tags.slice(selectedIndex + 1)
+        ...tags.slice(selectedIndex + 1),
       ];
     }
   }
+
   return (
-    <select 
-      value={selectedTag || ''} 
+    <select
       onChange={e => handleSelect(e.target.value)}
       style={{
         fontFamily: 'Arial, sans-serif',
@@ -43,15 +43,18 @@ const Tag: React.FC<TagDetailProps> = ({ tags, handleSelect, selectedTag }) => {
         display: 'flex',
         justifyContent: 'center',
       }}
+      value={selectedTag || ''}
     >
       <option value="">Select a tag</option>
       {sortedTags &&
-        sortedTags
-          .map((tag) => (
-            tag && <option key={tag.title} value={tag.title}>
-              {tag.title}
-            </option>
-        ))}
+        sortedTags.map(
+          tag =>
+            tag && (
+              <option key={tag.title} value={tag.title}>
+                {tag.title}
+              </option>
+            ),
+        )}
     </select>
   );
 };

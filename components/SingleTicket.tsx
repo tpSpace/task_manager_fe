@@ -92,7 +92,7 @@ const SingleTicket = ({
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       console.log('Ticket updated successfully');
       setSelectedTag(selected); // update the selected tag in the state
@@ -209,7 +209,11 @@ const SingleTicket = ({
                     </div>
                     <div className="place-self-center">
                       {/* Display tag title as a select menu */}
-                      <Tag handleSelect={handleSelect} tags={tags} selectedTag={selectedTag} />
+                      <Tag
+                        handleSelect={handleSelect}
+                        selectedTag={selectedTag}
+                        tags={tags}
+                      />
                       {/* {selectedTag && <div>Tag: {selectedTag}</div>} */}
                     </div>
                   </div>
