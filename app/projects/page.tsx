@@ -52,7 +52,6 @@ const Projects = () => {
       .then(res => {
         console.log(res);
         setProjects(res.data.projects);
-        console.log(projects);
         getProjectAdminName(res.data.projects);
       })
       .catch(err => {
