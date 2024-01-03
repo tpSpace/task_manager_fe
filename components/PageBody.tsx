@@ -181,7 +181,7 @@ const PageBody: React.FC = () => {
           </div>
 
           <div className="font-medium text-black text-center px-4 sm:px-6 lg:px-20 pt-8 sm:pt-10 md:pt-14 lg:pt-16 text-md sm:text-xl md:text-2xl lg:text-3xl">
-          &quot;We got rid of nearly a dozen different tools because of what
+            &quot;We got rid of nearly a dozen different tools because of what
             Tasking does for us.&quot;
           </div>
 
