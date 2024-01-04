@@ -38,8 +38,10 @@ const Tag: React.FC<TagDetailProps> = ({ tags, handleSelect, selectedTag }) => {
         fontWeight: 'bold',
         textAlign: 'center',
         marginTop: '4px',
-        WebkitAppearance: 'none', // Hide the arrow in WebKit browsers
-        appearance: 'none', // Hide the arrow in other browsers
+        // Hide the arrow in WebKit browsers
+        WebkitAppearance: 'none',
+        // Hide the arrow in other browsers
+        appearance: 'none',
         display: 'flex',
         justifyContent: 'center',
       }}
