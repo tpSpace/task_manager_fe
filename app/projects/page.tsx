@@ -42,21 +42,51 @@ const Projects = () => {
     fetchProjects(token);
   }, []);
 
-  const fetchProjects = async (token: string | null) => {
-    await axios
-      .get(`${API_URL}/projects/get`, {
+  const fetchAdmin = async (adminId: string, projectId: string) => {
+    const token = localStorage.getItem('token');
+    const res = await axios.get(`${API_URL}/auth/user/${adminId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then(res => {
-        console.log(res);
-        setProjects(res.data.projects);
-        getProjectAdminName(res.data.projects);
+    return res.data;
+  }
+
+  // const fetchProjects = async (token: string | null) => {
+  //   await axios
+  //     .get(`${API_URL}/projects/get`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     })
+  //     .then(res => {
+  //       //console.log(res);
+  //       setProjects(res.data.projects);
+  //       getProjectAdminName(res.data.projects);
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //     });
+  // };
+  const fetchProjects = async (token: string | null) => {
+    const {data:{projects}} = await axios.get(`${API_URL}/projects/get`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       })
-      .catch(err => {
-        console.log(err);
+      const projectData = await Promise.all(
+        projects.map(async(project:ProjectInforProps) =>{
+          return await fetchAdmin(project.adminId, project.projectId);
+        }
+      ));
+      const filteredData = projects.map ((project:ProjectInforProps) => {
+        const admin = projectData.find((data:any) => data.user.userId===project.adminId);
+        if (admin){
+          return {...project, adminName: admin.user.name};
+        }
+        return project;
       });
+      setProjects(filteredData);
   };
   const handleCreateProject = async () => {
     const token = localStorage.getItem('token');
@@ -132,7 +162,7 @@ const Projects = () => {
         },
       })
       .then(res => {
-        console.log(res);
+        //console.log(res);
         setProjects(tempProjects =>
           tempProjects.map(project =>
             project.projectId === projectId
