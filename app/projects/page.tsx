@@ -178,7 +178,7 @@ const Projects = () => {
             <button
               className={
                 ' flex relative w-72 h-48 bg-neutral-100 rounded-3xl border-[3px] border-black hover:scale-105' +
-                ' hover:border-[4px] shadow shadow-black hover:ease-out hover:duration-100 hover:bg-neutral-200 '
+                ' hover:border-[4px] shadow shadow-black hover:ease-out hover:duration-100 hover:bg-neutral-200 pointer-events-auto '
               }
               key={project.projectId}
               onClick={() => router.push(`projects/${project.projectId}`)}
@@ -189,7 +189,10 @@ const Projects = () => {
                   ' text-2xl z-10 hover:scale-125 absolute top-3 right-3 ' +
                   ' cursor-pointer hover:ease-out hover:duration-200 '
                 }
-                onClick={() => handleDelete(project.projectId)}
+                onClick={(event: MouseEvent) => {
+                  event.stopPropagation();
+                  handleDelete(project.projectId)
+                }}
               />
               <span
                 className={
@@ -213,8 +216,8 @@ const Projects = () => {
             title="+"
           />
           <AddProjectPopUp setTrigger={setPopup} trigger={Popup}>
-            <div className="grid grid-cols-2 border-none">
-              <div className="bg-white w-[320px] h-[480px] rounded-tl-[20px] rounded-bl-[20px] flex flex-col border-none">
+            <div className=" grid grid-cols-2 border-none ">
+              <div className=" bg-white w-[320px] h-[480px] rounded-tl-[20px] rounded-bl-[20px] flex flex-col border-none ">
                 <span
                   className="font-['Montserrat'] text-[35px] text-center font-medium w-[290px] h-[3.125rem]
                 mt-[2.69rem] bg-black text-white rounded-[20px] ml-3.5 "
@@ -223,7 +226,7 @@ const Projects = () => {
                 </span>
                 <button
                   className=" flex items-center justify-center w-[10rem] h-[10rem] bg-white text-black border-4 rounded-[20px] text-[60px] hover:scale-105
-                 mt-[4.12rem] ml-[5rem] border-black font-medium hover:ease-out hover:duration-300 pb-3 hover:pb-4 "
+                 mt-[4.12rem] ml-[5rem] border-black font-medium hover:ease-out hover:duration-100 pb-3 hover:pb-4 "
                   onClick={() => {
                     handleCreateProject();
                     setPopup(false);
@@ -256,7 +259,7 @@ const Projects = () => {
                 />
                 <button
                   className="text-black text-center w-[6rem] h-[3.125rem] bg-white rounded-[20px] mt-5 ml-[110px]
-                font-['Montserrat'] text-2xl font-medium hover:font-semibold hover:text-3xl hover:ease-out hover:duration-200"
+                font-['Montserrat'] text-2xl font-medium hover:font-semibold hover:text-3xl hover:ease-out hover:duration-100"
                   onClick={() => {
                     handleJoinProject();
                     setPopup(false);
