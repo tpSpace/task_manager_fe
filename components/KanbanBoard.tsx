@@ -201,26 +201,33 @@ function KanbanBoard({ project }: ProjectDetailProps) {
   }
 
   function createNewColumn() {
-    const columnToAdd: Column = {
-      id: generateId(),
-      title: `Column ${columns.length + 1}`,
-    };
+    let columnToAdd: Column = {} as Column;
+
     async function createColumn() {
       console.log('create column');
-      await axios.post(
-        `${API_URL}/stages/create/${project.id}`,
-        {
-          title: columnToAdd.title,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
+      await axios
+        .post(
+          `${API_URL}/stages/create/${project.id}`,
+          {
+            title: 'New Column',
           },
-        },
-      );
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        )
+        .then(res => {
+          console.log('Create stage successfully');
+          columnToAdd = {
+            id: res.data.stageId,
+            title: columnToAdd.title,
+          } as Column;
+
+          setColumns([...columns, columnToAdd]);
+        });
     }
     createColumn();
-    setColumns([...columns, columnToAdd]);
   }
 
   function deleteColumn(id: string) {

@@ -13,8 +13,6 @@ interface ProjectDetailProps {
   adminId: string;
 }
 
-const token = localStorage.getItem('token');
-
 const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   // state storing all the Ids return from backend
@@ -43,6 +41,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
 
   // main useEffect, use for fetching the whole project
   useEffect(() => {
+    const token = localStorage.getItem('token');
     fetchProject(token).then(res => {
       // get all the Ids
       setProjectData(prevData => ({
