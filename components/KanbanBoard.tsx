@@ -41,24 +41,8 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 function KanbanBoard({ project }: ProjectDetailProps) {
   const [columns, setColumns] = useState<Column[]>([]);
   const columnsId = useMemo(() => columns?.map(col => col.id), [columns]);
-  const defaultTasks = (): Task[] => {
-    const tasks: Task[] = [];
-    project.stages.forEach(stage => {
-      if (!stage.tickets) return;
-      stage.tickets.forEach(ticket => {
-        tasks.push({
-          id: ticket.ticketId,
-          columnId: stage.id,
-          content: ticket.title,
-        });
-      });
-    });
-    // console.log("tickets:"+project.stages[0].tickets![0].title);
-    console.log('tickets:' + tasks);
 
-    return tasks;
-  };
-  const [tasks, setTasks] = useState<Task[]>(defaultTasks);
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
 
@@ -73,7 +57,20 @@ function KanbanBoard({ project }: ProjectDetailProps) {
       } as ColumnData);
     });
     setColumns(columns);
-  }, [project]);
+
+    const tasks: Task[] = [];
+    project.stages.forEach(stage => {
+      if (!stage.tickets) return;
+      stage.tickets.forEach(ticket => {
+        tasks.push({
+          id: ticket.ticketId,
+          columnId: stage.id,
+          content: ticket.title,
+        });
+      });
+    });
+    setTasks(tasks);
+  }, []);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
