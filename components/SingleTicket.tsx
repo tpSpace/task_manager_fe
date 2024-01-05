@@ -46,7 +46,7 @@ const SingleTicket = ({
   const [comment, setComment] = useState<CommentProps>({
     id: '',
     commenter: {
-      userName: '',
+      name: '',
       id: '',
     },
     content: '',
@@ -83,7 +83,7 @@ const SingleTicket = ({
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log('Ticket deleted successfully');
+      console.log(`Ticket ${ticket.title} deleted sucessfully`);
       setFlag();
       closeModal();
     } catch (err) {
@@ -127,6 +127,7 @@ const SingleTicket = ({
   const loadTicket = async () => {
     const token = localStorage.getItem('token');
     try {
+      console.log('updating ticket: ', updatedTicket);
       await axios.put(
         `${API_URL}/tickets/update/${ticket.ticketId}`,
         updatedTicket,
@@ -137,6 +138,7 @@ const SingleTicket = ({
         },
       );
       setFlag();
+      console.log(`Ticket ${ticket.title} updated`);
     } catch (err) {
       console.log(err);
     }
@@ -175,7 +177,9 @@ const SingleTicket = ({
               >
                 <Dialog.Panel className="relative w-full max-w-full h-[70vh] min-h-full max-h-[80vh] transform rounded-2xl bg-white text-left shadow-xl transition-all flex-col">
                   <div className="grid grid-cols-3 pt-2 px-2 border-black border-b-2 min-h-[10%]">
-                    <div className="self-center">Created by </div>
+                    <div className="self-center">
+                      Created by {updatedTicket.creator.name}
+                    </div>
                     <input
                       className="text-3xl text-center font-bold focus:outline-0"
                       onBlur={() => {
@@ -272,7 +276,7 @@ const SingleTicket = ({
                                 className="border-black border-2 rounded-full max-w-[10%] h-full self-center hover:bg-black hover:text-white"
                                 type="submit"
                               >
-                                <AiOutlineEnter classname="w-full h-full" />
+                                <AiOutlineEnter className="w-full h-full" />
                               </button>
                             </form>
                           </div>

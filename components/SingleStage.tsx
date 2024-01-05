@@ -93,6 +93,7 @@ const SingleStage: React.FC<SingleStageProps> = ({
       );
 
       console.log(`Stage ${stage.title}'s tickets reloaded`);
+      console.log(responses.data.tickets);
       setUpdatedStage(prevStage => ({
         ...prevStage,
         tickets: responses.data.tickets,
@@ -117,7 +118,6 @@ const SingleStage: React.FC<SingleStageProps> = ({
           <input
             className="text-white bg-inherit w-full ml-1 text-2xl rounded-full"
             onBlur={e => {
-              setFlag(!flag);
               handleChangeStage(e.target.value);
               updateStage();
             }}

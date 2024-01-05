@@ -33,7 +33,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
     admin: {
       avatar: '',
       email: '',
-      userName: '',
+      name: '',
       token: '',
       id: '',
     },
@@ -108,7 +108,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
           admin: {
             avatar: res.data.user.avatar,
             email: res.data.user.email,
-            userName: res.data.user.name,
+            name: res.data.user.name,
             token: res.data.user.token,
             id: res.data.user.userId,
           },
@@ -132,7 +132,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
     const members = responses.map(response => ({
       avatar: response.data.user.avatar,
       email: response.data.user.email,
-      userName: response.data.user.name,
+      name: response.data.user.name,
       token: response.data.user.token,
       id: response.data.user.userId,
     }));
@@ -208,8 +208,6 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
           },
         },
       );
-
-      console.log(responses.data.tickets[0]);
 
       return responses.data.tickets;
     } catch (err) {
