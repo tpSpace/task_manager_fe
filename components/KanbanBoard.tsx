@@ -70,7 +70,8 @@ function KanbanBoard({ project }: ProjectDetailProps) {
       });
     });
     setTasks(tasks);
-  }, []);
+  }, [project.stages]);
+  console.log('tasks', project);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -118,24 +119,24 @@ function KanbanBoard({ project }: ProjectDetailProps) {
           </div>
           <button
             className="
-                h-[60px]
-                w-[350px]
-                min-w-[350px]
-                cursor-pointer
-                rounded-lg
-                bg-mainBackgroundColor
-                border-2
-                border-columnBackgroundColor
-                p-4
-                text-white
-                ring-rose-500
-                hover:ring-2
-                flex
-                flex-row
-                justify-center
-                items-center
-                gap-2
-                "
+              h-[60px]
+              w-[350px]
+              min-w-[350px]
+              cursor-pointer
+              rounded-lg
+              bg-mainBackgroundColor
+              border-2
+              border-columnBackgroundColor
+              p-4
+              text-white
+              ring-rose-500
+              hover:ring-2
+              flex
+              flex-row
+              justify-center
+              items-center
+              gap-2
+            "
             onClick={() => {
               createNewColumn();
             }}
@@ -218,7 +219,7 @@ function KanbanBoard({ project }: ProjectDetailProps) {
           console.log('Create stage successfully');
           columnToAdd = {
             id: res.data.stageId,
-            title: columnToAdd.title,
+            title: 'New Column',
           } as Column;
 
           setColumns([...columns, columnToAdd]);
