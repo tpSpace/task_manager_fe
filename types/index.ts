@@ -47,7 +47,7 @@ export interface TicketProps {
   tag?: TagProps;
   parent?: TicketProps;
   children?: TicketProps[];
-  deadline?: TimeRanges;
+  deadline?: string;
   creator: UserProps;
 }
 

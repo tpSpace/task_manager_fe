@@ -15,6 +15,7 @@ interface ProjectDetailProps {
 
 const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const token = localStorage.getItem('token');
   // state storing all the Ids return from backend
   const [projectData, setProjectData] = useState<ProjectDetailProps>({
     stageIds: [],
@@ -39,9 +40,10 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
     tags: [],
   });
 
+  const [stageChangingFlag, setStageChangingFlag] = useState<boolean>(true);
+
   // main useEffect, use for fetching the whole project
   useEffect(() => {
-    const token = localStorage.getItem('token');
     fetchProject(token).then(res => {
       // get all the Ids
       setProjectData(prevData => ({
@@ -63,7 +65,6 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
 
   // second useEffect, use for fetching data that required Ids from the first fetching
   useEffect(() => {
-    const token = localStorage.getItem('token');
     if (projectData.adminId) {
       fetchAdmin(token);
     }
@@ -71,11 +72,14 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
     if (projectData.memberIds) {
       fetchMembers(token);
     }
+  }, [projectData.adminId, projectData.memberIds]);
 
+  useEffect(() => {
+    const token = localStorage.getItem('token');
     if (projectData.stageIds) {
       updateStages(token);
     }
-  }, [projectData]);
+  }, [projectData.stageIds, stageChangingFlag]);
 
   // fetch all the Ids of all stages, members, and admin
   const fetchProject = async (token: string | null) => {
@@ -144,9 +148,10 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
         },
       })
       .then(res => {
+        console.log(res.data.tags);
         setProject(prevProject => ({
           ...prevProject,
-          tags: res.data.tag,
+          tags: res.data.tags,
         }));
       })
       .catch(err => {
@@ -212,7 +217,10 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
 
   return (
     <div className="h-[90%] w-full">
-      <SingleProject project={project} />
+      <SingleProject
+        project={project}
+        setStageChangingFlag={() => setStageChangingFlag(!stageChangingFlag)}
+      />
     </div>
   );
 };
