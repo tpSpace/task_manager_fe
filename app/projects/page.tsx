@@ -196,7 +196,7 @@ const Projects = () => {
                 }
                 onClick={(event: MouseEvent) => {
                   event.stopPropagation();
-                  handleDelete(project.projectId)
+                  handleDelete(project.projectId);
                 }}
               />
               <span
