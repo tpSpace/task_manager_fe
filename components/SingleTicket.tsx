@@ -98,23 +98,6 @@ const SingleTicket = ({
       tag: tags.find(tag => tag.title === selected),
       }));
     loadTicket();
-    // try {
-    //   // Update the ticket object with the new selected tag
-    //   await axios.put(
-    //     `${API_URL}/tickets/update/${ticket.ticketId}`,
-    //     updatedTicket,
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer ${token}`,
-    //       },
-    //     }
-    //   );
-    //   console.log('Ticket updated successfully');
-    //   //localStorage.setItem(`ticket-${ticket.ticketId}`, JSON.stringify(updatedTicket));
-    //   setFlag();
-    // } catch (err) {
-    //   console.log(err);
-    // }
     console.log(selected);
   };
 
