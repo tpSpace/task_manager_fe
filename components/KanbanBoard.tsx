@@ -174,12 +174,35 @@ function KanbanBoard({ project }: ProjectDetailProps) {
   );
 
   function createTask(columnId: string) {
-    const newTask: Task = {
-      id: generateId(),
-      columnId: columnId,
-      content: `Task ${tasks.length + 1}`,
-    };
-
+    let newTask: Task = {} as Task;
+    async function createTask() {
+      await axios
+        .post(
+          `${API_URL}/tickets/create/${columnId}`,
+          {
+            title: 'New Task',
+            description: 'New Task',
+            assignedUserIds: [project.admin],
+            deadline: new Date(),
+            parentTicketId: '',
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        )
+        .then(res => {
+          console.log('Create ticket successfully');
+          newTask.id = res.data.ticketId;
+          newTask = {
+            id: res.data.ticketId,
+            columnId: columnId,
+            content: 'New Task',
+          } as Task;
+        });
+    }
+    createTask();
     setTasks([...tasks, newTask]);
   }
 
