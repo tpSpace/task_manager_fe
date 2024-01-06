@@ -14,7 +14,7 @@ const AddProjectPopUp = (props: PopupProps) => {
     >
       <div
         className="w-full h-full max-w-[640px] max-h-[480px] bg-black relative rounded-[20px] border-none shadow shadow-black drop-shadow-2xl"
-        onClick={(event) => event.stopPropagation()}
+        onClick={event => event.stopPropagation()}
       >
         <button
           className="absolute top-[16px] right-[16px] border-none bg-transparent text-white h-[25px] w-[25px] text-[20px] font-bold -mt-[10px] hover:scale-125 hover:ease-out hover:duration-200"
