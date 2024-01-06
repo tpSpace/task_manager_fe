@@ -29,15 +29,14 @@ const Tag: React.FC<TagDetailProps> = ({ tags, handleSelect, selectedTag }) => {
       value={selectedTag || ''}
     >
       <option value="">Select a tag</option>
-      {sortedTags &&
-        sortedTags.map(
-          tag =>
-            tag && (
-              <option key={tag.title} value={tag.title}>
-                {tag.title}
-              </option>
-            ),
-        )}
+      {sortedTags?.map(
+        tag =>
+          tag && (
+            <option key={tag.title} value={tag.title}>
+              {tag.title}
+            </option>
+          ),
+      )}
     </select>
   );
 };
