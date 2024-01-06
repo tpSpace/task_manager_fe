@@ -55,14 +55,14 @@ const LoginPage = () => {
         >
           <input
             autoComplete="email"
-            className="border-2 border-black p-1 bg-slate-100"
+            className="border-2 border-black p-1 bg-slate-100 rounded-full"
             placeholder="Enter your email"
             type="text"
             {...register('email')}
           />
           <input
             autoComplete="current-password"
-            className="border-2 border-black p-1 bg-slate-100"
+            className="border-2 border-black p-1 bg-slate-100 rounded-full"
             placeholder="Enter your password"
             type="password"
             {...register('password')}

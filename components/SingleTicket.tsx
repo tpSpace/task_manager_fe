@@ -98,7 +98,8 @@ const SingleTicket = ({
       await axios.put(
         `${API_URL}/tickets/update/${ticket.ticketId}`,
         {
-          tag: selected, // update the tag
+          // update the tag
+          tag: selected,
         },
         {
           headers: {
@@ -107,8 +108,10 @@ const SingleTicket = ({
         },
       );
       console.log('Ticket updated successfully');
-      setSelectedTag(selected); // update the selected tag in the state
-      localStorage.setItem(`selectedTag-${ticket.ticketId}`, selected); // save the selected tag in localStorage
+      // update the selected tag in the state
+      setSelectedTag(selected);
+      // save the selected tag in localStorage
+      localStorage.setItem(`selectedTag-${ticket.ticketId}`, selected);
     } catch (err) {
       console.log(err);
     }

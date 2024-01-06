@@ -13,10 +13,9 @@ interface ProjectDetailProps {
   adminId: string;
 }
 
-const token = localStorage.getItem('token');
-
 const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const token = localStorage.getItem('token');
   // state storing all the Ids return from backend
   const [projectData, setProjectData] = useState<ProjectDetailProps>({
     stageIds: [],
@@ -66,7 +65,6 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
 
   // second useEffect, use for fetching data that required Ids from the first fetching
   useEffect(() => {
-    const token = localStorage.getItem('token');
     if (projectData.adminId) {
       fetchAdmin(token);
     }
