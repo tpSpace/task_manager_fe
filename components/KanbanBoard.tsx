@@ -181,9 +181,9 @@ function KanbanBoard({ project }: ProjectDetailProps) {
           `${API_URL}/tickets/create/${columnId}`,
           {
             title: 'New Task',
-            description: 'New Task',
-            assignedUserIds: [project.admin],
-            deadline: new Date(),
+            description: 'idk man',
+            assignedUserIds: [project.admin.id],
+            deadline: new Date().toISOString(),
             parentTicketId: '',
           },
           {
@@ -200,10 +200,10 @@ function KanbanBoard({ project }: ProjectDetailProps) {
             columnId: columnId,
             content: 'New Task',
           } as Task;
+          setTasks([...tasks, newTask]);
         });
     }
     createTask();
-    setTasks([...tasks, newTask]);
   }
 
   function deleteTask(id: Id) {
