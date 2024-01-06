@@ -47,7 +47,7 @@ const LoginPage = () => {
 
   return (
     <div className="flex justify-center items-center h-[90%] flex-col">
-      <h1 className="text-5xl font-bold">Log in</h1>
+      <h1 className="text-5xl font-semibold font-['Roboto']">Login</h1>
       <div className="">
         <form
           className="flex flex-col m-4 gap-4"
