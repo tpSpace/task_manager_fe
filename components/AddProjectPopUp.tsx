@@ -3,7 +3,7 @@ import React from 'react';
 interface PopupProps {
   trigger: boolean;
   setTrigger: (state: boolean) => void;
-  children: any;
+  children: React.ReactNode;
 }
 
 const AddProjectPopUp = (props: PopupProps) => {
@@ -19,6 +19,7 @@ const AddProjectPopUp = (props: PopupProps) => {
         <button
           className="absolute top-[16px] right-[16px] border-none bg-transparent text-white h-[25px] w-[25px] text-[20px] font-bold -mt-[10px] hover:scale-125 hover:ease-out hover:duration-200"
           onClick={() => props.setTrigger(false)}
+          type="button"
         >
           X
         </button>

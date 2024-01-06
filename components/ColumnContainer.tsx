@@ -121,7 +121,7 @@ function ColumnContainer({
           flex
           items-center
           justify-between
-          "
+        "
         onClick={() => {
           setEditMode(true);
         }}
@@ -129,15 +129,15 @@ function ColumnContainer({
         <div className="flex gap-2">
           <div
             className="
-        flex
-        justify-center
-        items-center
-        bg-columnBackgroundColor
-        px-2
-        py-1
-        text-sm
-        rounded-full
-        "
+              flex
+              justify-center
+              items-center
+              bg-columnBackgroundColor
+              px-2
+              py-1
+              text-sm
+              rounded-full
+            "
           >
             0
           </div>
@@ -216,6 +216,7 @@ function ColumnContainer({
         onClick={() => {
           createTask(column.id);
         }}
+        type="button"
       >
         <PlusIcon className="w-7 h-7" />
         <p>Add task</p>
