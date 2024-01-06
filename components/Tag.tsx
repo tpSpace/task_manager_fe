@@ -23,28 +23,9 @@ const Tag: React.FC<TagDetailProps> = ({ tags, handleSelect, selectedTag }) => {
 
   return (
     <select
+      className="font-sans text-base text-gray-800 bg-white border-2 border-black rounded-full p-2
+        w-full box-border outline-none text-center font-bold mt-1 appearance-none flex clsjustify-center"
       onChange={e => handleSelect(e.target.value)}
-      style={{
-        fontFamily: 'Arial, sans-serif',
-        fontSize: '16px',
-        color: '#333',
-        backgroundColor: '#fff',
-        border: '2.5px solid #000',
-        borderRadius: '18px',
-        padding: '8px',
-        width: '100%',
-        boxSizing: 'border-box',
-        outline: 'none',
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginTop: '4px',
-        // Hide the arrow in WebKit browsers
-        WebkitAppearance: 'none',
-        // Hide the arrow in other browsers
-        appearance: 'none',
-        display: 'flex',
-        justifyContent: 'center',
-      }}
       value={selectedTag || ''}
     >
       <option value="">Select a tag</option>
