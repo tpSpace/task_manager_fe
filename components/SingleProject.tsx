@@ -57,11 +57,11 @@ const SingleProject = ({
             <div className="font-bold text-4xl">{project.title}</div>
             <div>Setting</div>
           </div>
-          {/* <ListStages
+          <ListStages
             project={project}
             setStageChangingFlag={setStageChangingFlag}
-          /> */}
-          <KanbanBoard project={project} />
+          />
+          {/* <KanbanBoard project={project} /> */}
         </div>
       </div>
     </div>
