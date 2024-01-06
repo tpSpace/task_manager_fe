@@ -77,18 +77,20 @@ const SingleTicket = ({
 
   const handleDeleteTicket = async () => {
     const token = localStorage.getItem('token');
-    try {
-      axios.delete(`${API_URL}/tickets/delete/${ticket.ticketId}`, {
+    axios
+      .delete(`${API_URL}/tickets/delete/${ticket.ticketId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+      })
+      .then(() => {
+        console.log(`Ticket ${ticket.title} deleted sucessfully`);
+        closeModal();
+        setFlag();
+      })
+      .catch(err => {
+        console.log(err);
       });
-      console.log(`Ticket ${ticket.title} deleted sucessfully`);
-      setFlag();
-      closeModal();
-    } catch (err) {
-      console.log(err);
-    }
   };
 
   const handleSelect = async (selected: string) => {
@@ -129,22 +131,23 @@ const SingleTicket = ({
 
   const loadTicket = async () => {
     const token = localStorage.getItem('token');
-    try {
-      console.log('updating ticket: ', updatedTicket);
-      await axios.put(
-        `${API_URL}/tickets/update/${ticket.ticketId}`,
-        updatedTicket,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+
+    console.log('updating ticket: ', updatedTicket);
+    await axios
+      .put(`${API_URL}/tickets/update/${ticket.ticketId}`, updatedTicket, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
-      setFlag();
-      console.log(`Ticket ${ticket.title} updated`);
-    } catch (err) {
-      console.log(err);
-    }
+      })
+      .then(res => {
+        if (res.status === 200) {
+          setFlag();
+          console.log(`Ticket ${ticket.title} updated`);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   return (
@@ -184,6 +187,7 @@ const SingleTicket = ({
                       Created by {updatedTicket.creator.name}
                     </div>
                     <input
+                      autoFocus={false}
                       className="text-3xl text-center font-bold focus:outline-0"
                       onBlur={() => {
                         loadTicket();

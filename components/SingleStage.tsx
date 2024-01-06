@@ -82,25 +82,24 @@ const SingleStage: React.FC<SingleStageProps> = ({
 
   const reloadTickets = async () => {
     const token = localStorage.getItem('token');
-    try {
-      const responses = await axios.get(
-        `${API_URL}/tickets/get/stage/${stage.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
 
-      console.log(`Stage ${stage.title}'s tickets reloaded`);
-      console.log(responses.data.tickets);
-      setUpdatedStage(prevStage => ({
-        ...prevStage,
-        tickets: responses.data.tickets,
-      }));
-    } catch (err) {
-      console.log(err);
-    }
+    await axios
+      .get(`${API_URL}/tickets/get/stage/${stage.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(responses => {
+        console.log(`Stage ${stage.title}'s tickets reloaded`);
+        console.log(responses.data.tickets);
+        setUpdatedStage(prevStage => ({
+          ...prevStage,
+          tickets: responses.data.tickets,
+        }));
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   const openTicketForm = () => {
