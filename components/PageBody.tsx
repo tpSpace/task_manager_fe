@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Image from 'next/image';
 
@@ -16,7 +16,6 @@ const PageBody: React.FC = () => {
   };
 
   useEffect(() => {
-    
     setSelectedImage(1);
   }, []);
 
@@ -202,7 +201,6 @@ const PageBody: React.FC = () => {
       </div>
 
       <div className="bg-white mt-12 lg:mt-24">
-        
         <div className="text-center font-bold text-3xl sm:text-4xl md-5xl lg:text-5xl">
           Every team, side-by-side
         </div>
@@ -313,127 +311,122 @@ const PageBody: React.FC = () => {
 
         {/* Large box with selected image */}
         <div>
-          
           {selectedImage === 1 && (
-          <div className="flex flex-col mt-10 mx-10 sm:mx-12 md:mx-16 lg:mx-32 xl:mx-72 rounded-xl relative border shadow-md">
-            
-            <h2 className="font-bold text-left text-red-500 text-sm sm:text-lg md:text-2xl lg:text-4xl ml-4 sm:ml-6 md:ml-10 lg:ml-16 my-2 sm:my-4 md:my-4 lg:my-6 xl:my-8">Build any ticket</h2>
-            
-            <p className="font-medium text-left text-xs sm:text-base md:text-xl lg:text-2xl ml-4 sm:ml-6 md:ml-10 lg:ml-16 mb-4 sm:mb-6 md:mb-8 ">Show only tasks assigned to you, efficiency work!</p>
-            
-            <div className="flex justify-center my-2 sm:my-4 md:my-4 lg:my-6 xl:my-8">
-              <Image
-              alt="Image3"
-              className="h-32 sm:h-60 md:h-72 lg:h-96 xl:h-auto"
-              height={1000}
-              src="/image3.svg"
-              width={560}
-              />
-            </div>
+            <div className="flex flex-col mt-10 mx-10 sm:mx-12 md:mx-16 lg:mx-32 xl:mx-72 rounded-xl relative border shadow-md">
+              <h2 className="font-bold text-left text-red-500 text-sm sm:text-lg md:text-2xl lg:text-4xl ml-4 sm:ml-6 md:ml-10 lg:ml-16 my-2 sm:my-4 md:my-4 lg:my-6 xl:my-8">
+                Build any ticket
+              </h2>
 
-          </div>
+              <p className="font-medium text-left text-xs sm:text-base md:text-xl lg:text-2xl ml-4 sm:ml-6 md:ml-10 lg:ml-16 mb-4 sm:mb-6 md:mb-8 ">
+                Show only tasks assigned to you, efficiency work!
+              </p>
+
+              <div className="flex justify-center my-2 sm:my-4 md:my-4 lg:my-6 xl:my-8">
+                <Image
+                  alt="Image3"
+                  className="h-32 sm:h-60 md:h-72 lg:h-96 xl:h-auto"
+                  height={1000}
+                  src="/image3.svg"
+                  width={560}
+                />
+              </div>
+            </div>
           )}
 
           {selectedImage === 2 && (
-          <div className="flex flex-col mt-10 mx-10 sm:mx-12 md:mx-16 lg:mx-38 xl:mx-72 rounded-xl relative border shadow-md">
-            
-            <h2 className="font-bold text-left text-cyan-500 text-sm sm:text-lg md:text-2xl lg:text-4xl ml-4 sm:ml-6 md:ml-10 lg:ml-16 my-2 sm:my-4 md:my-4 lg:my-6 xl:my-8">Easy assigning</h2>
-            
-            <p className="font-medium text-left text-xs sm:text-base md:text-xl lg:text-2xl ml-4 sm:ml-6 md:ml-10 lg:ml-16 mb-4 sm:mb-6 md:mb-8">Collaborating with friends now easier with TasKing</p>
+            <div className="flex flex-col mt-10 mx-10 sm:mx-12 md:mx-16 lg:mx-38 xl:mx-72 rounded-xl relative border shadow-md">
+              <h2 className="font-bold text-left text-cyan-500 text-sm sm:text-lg md:text-2xl lg:text-4xl ml-4 sm:ml-6 md:ml-10 lg:ml-16 my-2 sm:my-4 md:my-4 lg:my-6 xl:my-8">
+                Easy assigning
+              </h2>
 
-            <div className="flex justify-center my-2 sm:my-4 md:my-4 lg:my-6 xl:my-8">
-              <Image
-              alt="Image4"
-              className="h-32 sm:h-60 md:h-72 lg:h-96 xl:h-auto"
-              height={1000}
-              src="/image4.svg"
-              width={560}
-              />
+              <p className="font-medium text-left text-xs sm:text-base md:text-xl lg:text-2xl ml-4 sm:ml-6 md:ml-10 lg:ml-16 mb-4 sm:mb-6 md:mb-8">
+                Collaborating with friends now easier with TasKing
+              </p>
+
+              <div className="flex justify-center my-2 sm:my-4 md:my-4 lg:my-6 xl:my-8">
+                <Image
+                  alt="Image4"
+                  className="h-32 sm:h-60 md:h-72 lg:h-96 xl:h-auto"
+                  height={1000}
+                  src="/image4.svg"
+                  width={560}
+                />
+              </div>
             </div>
-
-          </div>
           )}
 
           {selectedImage === 3 && (
-          <div className="flex flex-col mt-10 mx-10 sm:mx-12 md:mx-16 lg:mx-38 xl:mx-72 rounded-xl relative border shadow-md">
-            
-            <h2 className="font-bold text-left text-yellow-500 text-sm sm:text-lg md:text-2xl lg:text-4xl ml-4 sm:ml-6 md:ml-10 lg:ml-16 my-2 sm:my-4 md:my-4 lg:my-6 xl:my-8">Creative tags</h2>
+            <div className="flex flex-col mt-10 mx-10 sm:mx-12 md:mx-16 lg:mx-38 xl:mx-72 rounded-xl relative border shadow-md">
+              <h2 className="font-bold text-left text-yellow-500 text-sm sm:text-lg md:text-2xl lg:text-4xl ml-4 sm:ml-6 md:ml-10 lg:ml-16 my-2 sm:my-4 md:my-4 lg:my-6 xl:my-8">
+                Creative tags
+              </h2>
 
-            <p className="font-medium text-left text-xs sm:text-base md:text-xl lg:text-2xl ml-4 sm:ml-6 md:ml-10 lg:ml-16 mb-4 sm:mb-6 md:mb-8">Custom your own labels, tags, owners, and more</p>
+              <p className="font-medium text-left text-xs sm:text-base md:text-xl lg:text-2xl ml-4 sm:ml-6 md:ml-10 lg:ml-16 mb-4 sm:mb-6 md:mb-8">
+                Custom your own labels, tags, owners, and more
+              </p>
 
-            <div className="flex justify-center my-2 sm:my-4 md:my-4 lg:my-6 xl:my-8">
-              <Image
-              alt="Image5"
-              className="h-32 sm:h-60 md:h-72 lg:h-96 xl:h-auto"
-              height={1000}
-              src="/image5.svg"
-              width={560}
-              />
+              <div className="flex justify-center my-2 sm:my-4 md:my-4 lg:my-6 xl:my-8">
+                <Image
+                  alt="Image5"
+                  className="h-32 sm:h-60 md:h-72 lg:h-96 xl:h-auto"
+                  height={1000}
+                  src="/image5.svg"
+                  width={560}
+                />
+              </div>
             </div>
-
-          </div>
           )}
 
           {selectedImage === 4 && (
-          <div className="flex flex-col mt-10 mx-10 sm:mx-12 md:mx-16 lg:mx-38 xl:mx-72 rounded-xl relative border shadow-md">
-            
-            <h2 className="font-bold text-left text-lime-500 text-sm sm:text-lg md:text-2xl lg:text-4xl ml-4 sm:ml-6 md:ml-10 lg:ml-16 my-2 sm:my-4 md:my-4 lg:my-6 xl:my-8">Join faster!</h2>
+            <div className="flex flex-col mt-10 mx-10 sm:mx-12 md:mx-16 lg:mx-38 xl:mx-72 rounded-xl relative border shadow-md">
+              <h2 className="font-bold text-left text-lime-500 text-sm sm:text-lg md:text-2xl lg:text-4xl ml-4 sm:ml-6 md:ml-10 lg:ml-16 my-2 sm:my-4 md:my-4 lg:my-6 xl:my-8">
+                Join faster!
+              </h2>
 
-            <p className="font-medium text-left text-xs sm:text-base md:text-xl lg:text-2xl ml-4 sm:ml-6 md:ml-10 lg:ml-16 mb-4 sm:mb-6 md:mb-8">You can join an existing project or create your own!</p>
-            
-            <div className="flex justify-center my-2 sm:my-4 md:my-4 lg:my-6 xl:my-8">
-              <Image
-              alt="Image6"
-              className="h-32 sm:h-60 md:h-72 lg:h-96 xl:h-auto"
-              height={1000}
-              src="/image6.svg"
-              width={560}
-              />
+              <p className="font-medium text-left text-xs sm:text-base md:text-xl lg:text-2xl ml-4 sm:ml-6 md:ml-10 lg:ml-16 mb-4 sm:mb-6 md:mb-8">
+                You can join an existing project or create your own!
+              </p>
+
+              <div className="flex justify-center my-2 sm:my-4 md:my-4 lg:my-6 xl:my-8">
+                <Image
+                  alt="Image6"
+                  className="h-32 sm:h-60 md:h-72 lg:h-96 xl:h-auto"
+                  height={1000}
+                  src="/image6.svg"
+                  width={560}
+                />
+              </div>
             </div>
-
-          </div>
           )}
-
-      </div>
-
-
-      <div>
-
-        <div className="flex justify-center font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl mt-20">
-          Get started for free
         </div>
 
-        <div className="flex justify-center my-6 sm:my-8 md:my-10 lg:my-12">
+        <div>
+          <div className="flex justify-center font-bold text-3xl sm:text-4xl md:text-5xl lg:text-6xl mt-20">
+            Get started for free
+          </div>
+
+          <div className="flex justify-center my-6 sm:my-8 md:my-10 lg:my-12">
             <button
+              className="bg-black text-white px-6 md:px-8 py-1 md:py-2 rounded-full hover:bg-zinc-700"
               onClick={handleGetStartedClick}
-              className="bg-black text-white px-6 md:px-8 py-1 md:py-2 rounded-full hover:bg-zinc-700">
+            >
               <span className="font-medium text-lg sm:text-2xl md:text-3xl">
                 Try now
               </span>
             </button>
-          
-          
-        </div>  
+          </div>
 
-        <div className="flex justify-center">
-          <Image
-            alt="Notion5"
-            className="h-40 sm:h-52 md:h-64 lg:h-80 xl:h-96"
-            height={1000}
-            src="/notion5.svg"
-            width={800}
-          />
-        </div> 
-
-
-
+          <div className="flex justify-center">
+            <Image
+              alt="Notion5"
+              className="h-40 sm:h-52 md:h-64 lg:h-80 xl:h-96"
+              height={1000}
+              src="/notion5.svg"
+              width={800}
+            />
+          </div>
+        </div>
       </div>
-
-
-
-
-      </div>
-      
     </div>
   );
 };
