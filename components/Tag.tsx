@@ -6,9 +6,10 @@ interface TagDetailProps {
   tags: TagProps[];
   handleSelect: (selected: string) => void;
   selectedTag: string | null;
+  loadTicket: () => void;
 }
 
-const Tag: React.FC<TagDetailProps> = ({ tags, handleSelect, selectedTag }) => {
+const Tag: React.FC<TagDetailProps> = ({ tags, handleSelect, selectedTag, loadTicket }) => {
   let sortedTags = tags;
   if (selectedTag) {
     const selectedIndex = tags.findIndex(tag => tag.title === selectedTag);
@@ -26,6 +27,7 @@ const Tag: React.FC<TagDetailProps> = ({ tags, handleSelect, selectedTag }) => {
       className="font-sans text-base text-gray-800 bg-white border-2 border-black rounded-full p-2
         w-full box-border outline-none text-center font-bold mt-1 appearance-none flex clsjustify-center"
       onChange={e => handleSelect(e.target.value)}
+      //onBlur={loadTicket}
       value={selectedTag || ''}
     >
       <option value="">Select a tag</option>
