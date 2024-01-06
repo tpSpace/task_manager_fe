@@ -3,12 +3,13 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 import axios from 'axios';
 import Image from 'next/image';
+import { AiOutlineEnter } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
 
 import SingleComment from './SingleComment';
 import Tag from './Tag';
 
-import { TagProps, TicketProps } from '@/types';
+import { CommentProps, TagProps, TicketProps } from '@/types';
 
 interface SingleTicketProps {
   isOpen: boolean;
@@ -40,6 +41,17 @@ const SingleTicket = ({
     creator: ticket.creator,
   });
 
+  const [comment, setComment] = useState<CommentProps>({
+    id: '',
+    commenter: {
+      name: '',
+      id: '',
+    },
+    content: '',
+  });
+
+  const [comments, setComments] = useState<CommentProps[]>([]);
+
   const handleChangeTitle = (title: string) => {
     setUpdatedTicket(prevTicket => ({
       ...prevTicket,
@@ -63,18 +75,20 @@ const SingleTicket = ({
 
   const handleDeleteTicket = async () => {
     const token = localStorage.getItem('token');
-    try {
-      axios.delete(`${API_URL}/tickets/delete/${ticket.ticketId}`, {
+    axios
+      .delete(`${API_URL}/tickets/delete/${ticket.ticketId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+      })
+      .then(() => {
+        console.log(`Ticket ${ticket.title} deleted sucessfully`);
+        closeModal();
+        setFlag();
+      })
+      .catch(err => {
+        console.log(err);
       });
-      console.log('Ticket deleted successfully');
-      setFlag();
-      closeModal();
-    } catch (err) {
-      console.log(err);
-    }
   };
 
   const handleSelect = async (selected: string) => {
@@ -104,31 +118,27 @@ const SingleTicket = ({
     console.log(selected);
   };
 
-  // useEffect(() => {
-  //   const savedTicket = localStorage.getItem(`ticket-${ticket.ticketId}`);
-  //   if (savedTicket) {
-  //     const parsedTicket = JSON.parse(savedTicket);
-  //     setUpdatedTicket(parsedTicket);
-  //   }
-  // }, [ticket.ticketId, setUpdatedTicket]);
+  const handleComment = (content: string) => {};
 
   const loadTicket = async () => {
     const token = localStorage.getItem('token');
-    try {
-      console.log("load ticket", updatedTicket);
-      await axios.put(
-        `${API_URL}/tickets/update/${ticket.ticketId}`,
-        updatedTicket,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+
+    console.log('updating ticket: ', updatedTicket);
+    await axios
+      .put(`${API_URL}/tickets/update/${ticket.ticketId}`, updatedTicket, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-      );
-      setFlag();
-    } catch (err) {
-      console.log(err);
-    }
+      })
+      .then(res => {
+        if (res.status === 200) {
+          setFlag();
+          console.log(`Ticket ${ticket.title} updated`);
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   return (
@@ -164,8 +174,11 @@ const SingleTicket = ({
               >
                 <Dialog.Panel className="relative w-full max-w-full h-[70vh] min-h-full max-h-[80vh] transform rounded-2xl bg-white text-left shadow-xl transition-all flex-col">
                   <div className="grid grid-cols-3 pt-2 px-2 border-black border-b-2 min-h-[10%]">
-                    <div className="self-center">Created by </div>
+                    <div className="self-center">
+                      Created by {updatedTicket.creator.name}
+                    </div>
                     <input
+                      autoFocus={false}
                       className="text-3xl text-center font-bold focus:outline-0"
                       onBlur={() => {
                         loadTicket();
@@ -201,7 +214,6 @@ const SingleTicket = ({
                       <input
                         onBlur={() => {
                           loadTicket();
-                          setFlag();
                         }}
                         onChange={e =>
                           handleChangeDeadline(e.target.valueAsDate!)
@@ -223,15 +235,15 @@ const SingleTicket = ({
                   </div>
 
                   <div className="grid grid-cols-3 w-full min-h-[80%]">
-                    <div className="col-span-2">
-                      <div className="grid grid-rows-3 min-h-full">
-                        <div className="row-span-2 mr-1 ml-4 my-1 bg-gray-200 border-black border-2 rounded-2xl">
-                          <h1 className="text-3xl font-semibold text-center">
+                    <div className="col-span-2 p-0 m-0">
+                      <div className="grid grid-rows-5 min-h-full">
+                        <div className="row-span-3 mr-1 ml-4 my-1 bg-gray-200 border-black border-2 rounded-2xl">
+                          <h1 className="text-2xl font-semibold text-center">
                             Description
                           </h1>
                           <textarea
                             className="w-full h-[80%] bg-gray-200 focus:outline-0 pl-1 resize-none"
-                            onBlur={e => {
+                            onBlur={() => {
                               loadTicket();
                             }}
                             onChange={e =>
@@ -242,19 +254,37 @@ const SingleTicket = ({
                           />
                         </div>
 
-                        <div className="mr-1 ml-4 mt-1 mb-2 bg-gray-200 border-black border-2 rounded-2xl">
-                          <h1 className="text-3xl font-semibold text-center">
-                            Comments
-                          </h1>
-                          {updatedTicket.comments?.map((comment, index) => (
-                            <SingleComment comment={comment} key={index} />
-                          ))}
+                        <div className="row-span-2 h-[90%] mr-1 ml-4 mt-1 mb-4">
+                          <div className="h-full grid grid-rows-4 place-items-center bg-gray-200 border-black border-2 rounded-2xl">
+                            <h1 className="text-2xl font-semibold text-center max-h-[60%]">
+                              Comments
+                            </h1>
+                            <div className="row-span-2 min-h-[full] overflow-y-auto">
+                              {updatedTicket.comments?.map((comment, index) => (
+                                <SingleComment comment={comment} key={index} />
+                              ))}
+                            </div>
+
+                            <form className="w-[80%] flex justify-center px-2">
+                              <textarea
+                                className="w-[80%] resize-none h-8 border-black border-2 rounded-3xl px-2"
+                                onChange={e => handleComment(e.target.value)}
+                                placeholder="Add a comment"
+                              />
+                              <button
+                                className="border-black border-2 rounded-full max-w-[10%] h-full self-center hover:bg-black hover:text-white"
+                                type="submit"
+                              >
+                                <AiOutlineEnter className="w-full h-full" />
+                              </button>
+                            </form>
+                          </div>
                         </div>
                       </div>
                     </div>
 
-                    <div className="ml-1 mr-4 mt-1 mb-2 bg-gray-200 border-black border-2 rounded-2xl">
-                      <h1 className="text-3xl font-semibold text-center">
+                    <div className="h-[96%] ml-1 mr-4 mt-1 mb-3 bg-gray-200 border-black border-2 rounded-2xl">
+                      <h1 className="text-2xl font-semibold text-center">
                         Relationship tree
                       </h1>
                     </div>
