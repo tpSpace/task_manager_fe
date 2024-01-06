@@ -27,8 +27,6 @@ const SingleTicket = ({
 }: SingleTicketProps) => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-  const [selectedTag, setSelectedTag] = useState<string | null>(null);
-
   const [updatedTicket, setUpdatedTicket] = useState<TicketProps>({
     ticketId: ticket.ticketId,
     title: ticket.title,
@@ -81,41 +79,43 @@ const SingleTicket = ({
 
   const handleSelect = async (selected: string) => {
     // replace with your actual handle select function
-    const token = localStorage.getItem('token');
-    try {
-      await axios.put(
-        `${API_URL}/tickets/update/${ticket.ticketId}`,
-        {
-          // update the tag
-          tag: selected,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-      console.log('Ticket updated successfully');
-      // update the selected tag in the state
-      setSelectedTag(selected);
-      // save the selected tag in localStorage
-      localStorage.setItem(`selectedTag-${ticket.ticketId}`, selected);
-    } catch (err) {
-      console.log(err);
-    }
+    setUpdatedTicket(prevTicket => ({
+      ...prevTicket,
+      tag: tags.find(tag => tag.title === selected),
+      }));
+    loadTicket();
+    // try {
+    //   // Update the ticket object with the new selected tag
+    //   await axios.put(
+    //     `${API_URL}/tickets/update/${ticket.ticketId}`,
+    //     updatedTicket,
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${token}`,
+    //       },
+    //     }
+    //   );
+    //   console.log('Ticket updated successfully');
+    //   //localStorage.setItem(`ticket-${ticket.ticketId}`, JSON.stringify(updatedTicket));
+    //   setFlag();
+    // } catch (err) {
+    //   console.log(err);
+    // }
     console.log(selected);
   };
 
-  useEffect(() => {
-    const savedTag = localStorage.getItem(`selectedTag-${ticket.ticketId}`);
-    if (savedTag) {
-      setSelectedTag(savedTag);
-    }
-  }, [ticket.ticketId]);
+  // useEffect(() => {
+  //   const savedTicket = localStorage.getItem(`ticket-${ticket.ticketId}`);
+  //   if (savedTicket) {
+  //     const parsedTicket = JSON.parse(savedTicket);
+  //     setUpdatedTicket(parsedTicket);
+  //   }
+  // }, [ticket.ticketId, setUpdatedTicket]);
 
   const loadTicket = async () => {
     const token = localStorage.getItem('token');
     try {
+      console.log("load ticket", updatedTicket);
       await axios.put(
         `${API_URL}/tickets/update/${ticket.ticketId}`,
         updatedTicket,
@@ -214,8 +214,9 @@ const SingleTicket = ({
                       {/* Display tag title as a select menu */}
                       <Tag
                         handleSelect={handleSelect}
-                        selectedTag={selectedTag}
+                        selectedTag={updatedTicket.tag?.title ?? null}
                         tags={tags}
+                        loadTicket={loadTicket}
                       />
                       {/* {selectedTag && <div>Tag: {selectedTag}</div>} */}
                     </div>

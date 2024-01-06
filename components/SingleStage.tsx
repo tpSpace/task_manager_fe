@@ -97,6 +97,7 @@ const SingleStage: React.FC<SingleStageProps> = ({
         ...prevStage,
         tickets: responses.data.tickets,
       }));
+      console.log(responses.data.tickets);
     } catch (err) {
       console.log(err);
     }
