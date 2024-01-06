@@ -1,3 +1,5 @@
+import { TicketProps } from '.';
+
 export type Id = string | number;
 
 export type Column = {
@@ -8,5 +10,5 @@ export type Column = {
 export type Task = {
   id: string;
   columnId: string;
-  content: string;
+  ticket: TicketProps;
 };

@@ -14,7 +14,7 @@ interface SingleTicketProps {
   isOpen: boolean;
   closeModal: () => void;
   ticket: TicketProps;
-  setFlag: () => void;
+  setFlag?: (() => void) | undefined;
   tags: TagProps[];
 }
 
@@ -72,7 +72,9 @@ const SingleTicket = ({
         },
       });
       console.log('Ticket deleted successfully');
-      setFlag();
+      if (typeof setFlag === 'function') {
+        setFlag();
+      }
       closeModal();
     } catch (err) {
       console.log(err);
@@ -125,7 +127,9 @@ const SingleTicket = ({
           },
         },
       );
-      setFlag();
+      if (typeof setFlag === 'function') {
+        setFlag();
+      }
     } catch (err) {
       console.log(err);
     }
@@ -201,7 +205,9 @@ const SingleTicket = ({
                       <input
                         onBlur={() => {
                           loadTicket();
-                          setFlag();
+                          if (typeof setFlag === 'function') {
+                            setFlag();
+                          }
                         }}
                         onChange={e =>
                           handleChangeDeadline(e.target.valueAsDate!)

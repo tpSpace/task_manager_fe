@@ -5,19 +5,27 @@ import { useState } from 'react';
 
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { set } from 'zod';
 
+import SingleTicket from './SingleTicket';
+
+import EditIcon from '../icons/EditIcon';
 import TrashIcon from '../icons/TrashIcon';
 import { Id, Task } from '../types/types';
+
+import { TagProps } from '@/types';
 
 interface Props {
   task: Task;
   deleteTask: (id: string) => void;
   updateTask: (id: string, content: string) => void;
+  tags: TagProps[];
 }
 
-function TaskCard({ task, deleteTask, updateTask }: Props) {
+function TaskCard({ task, deleteTask, updateTask, tags }: Props) {
   const [mouseIsOver, setMouseIsOver] = useState(false);
   const [editMode, setEditMode] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
 
   const {
     setNodeRef,
@@ -32,7 +40,6 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
       type: 'Task',
       task,
     },
-    disabled: editMode,
   });
 
   const style = {
@@ -58,35 +65,6 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
     );
   }
 
-  if (editMode) {
-    return (
-      <div
-        ref={setNodeRef}
-        style={style}
-        {...attributes}
-        {...listeners}
-        className="bg-mainBackgroundColor p-2.5 h-[100px] min-h-[100px] items-center flex text-left rounded-xl hover:ring-2 hover:ring-inset hover:ring-rose-500 cursor-grab relative"
-      >
-        <textarea
-          autoFocus
-          className="
-        h-[90%]
-        w-full resize-none border-none rounded bg-transparent text-white focus:outline-none
-        "
-          onBlur={toggleEditMode}
-          onChange={e => updateTask(task.id, e.target.value)}
-          onKeyDown={e => {
-            if (e.key === 'Enter' && e.shiftKey) {
-              toggleEditMode();
-            }
-          }}
-          placeholder="Task content here"
-          value={task.content}
-        />
-      </div>
-    );
-  }
-
   return (
     <div
       ref={setNodeRef}
@@ -94,7 +72,6 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
       {...attributes}
       {...listeners}
       className="bg-mainBackgroundColor p-2.5 h-[100px] min-h-[100px] items-center flex text-left rounded-xl hover:ring-2 hover:ring-inset hover:ring-rose-500 cursor-grab relative task"
-      onClick={toggleEditMode}
       onMouseEnter={() => {
         setMouseIsOver(true);
       }}
@@ -103,20 +80,26 @@ function TaskCard({ task, deleteTask, updateTask }: Props) {
       }}
     >
       <p className="my-auto h-[90%] w-full overflow-y-auto overflow-x-hidden whitespace-pre-wrap">
-        {task.content}
+        {task.ticket.title}
       </p>
 
       {mouseIsOver && (
         <button
           className="stroke-white absolute right-4 top-1/2 -translate-y-1/2 bg-columnBackgroundColor p-2 rounded opacity-60 hover:opacity-100"
           onClick={() => {
-            deleteTask(task.id);
+            setIsOpen(!isOpen);
           }}
           type="button"
         >
-          <TrashIcon />
+          <EditIcon className="w-6 h-6" />
         </button>
       )}
+      <SingleTicket
+        closeModal={() => setIsOpen(false)}
+        isOpen={isOpen}
+        tags={tags}
+        ticket={task.ticket}
+      />
     </div>
   );
 }

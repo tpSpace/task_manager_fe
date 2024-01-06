@@ -24,7 +24,7 @@ import TaskCard from './TaskCard';
 import PlusIcon from '../icons/PlusIcon';
 import { Column, Id, Task } from '../types/types';
 
-import { ProjectProps } from '@/types';
+import { ProjectProps, TicketProps } from '@/types';
 
 interface ProjectDetailProps {
   project: ProjectProps;
@@ -65,7 +65,7 @@ function KanbanBoard({ project }: ProjectDetailProps) {
         tasks.push({
           id: ticket.ticketId,
           columnId: stage.id,
-          content: ticket.title,
+          ticket: ticket,
         });
       });
     });
@@ -110,6 +110,7 @@ function KanbanBoard({ project }: ProjectDetailProps) {
                   deleteColumn={deleteColumn}
                   deleteTask={deleteTask}
                   key={col.id}
+                  tags={project.tags}
                   tasks={tasks.filter(task => task.columnId === col.id)}
                   updateColumn={updateColumn}
                   updateTask={updateTask}
@@ -154,6 +155,7 @@ function KanbanBoard({ project }: ProjectDetailProps) {
                 createTask={createTask}
                 deleteColumn={deleteColumn}
                 deleteTask={deleteTask}
+                tags={project.tags}
                 tasks={tasks.filter(task => task.columnId === activeColumn.id)}
                 updateColumn={updateColumn}
                 updateTask={updateTask}
@@ -162,6 +164,7 @@ function KanbanBoard({ project }: ProjectDetailProps) {
             {activeTask && (
               <TaskCard
                 deleteTask={deleteTask}
+                tags={project.tags}
                 task={activeTask}
                 updateTask={updateTask}
               />
@@ -198,7 +201,9 @@ function KanbanBoard({ project }: ProjectDetailProps) {
           newTask = {
             id: res.data.ticketId,
             columnId: columnId,
-            content: 'New Task',
+            ticket: {
+              ticketId: res.data.ticketId,
+            } as TicketProps,
           } as Task;
           setTasks([...tasks, newTask]);
         });
