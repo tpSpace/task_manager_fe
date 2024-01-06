@@ -25,16 +25,16 @@ const Header = () => {
       <div className="flex flex-row items-center justify-center">
         <Image
           alt="Logo"
+          className={`cursor-pointer`}
           height={65}
-          width={65}
           onClick={() => {
             window.location.href = '/';
           }}
           src="/logo.svg"
-          className={`cursor-pointer`}
+          width={65}
         />
         <CustomLink
-          containerStyles="font-semibold text-2xl ml-4 text-white font-['Monsterrat']"
+          containerStyles="font-semibold text-2xl ml-4 text-white font-['Montserrat']"
           route="/"
           title="TasKing"
         />
@@ -42,12 +42,12 @@ const Header = () => {
       {!isLogged && (
         <div className="flex gap-4">
           <CustomLink
-            containerStyles="text-white px-4 py-2 font-semibold rounded-full hover:bg-white hover:text-black text-base"
+            containerStyles="text-white px-4 py-2 font-semibold rounded-full hover:bg-white hover:text-black text-lg font-['Roboto']"
             route="/login"
             title="Login"
           />
           <CustomLink
-            containerStyles="text-white px-4 py-2 font-semibold rounded-full hover:bg-white hover:text-black text-base"
+            containerStyles="text-white px-4 py-2 font-semibold rounded-full hover:bg-white hover:text-black text-lg font-['Roboto']"
             route="/register"
             title="Register"
           />
@@ -56,14 +56,14 @@ const Header = () => {
       {isLogged && (
         <div className="flex gap-4">
           <CustomLink
-            containerStyles="text-white px-4 py-2 font-semibold rounded-full hover:bg-white hover:text-black text-base"
+            containerStyles="text-white px-4 py-2 font-semibold rounded-full hover:bg-white hover:text-black text-lg font-['Roboto']"
             route="/projects"
             title="Projects"
           />
           {/* <button onClick={logout} > */}
           <CustomLink
             click={logout}
-            containerStyles="text-white px-4 py-2 font-semibold rounded-full hover:bg-white hover:text-black text-base"
+            containerStyles="text-white px-4 py-2 font-semibold rounded-full hover:bg-white hover:text-black text-lg font-['Roboto']"
             route="/"
             title="Logout"
           />
