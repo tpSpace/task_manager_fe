@@ -82,24 +82,23 @@ const SingleStage: React.FC<SingleStageProps> = ({
 
   const reloadTickets = async () => {
     const token = localStorage.getItem('token');
-    try {
-      const responses = await axios.get(
-        `${API_URL}/tickets/get/stage/${stage.id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
 
-      console.log(`Stage ${stage.title}'s tickets reloaded`);
-      setUpdatedStage(prevStage => ({
-        ...prevStage,
-        tickets: responses.data.tickets,
-      }));
-    } catch (err) {
-      console.log(err);
-    }
+    await axios
+      .get(`${API_URL}/tickets/get/stage/${stage.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(responses => {
+        console.log(`Stage ${stage.title}'s tickets reloaded`);
+        setUpdatedStage({
+          ...updatedStage,
+          tickets: responses.data.tickets,
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   const openTicketForm = () => {
@@ -116,11 +115,7 @@ const SingleStage: React.FC<SingleStageProps> = ({
         <div className="mx-1 flex bg-inherit w-full rounded-full">
           <input
             className="text-white bg-inherit w-full ml-1 text-2xl rounded-full"
-            onBlur={e => {
-              setFlag(!flag);
-              handleChangeStage(e.target.value);
-              updateStage();
-            }}
+            onBlur={updateStage}
             onChange={e => handleChangeStage(e.target.value)}
             value={updatedStage.title}
           />

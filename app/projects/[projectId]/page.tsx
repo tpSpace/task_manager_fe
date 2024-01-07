@@ -32,7 +32,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
     admin: {
       avatar: '',
       email: '',
-      userName: '',
+      name: '',
       token: '',
       id: '',
     },
@@ -74,6 +74,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
     }
   }, [projectData.adminId, projectData.memberIds]);
 
+  // third useEffect, use for re-render stages when something change in stages
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (projectData.stageIds) {
@@ -105,7 +106,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
           admin: {
             avatar: res.data.user.avatar,
             email: res.data.user.email,
-            userName: res.data.user.name,
+            name: res.data.user.name,
             token: res.data.user.token,
             id: res.data.user.userId,
           },
@@ -129,7 +130,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
     const members = responses.map(response => ({
       avatar: response.data.user.avatar,
       email: response.data.user.email,
-      userName: response.data.user.name,
+      name: response.data.user.name,
       token: response.data.user.token,
       id: response.data.user.userId,
     }));
@@ -148,7 +149,6 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
         },
       })
       .then(res => {
-        console.log(res.data.tags);
         setProject(prevProject => ({
           ...prevProject,
           tags: res.data.tags,
@@ -176,13 +176,11 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
     const fetchedStages = await fetchStages(token);
 
     const promises = fetchedStages.map(
-      async (stage: { stageId: string; title: string }) => {
-        const fetchedTickets = await fetchTickets(token, stage.stageId);
-
+      (stage: { stageId: string; title: string }) => {
         return {
           id: stage.stageId,
           title: stage.title,
-          tickets: fetchedTickets,
+          tickets: [],
         };
       },
     );
@@ -194,25 +192,6 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
       stages: updatedStages,
     }));
     console.log('updated Stages');
-  };
-
-  const fetchTickets = async (token: string | null, stageId: string) => {
-    try {
-      const responses = await axios.get(
-        `${API_URL}/tickets/get/stage/${stageId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-
-      return responses.data.tickets;
-    } catch (err) {
-      console.log(err);
-
-      return null;
-    }
   };
 
   return (

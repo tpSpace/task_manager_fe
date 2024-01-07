@@ -7,8 +7,8 @@ interface SingleCommentProps {
 const SingleComment = ({ comment }: SingleCommentProps) => {
   return (
     <div>
-      <h1>{comment.commenter.userName}</h1>
-      <p>{comment.content}</p>
+      <h1>{comment.commenter.id}</h1>
+      <input value={comment.content} />
     </div>
   );
 };

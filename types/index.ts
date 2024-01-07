@@ -24,7 +24,7 @@ export interface ProjectProps {
 }
 
 export interface UserProps {
-  userName: string;
+  name: string;
   id: string;
   email?: string;
   avatar?: string;
