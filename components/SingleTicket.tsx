@@ -52,6 +52,31 @@ const SingleTicket = ({
 
   const [comments, setComments] = useState<CommentProps[]>([]);
 
+  // initialize the ticket when the pop-up shown
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+
+    const initTicket = async () => {
+      await axios
+        .get(`${API_URL}/tickets/get/ticket/${ticket.ticketId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(res => {
+          if (res.status === 200) {
+            console.log(res.data);
+            setUpdatedTicket(res.data.ticket);
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    };
+
+    initTicket();
+  }, [ticket.ticketId]);
+
   const handleChangeTitle = (title: string) => {
     setUpdatedTicket(prevTicket => ({
       ...prevTicket,
@@ -75,17 +100,19 @@ const SingleTicket = ({
 
   const handleDeleteTicket = async () => {
     const token = localStorage.getItem('token');
-    axios
+    await axios
       .delete(`${API_URL}/tickets/delete/${ticket.ticketId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then(() => {
-        console.log(`Ticket ${ticket.title} deleted sucessfully`);
+      .then(res => {
         closeModal();
         if (typeof setFlag === 'function') {
-          setFlag();
+          if (res.status === 200) {
+            console.log(`Ticket ${ticket.title} deleted sucessfully`);
+            setFlag();
+          }
         }
       })
       .catch(err => {
@@ -99,7 +126,6 @@ const SingleTicket = ({
       ...prevTicket,
       tag: tags.find(tag => tag.title === selected),
     }));
-    loadTicket();
     console.log(selected);
   };
 
@@ -108,7 +134,6 @@ const SingleTicket = ({
   const loadTicket = async () => {
     const token = localStorage.getItem('token');
 
-    console.log('updating ticket: ', updatedTicket);
     await axios
       .put(`${API_URL}/tickets/update/${ticket.ticketId}`, updatedTicket, {
         headers: {
@@ -167,9 +192,6 @@ const SingleTicket = ({
                     <input
                       autoFocus={false}
                       className="text-3xl text-center font-bold focus:outline-0"
-                      onBlur={() => {
-                        loadTicket();
-                      }}
                       onChange={e => handleChangeTitle(e.target.value)}
                       value={updatedTicket.title}
                     />
@@ -180,7 +202,10 @@ const SingleTicket = ({
                       />
                       <button
                         className="px-2 z-10 rounded-full"
-                        onClick={closeModal}
+                        onClick={() => {
+                          loadTicket();
+                          closeModal();
+                        }}
                         type="button"
                       >
                         <Image
@@ -199,9 +224,6 @@ const SingleTicket = ({
                     <div className="place-self-center">
                       Deadline:
                       <input
-                        onBlur={() => {
-                          loadTicket();
-                        }}
                         onChange={e =>
                           handleChangeDeadline(e.target.valueAsDate!)
                         }
@@ -213,7 +235,6 @@ const SingleTicket = ({
                       {/* Display tag title as a select menu */}
                       <Tag
                         handleSelect={handleSelect}
-                        loadTicket={loadTicket}
                         selectedTag={updatedTicket.tag?.title ?? null}
                         tags={tags}
                       />
@@ -230,9 +251,6 @@ const SingleTicket = ({
                           </h1>
                           <textarea
                             className="w-full h-[80%] bg-gray-200 focus:outline-0 pl-1 resize-none"
-                            onBlur={() => {
-                              loadTicket();
-                            }}
                             onChange={e =>
                               handleChangeDescription(e.target.value)
                             }

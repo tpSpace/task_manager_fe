@@ -91,11 +91,10 @@ const SingleStage: React.FC<SingleStageProps> = ({
       })
       .then(responses => {
         console.log(`Stage ${stage.title}'s tickets reloaded`);
-        console.log(responses.data.tickets);
-        setUpdatedStage(prevStage => ({
-          ...prevStage,
+        setUpdatedStage({
+          ...updatedStage,
           tickets: responses.data.tickets,
-        }));
+        });
       })
       .catch(err => {
         console.log(err);
@@ -116,10 +115,7 @@ const SingleStage: React.FC<SingleStageProps> = ({
         <div className="mx-1 flex bg-inherit w-full rounded-full">
           <input
             className="text-white bg-inherit w-full ml-1 text-2xl rounded-full"
-            onBlur={e => {
-              handleChangeStage(e.target.value);
-              updateStage();
-            }}
+            onBlur={updateStage}
             onChange={e => handleChangeStage(e.target.value)}
             value={updatedStage.title}
           />
