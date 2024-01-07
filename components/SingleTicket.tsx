@@ -108,9 +108,9 @@ const SingleTicket = ({
       })
       .then(res => {
         closeModal();
+        console.log(`Ticket ${ticket.title} deleted sucessfully`);
         if (typeof setFlag === 'function') {
           if (res.status === 200) {
-            console.log(`Ticket ${ticket.title} deleted sucessfully`);
             setFlag();
           }
         }

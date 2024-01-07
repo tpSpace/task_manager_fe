@@ -67,7 +67,6 @@ function KanbanBoard({ project }: ProjectDetailProps) {
           },
         })
       ).data.tickets) as TicketProps[];
-      console.log(tickets);
       if (!tickets) return;
       tickets.forEach(ticket => {
         tasks.push({
@@ -203,15 +202,22 @@ function KanbanBoard({ project }: ProjectDetailProps) {
             },
           },
         )
-        .then(res => {
+        .then(async res => {
           console.log('Create ticket successfully');
-          newTask.id = res.data.ticketId;
+          const newTicket = (
+            await axios.get(
+              `${API_URL}/tickets/get/ticket/${res.data.ticketId}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              },
+            )
+          ).data.ticket as TicketProps;
           newTask = {
             id: res.data.ticketId,
             columnId: columnId,
-            ticket: {
-              ticketId: res.data.ticketId,
-            } as TicketProps,
+            ticket: newTicket,
           } as Task;
           setTasks([...tasks, newTask]);
         });
