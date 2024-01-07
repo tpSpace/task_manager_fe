@@ -21,7 +21,9 @@ const config: Config = {
         '128': '47rem',
       },
       fontFamily: {
-        customFont: ['Poppins', 'sans-serif', 'Montserrat', 'Roboto', 'Metropolis'],
+        Roboto: ['Roboto', 'sans-serif'],
+        Montserrat: ['Montserrat', 'sans-serif'],
+
       }
     },
   },
