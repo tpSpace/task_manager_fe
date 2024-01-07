@@ -49,30 +49,28 @@ const LoginPage = () => {
 
   return (
     <div className="flex justify-center items-center h-[90%] flex-col">
-      <h1 className="text-5xl font-semibold font-['Roboto']">
-        Welcome to TasKing
-      </h1>
+      <h1 className="text-6xl font-bold font-Montserrat">Welcome to TasKing</h1>
       <div>
         <form
-          className="flex flex-col m-4 gap-4 justify-center items-center relative"
+          className="flex flex-col m-4 gap-4"
           onSubmit={handleSubmit(submit)}
         >
           <input
             autoComplete="email"
-            className=" px-4 border-2 border-black p-1 bg-slate-50 rounded-full shadow shadow-black"
+            className=" px-4 border-[1px] border-black p-1 bg-gray-100 rounded-xl focus:border-[3px] font-Roboto"
             placeholder="Email"
             type="text"
             {...register('email')}
           />
           <input
             autoComplete="current-password"
-            className=" px-4 border-2 border-black p-1 bg-slate-50 rounded-full shadow shadow-black"
+            className=" px-4 border-[1px] border-black p-1 bg-gray-100 rounded-xl focus:border-[3px] font-Roboto"
             placeholder="Password"
             type="password"
             {...register('password')}
           />
           <button
-            className="border-2 w-1/4 border-black bg-white rounded-full hover:bg-black hover:text-white font-semibold shadow shadow-black font-['Roboto']"
+            className="border-[1px] p-1 border-black bg-white rounded-xl hover:bg-black hover:text-white font-semibold text-xl font-Roboto"
             type="submit"
           >
             Login
@@ -80,9 +78,9 @@ const LoginPage = () => {
         </form>
       </div>
       <CustomLink
-        containerStyles="text-black font-semibold font-['Roboto'] text-xl hover:underline cursor-pointer"
+        containerStyles=" text-slate-400 font-Roboto text-lg hover:underline cursor-pointer"
         route={'/register'}
-        title={"Don't have an account? Sign up now!"}
+        title={"Don't have an account? Register now!"}
       ></CustomLink>
     </div>
   );
