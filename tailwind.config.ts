@@ -20,6 +20,9 @@ const config: Config = {
       maxHeight: {
         '128': '47rem',
       },
+      fontFamily: {
+        customFont: ['Poppins', 'sans-serif', 'Montserrat', 'Roboto', 'Metropolis'],
+      }
     },
   },
   plugins: [],
