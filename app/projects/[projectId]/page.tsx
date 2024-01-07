@@ -176,13 +176,11 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
     const fetchedStages = await fetchStages(token);
 
     const promises = fetchedStages.map(
-      async (stage: { stageId: string; title: string }) => {
-        const fetchedTickets = await fetchTickets(token, stage.stageId);
-
+      (stage: { stageId: string; title: string }) => {
         return {
           id: stage.stageId,
           title: stage.title,
-          tickets: fetchedTickets,
+          tickets: [],
         };
       },
     );
@@ -194,25 +192,6 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
       stages: updatedStages,
     }));
     console.log('updated Stages');
-  };
-
-  const fetchTickets = async (token: string | null, stageId: string) => {
-    try {
-      const responses = await axios.get(
-        `${API_URL}/tickets/get/stage/${stageId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
-
-      return responses.data.tickets;
-    } catch (err) {
-      console.log(err);
-
-      return null;
-    }
   };
 
   return (

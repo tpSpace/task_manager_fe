@@ -6,10 +6,9 @@ interface TagDetailProps {
   tags: TagProps[];
   handleSelect: (selected: string) => void;
   selectedTag: string | null;
-  loadTicket: () => void;
 }
 
-const Tag: React.FC<TagDetailProps> = ({ tags, handleSelect, selectedTag, loadTicket }) => {
+const Tag: React.FC<TagDetailProps> = ({ tags, handleSelect, selectedTag }) => {
   let sortedTags = tags;
   if (selectedTag) {
     const selectedIndex = tags.findIndex(tag => tag.title === selectedTag);
