@@ -59,9 +59,17 @@ function KanbanBoard({ project }: ProjectDetailProps) {
     setColumns(columns);
 
     const tasks: Task[] = [];
-    project.stages.forEach(stage => {
-      if (!stage.tickets) return;
-      stage.tickets.forEach(ticket => {
+    project.stages.forEach(async stage => {
+      const tickets = (await (
+        await axios.get(`${API_URL}/tickets/get/stage/${stage.id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+      ).data.tickets) as TicketProps[];
+      console.log(tickets);
+      if (!tickets) return;
+      tickets.forEach(ticket => {
         tasks.push({
           id: ticket.ticketId,
           columnId: stage.id,
