@@ -17,6 +17,7 @@ import {
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { arrayMove, SortableContext } from '@dnd-kit/sortable';
 import axios from 'axios';
+import { set } from 'zod';
 
 import ColumnContainer from './ColumnContainer';
 import TaskCard from './TaskCard';
@@ -28,6 +29,7 @@ import { ProjectProps, TicketProps } from '@/types';
 
 interface ProjectDetailProps {
   project: ProjectProps;
+  selectedTag: string;
 }
 
 interface ColumnData {
@@ -38,15 +40,34 @@ interface ColumnData {
 const token = localStorage.getItem('token');
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
-function KanbanBoard({ project }: ProjectDetailProps) {
+function KanbanBoard({ project, selectedTag }: ProjectDetailProps) {
   const [columns, setColumns] = useState<Column[]>([]);
   const columnsId = useMemo(() => columns?.map(col => col.id), [columns]);
-
+  console.log(selectedTag);
   const [tasks, setTasks] = useState<Task[]>([]);
-
+  const [tickets, setTickets] = useState<Task[]>([]);
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
 
   const [activeTask, setActiveTask] = useState<Task | null>(null);
+
+  function sortTag(tag: string) {
+    if (tag === 'All') {
+      setTasks(tickets);
+
+      return;
+    }
+    if (tag === '+') return;
+    if (tasks !== undefined) {
+      const newTasks = tickets.filter(
+        ticket => ticket.ticket.tag!.title === tag,
+      );
+      setTasks(newTasks);
+    }
+  }
+
+  useEffect(() => {
+    sortTag(selectedTag);
+  }, [selectedTag]);
 
   useEffect(() => {
     const columns: ColumnData[] = [];
@@ -82,6 +103,8 @@ function KanbanBoard({ project }: ProjectDetailProps) {
       try {
         const allTasks = await Promise.all(tasksPromises);
         setTasks(allTasks.flat());
+        setTickets(allTasks.flat());
+        console.log('Tasks fetched successfully');
       } catch (error) {
         console.error('Error fetching tasks:', error);
         // Handle error gracefully, e.g., display an error message
@@ -90,7 +113,7 @@ function KanbanBoard({ project }: ProjectDetailProps) {
 
     fetchTasksForAllStages();
   }, [project.stages]);
-
+  console.log(tasks);
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -430,7 +453,7 @@ function KanbanBoard({ project }: ProjectDetailProps) {
           overId !== tasks[activeIndex].ticket.ticketId &&
           overId !== columns[overIndex].id
         ) {
-          updateTicket();
+          // updateTicket();
         }
 
         return arrayMove(tasks, activeIndex, activeIndex);

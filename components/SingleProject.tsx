@@ -5,9 +5,7 @@ import Link from 'next/link';
 import { BsArrowLeft } from 'react-icons/bs';
 
 import KanbanBoard from './KanbanBoard';
-import ListStages from './ListStages';
 
-//import Tag from './Tag';
 import UserCard from '@/components/UserCard';
 import { ProjectProps, TagProps } from '@/types';
 
@@ -244,7 +242,7 @@ const SingleProject = ({
             selectedTag={selectedTag}
             setStageChangingFlag={setStageChangingFlag}
           /> */}
-          <KanbanBoard project={project} />
+          <KanbanBoard project={project} selectedTag={selectedTag} />
         </div>
       </div>
     </div>
