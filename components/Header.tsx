@@ -34,7 +34,7 @@ const Header = () => {
           width={65}
         />
         <CustomLink
-          containerStyles="font-semibold text-2xl ml-4 text-white font-['Montserrat']"
+          containerStyles="font-semibold text-2xl ml-4 text-white font-Montserrat"
           route="/"
           title="TasKing"
         />
@@ -42,12 +42,12 @@ const Header = () => {
       {!isLogged && (
         <div className="flex gap-4">
           <CustomLink
-            containerStyles="text-white px-4 py-2 font-semibold rounded-full hover:bg-white hover:text-black text-lg font-['Roboto']"
+            containerStyles="text-white px-4 py-2 font-semibold rounded-full hover:bg-white hover:text-black text-lg font-Roboto"
             route="/login"
-            title="Login"
+            title="Log in"
           />
           <CustomLink
-            containerStyles="text-white px-4 py-2 font-semibold rounded-full hover:bg-white hover:text-black text-lg font-['Roboto']"
+            containerStyles="text-white px-4 py-2 font-semibold rounded-full hover:bg-white hover:text-black text-lg font-Roboto"
             route="/register"
             title="Register"
           />
@@ -56,16 +56,16 @@ const Header = () => {
       {isLogged && (
         <div className="flex gap-4">
           <CustomLink
-            containerStyles="text-white px-4 py-2 font-semibold rounded-full hover:bg-white hover:text-black text-lg font-['Roboto']"
+            containerStyles="text-white px-4 py-2 font-semibold rounded-full hover:bg-white hover:text-black text-lg font-Roboto"
             route="/projects"
             title="Projects"
           />
           {/* <button onClick={logout} > */}
           <CustomLink
             click={logout}
-            containerStyles="text-white px-4 py-2 font-semibold rounded-full hover:bg-white hover:text-black text-lg font-['Roboto']"
+            containerStyles="text-white px-4 py-2 font-semibold rounded-full hover:bg-white hover:text-black text-lg font-Roboto"
             route="/"
-            title="Logout"
+            title="Log out"
           />
           {/* </button> */}
         </div>

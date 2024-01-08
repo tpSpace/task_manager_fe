@@ -159,7 +159,10 @@ const SingleTicket = ({
         <Dialog
           as="div"
           className="relative z-10 h-0 inset-0"
-          onClose={closeModal}
+          onClose={() => {
+            closeModal();
+            loadTicket();
+          }}
         >
           <Transition.Child
             as={Fragment}
