@@ -3,6 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import { BsArrowLeft } from 'react-icons/bs';
+import { MdDelete } from 'react-icons/md';
 
 import KanbanBoard from './KanbanBoard';
 
@@ -26,10 +27,13 @@ const SingleProject = ({
 
   const [selectedTag, setSelectedTag] = useState<string>('All');
   const [isPopupOpen, setIsPopupOpen] = useState(false);
+  const [isDeletePopupOpen, setIsDeletePopupOpen] = useState(false);
 
   const [newTagTitle, setNewTagTitle] = useState<string>('');
   const [newTagPriority, setNewTagPriority] = useState<number>(1);
   const [newTagColor, setNewTagColor] = useState<string>('#ffffff');
+
+  const [isHover, setIsHover] = useState<boolean>(true);
 
   const handleChangeProjectTitle = (newTitle: string) => {
     setProjectTitle(newTitle);
@@ -96,6 +100,41 @@ const SingleProject = ({
       });
   };
 
+  const handleDeleteTag = async (selectedTag: string) => {
+    const tagToDelete = project.tags.find(
+      tag => tag && tag.title === selectedTag,
+    );
+    if (!tagToDelete) {
+      console.error('Tag to delete not found');
+
+      return;
+    }
+    const tagId = tagToDelete.id;
+    await axios
+      .delete(`${API_URL}/tags/delete/${tagId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(res => {
+        if (res.status === 200) {
+          console.log(res);
+          setProject(prevProject => ({
+            ...prevProject,
+            tags: [
+              ...prevProject.tags.filter(tag => {
+                return tag.id !== tagId;
+              }),
+            ],
+          }));
+        }
+      })
+      .catch(err => {
+        console.error('An error occurred while deleting the tag:', err);
+        console.log(err);
+      });
+  };
+
   return (
     <div className="w-full h-full flex flex-row justify-center items-center border-r-2">
       <div className="w-[15%] min-w-[150px] h-full flex-col items-center flex bg-neutral-300 relative justify-between py-6">
@@ -116,22 +155,22 @@ const SingleProject = ({
           </div>
           <div className="flex flex-col space-y-4 max-h-[300px] overflow-y-auto">
             {project.members.map((member, index) => (
-              <UserCard key={index} user={member} />
+              <UserCard admin={project.admin} key={index} user={member} />
             ))}
           </div>
         </div>
-        <div
-          className="w-full text-center cursor-pointer"
-          onClick={() => {
-            navigator.clipboard.writeText(project.id);
-          }}
-        >
-          <span className={'text-lg font-Roboto'}>
-            Copy this code to invite
+        <div className="w-full text-center cursor-pointer">
+          <span
+            className={'text-lg font-Roboto'}
+            onClick={() => {
+              navigator.clipboard.writeText(project.id);
+            }}
+          >
+            Click to copy code
           </span>
           <p
             className={
-              'text-sm font-Roboto font-bold truncate text-cyan-400 hover:text-cyan-500'
+              'text-sm font-Roboto font-bold truncate text-cyan-400 hover:text-cyan-500 select-all'
             }
           >
             {project.id}
@@ -157,38 +196,47 @@ const SingleProject = ({
             />
             <div className={'font-Roboto font-medium'}>Setting</div>
           </div>
-          {/* <div>
-            <Tag tag={project.tag} />
-            <div className="flex flex-row space-x-2">
-              {project.tags.map((tag, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-200 rounded-full px-2 py-1 text-sm"
-                >
-                  {tag.title}
-                </div>
-              ))}
-            </div>
-          </div> */}
+
           <div>
             <select
               className="form-select mt-5 mr-7 w-[10%] font-sans text-base text-gray-800 bg-white border-2 border-black rounded-full p-2
               box-border outline-none text-center font-bold appearance-none flex justify-center ml-auto"
               onChange={e => {
-                if (e.target.value === '+') {
+                if (e.target.value === 'Create Tag') {
                   setIsPopupOpen(true);
+                } else if (e.target.value === 'Delete Tag') {
+                  setIsDeletePopupOpen(true);
                 } else {
                   setSelectedTag(e.target.value);
                 }
               }}
             >
-              <option value="All">All</option>
-              {project.tags.map((tag, index) => (
-                <option key={index} value={tag.title}>
-                  {tag.title}
-                </option>
-              ))}
-              <option value="+">+</option>
+              <option
+                onMouseOut={() => setIsHover(false)}
+                onMouseOver={() => setIsHover(true)}
+                value="All"
+              >
+                All
+              </option>
+              {project.tags
+                ? project.tags.map((tag, index) =>
+                    tag ? (
+                      <option key={index} value={tag.title}>
+                        {tag.title}
+                        {/* {isHover ? (
+                    <MdDelete
+                      className="bg-black absolute"
+                      onClick={() => handleDeleteTag(project.tags[index].id)}
+                    />
+                  ) : (
+                    <></>
+                  )} */}
+                      </option>
+                    ) : null,
+                  )
+                : null}
+              <option value="Create Tag">Create Tag</option>
+              <option value="Delete Tag">Delete Tag</option>
             </select>
             {isPopupOpen && (
               <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 rounded-3xl">
@@ -230,6 +278,46 @@ const SingleProject = ({
                   <button
                     className="absolute top-2 right-2 p-2 bg-black text-white text-bold rounded-full"
                     onClick={() => setIsPopupOpen(false)}
+                  >
+                    X
+                  </button>
+                </div>
+              </div>
+            )}
+            {isDeletePopupOpen && (
+              <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 rounded-3xl">
+                <div className="w-1/2 h-1/2 p-2 border-4 border-gray-800 relative flex justify-center items-center bg-white shadow-lg rounded-3xl">
+                  {/* Add your tag deletion form */}
+                  <form
+                    className="w-full p-4 border-2 border-gray-500 flex flex-col space-y-4 bg-white shadow-md rounded-3xl"
+                    onSubmit={e => {
+                      e.preventDefault();
+                      handleDeleteTag(selectedTag);
+                    }}
+                  >
+                    <select
+                      className="p-2 border-2 border-gray-300 rounded-full shadow-sm"
+                      onChange={e => setSelectedTag(e.target.value)}
+                      required
+                    >
+                      {project.tags.map((tag, index) =>
+                        tag ? (
+                          <option key={index} value={tag.title}>
+                            {tag.title}
+                          </option>
+                        ) : null,
+                      )}
+                    </select>
+                    <button
+                      className="p-2 bg-black text-white text-bold rounded-full"
+                      type="submit"
+                    >
+                      Delete Tag
+                    </button>
+                  </form>
+                  <button
+                    className="absolute top-2 right-2 p-2 bg-black text-white text-bold rounded-full"
+                    onClick={() => setIsDeletePopupOpen(false)}
                   >
                     X
                   </button>
