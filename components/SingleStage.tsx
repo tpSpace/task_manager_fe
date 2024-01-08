@@ -8,18 +8,20 @@ import TicketCard from './TicketCard';
 import TicketCreationForm from './TicketCreationForm';
 
 import CustomButton from '@/components/CustomButton';
-import { StageProps, TagProps } from '@/types';
+import { StageProps, TagProps, TicketProps } from '@/types';
 
 interface SingleStageProps {
   stage: StageProps;
   setStageChangingFlag: () => void;
   tags: TagProps[];
+  selectedTag: string;
 }
 
 const SingleStage: React.FC<SingleStageProps> = ({
   stage,
   setStageChangingFlag,
   tags,
+  selectedTag,
 }) => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -91,9 +93,14 @@ const SingleStage: React.FC<SingleStageProps> = ({
       })
       .then(responses => {
         console.log(`Stage ${stage.title}'s tickets reloaded`);
+
+        const newTickets = responses.data.tickets as TicketProps[];
+        const sortedTickets = newTickets.filter(ticket => {
+          ticket.tag?.title === selectedTag;
+        });
         setUpdatedStage({
           ...updatedStage,
-          tickets: responses.data.tickets,
+          tickets: selectedTag ? sortedTickets : newTickets,
         });
       })
       .catch(err => {
