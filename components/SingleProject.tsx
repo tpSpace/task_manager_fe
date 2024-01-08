@@ -1,3 +1,6 @@
+import { useState } from 'react';
+
+import axios from 'axios';
 import Link from 'next/link';
 import { BsArrowLeft } from 'react-icons/bs';
 
@@ -17,6 +20,37 @@ const SingleProject = ({
   project,
   setStageChangingFlag,
 }: SingleProjectProps) => {
+  const [projectTitle, setProjectTitle] = useState<string>(project.title);
+
+  const handleChangeProjectTitle = (newTitle: string) => {
+    setProjectTitle(newTitle);
+  };
+
+  const handleSubmitNewTitle = async () => {
+    const token = localStorage.getItem('token');
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    await axios
+      .put(
+        `${API_URL}/projects/updateTitle/${project.id}`,
+        {
+          title: projectTitle,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
+      .then(res => {
+        if (res.status === 200) {
+          console.log('Project title updated successfully');
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="w-full h-full flex flex-row border-2">
       <div className="w-[15%] min-w-[150px] h-full flex flex-col border border-black-100">
@@ -54,7 +88,12 @@ const SingleProject = ({
                 <BsArrowLeft className="text-4xl" />
               </Link>
             </div>
-            <div className="font-bold text-4xl">{project.title}</div>
+            <input
+              className="font-bold text-4xl focus:outline-0 text-center bg-gray-100"
+              onBlur={handleSubmitNewTitle}
+              onChange={e => handleChangeProjectTitle(e.target.value)}
+              value={projectTitle ? projectTitle : project.title}
+            />
             <div>Setting</div>
           </div>
           <ListStages
