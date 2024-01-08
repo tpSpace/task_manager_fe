@@ -61,43 +61,73 @@ const RegisterPage = () => {
 
   return (
     <div className="flex flex-col justify-center items-center h-[90%] w-full">
-      <h1 className="text-5xl font-bold">Sign Up</h1>
+      <h1 className="text-6xl font-bold font-Montserrat mb-16">
+        Welcome to TasKing
+      </h1>
       <div className="">
         <form
           className="flex flex-col m-4 gap-4"
           onSubmit={handleSubmit(submit)}
         >
           {/* // make an alert for error */}
+          <span
+            className={
+              '-mb-4 font-semibold text-base font-Roboto text-neutral-600'
+            }
+          >
+            Username
+          </span>
           <>
             {watchEmail && errors.username && <p>{errors.username.message}</p>}
             <input
               {...register('username')}
-              className="border-2 border-black p-1"
+              className="px-4 border-[1px] border-gray-300 p-1 bg-gray-100 rounded-xl focus:border-[3px] font-Roboto"
               onChange={() => console.log(watchEmail)}
-              placeholder="username"
+              placeholder="Enter username"
               type="text"
             />
           </>
+          <span
+            className={
+              '-mb-4 -mt-4 font-semibold text-base font-Roboto text-neutral-600'
+            }
+          >
+            Email
+          </span>
           <input
             {...register('email')}
-            className="border-2 border-black p-1"
-            placeholder="email"
+            className="px-4 border-[1px] border-gray-300 p-1 bg-gray-100 rounded-xl focus:border-[3px] font-Roboto"
+            placeholder="Enter email"
             type="email"
           />
+          <span
+            className={
+              '-mb-4 -mt-4 font-semibold text-base font-Roboto text-neutral-600'
+            }
+          >
+            Password
+          </span>
           <input
             {...register('password')}
-            className="border-2 border-black p-1"
-            placeholder="password"
+            className="px-4 border-[1px] border-gray-300 p-1 bg-gray-100 rounded-xl focus:border-[3px] font-Roboto"
+            placeholder="Enter password"
             type="password"
           />
+          <span
+            className={
+              '-mb-4 -mt-4 font-semibold text-base font-Roboto text-neutral-600'
+            }
+          >
+            Retype Password
+          </span>
           <input
             {...register('confirmPassword')}
-            className="border-2 border-black p-1"
-            placeholder="retype-password"
+            className="px-4 border-[1px] border-gray-300 p-1 bg-gray-100 rounded-xl focus:border-[3px] font-Roboto"
+            placeholder="Enter retype-password"
             type="new-password"
           />
           <button
-            className="border-2 border-black bg-white hover:bg-black hover:text-white"
+            className="border-[1px] p-1 border-cyan-300 bg-cyan-50 rounded-xl hover:bg-cyan-100 text-cyan-500 font-semibold text-xl font-Roboto"
             type="submit"
           >
             Register
