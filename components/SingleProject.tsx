@@ -22,6 +22,8 @@ const SingleProject = ({
 }: SingleProjectProps) => {
   const [projectTitle, setProjectTitle] = useState<string>(project.title);
 
+  const [selectedTag, setSelectedTag] = useState<string>('');
+
   const handleChangeProjectTitle = (newTitle: string) => {
     setProjectTitle(newTitle);
   };
@@ -110,8 +112,12 @@ const SingleProject = ({
             </div>
           </div> */}
           <div>
-            <select className="form-select mt-5 mr-7 w-[10%] font-sans text-base text-gray-800 bg-white border-2 border-black rounded-full p-2
-              box-border outline-none text-center font-bold appearance-none flex justify-center ml-auto">
+            <select
+              className="form-select mt-5 mr-7 w-[10%] font-sans text-base text-gray-800 bg-white border-2 border-black rounded-full p-2
+              box-border outline-none text-center font-bold appearance-none flex justify-center ml-auto"
+              onChange={e => setSelectedTag(e.target.value)}
+            >
+              <option value="all">All</option>
               {project.tags.map((tag, index) => (
                 <option key={index} value={tag.title}>
                   {tag.title}
