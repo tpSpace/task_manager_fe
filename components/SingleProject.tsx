@@ -98,6 +98,8 @@ const SingleProject = ({
       });
   };
 
+  console.log(project);
+
   return (
     <div className="w-full h-full flex flex-row justify-center items-center border-r-2">
       <div className="w-[15%] min-w-[150px] h-full flex-col items-center flex bg-neutral-300 relative">
@@ -118,7 +120,7 @@ const SingleProject = ({
           </div>
           <div className="flex flex-col space-y-4">
             {project.members.map((member, index) => (
-              <UserCard key={index} user={member} />
+              <UserCard admin={project.admin} key={index} user={member} />
             ))}
           </div>
         </div>
