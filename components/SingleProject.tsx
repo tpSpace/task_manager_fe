@@ -25,6 +25,11 @@ const SingleProject = ({
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const [selectedTag, setSelectedTag] = useState<string>('All');
+  const [isPopupOpen, setIsPopupOpen] = useState(false); // New state variable
+
+  const [newTagTitle, setNewTagTitle] = useState<string>('');
+  const [newTagPriority, setNewTagPriority] = useState<number>(1);
+  const [newTagColor, setNewTagColor] = useState<string>('#ffffff');
 
   const handleChangeProjectTitle = (newTitle: string) => {
     setProjectTitle(newTitle);
@@ -51,6 +56,38 @@ const SingleProject = ({
       .catch(err => {
         console.log(err);
       });
+  };
+
+  const handleCreateTag = async (event: React.FormEvent) => {
+    event.preventDefault();
+
+    try {
+      const response = await fetch(`${API_URL}/tags/create/${project.id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          title: newTagTitle,
+          priority: newTagPriority,
+          colour: newTagColor,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const createdTag = await response.json();
+      project.tags.push(createdTag);
+      setIsPopupOpen(false);
+      setNewTagTitle('');
+      setNewTagPriority(1);
+      setNewTagColor('#ffffff');
+    } catch (error) {
+      console.error('An error occurred while creating the tag:', error);
+    }
   };
 
   return (
@@ -131,7 +168,13 @@ const SingleProject = ({
             <select
               className="form-select mt-5 mr-7 w-[10%] font-sans text-base text-gray-800 bg-white border-2 border-black rounded-full p-2
               box-border outline-none text-center font-bold appearance-none flex justify-center ml-auto"
-              onChange={e => setSelectedTag(e.target.value)}
+              onChange={e => {
+                if (e.target.value === '+') {
+                  setIsPopupOpen(true);
+                } else {
+                  setSelectedTag(e.target.value);
+                }
+              }}
             >
               <option value="All">All</option>
               {project.tags.map((tag, index) => (
@@ -141,6 +184,52 @@ const SingleProject = ({
               ))}
               <option value="+">+</option>
             </select>
+            {isPopupOpen && (
+              <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                <div className="w-1/2 h-1/2 p-2 border-3 relative flex justify-center items-center bg-white">
+                  {/* Add your tag creation form here */}
+                  <form
+                    className="w-full p-4 border-2 border-gray-300 rounded flex flex-col space-y-4"
+                    onSubmit={handleCreateTag}
+                  >
+                    <input
+                      className="p-2 border-2 border-gray-300 rounded"
+                      onChange={e => setNewTagTitle(e.target.value)}
+                      placeholder="Tag title"
+                      required
+                      type="text"
+                      value={newTagTitle}
+                    />
+                    <input
+                      className="p-2 border-2 border-gray-300 rounded"
+                      onChange={e => setNewTagPriority(Number(e.target.value))}
+                      placeholder="Tag priority"
+                      required
+                      type="number"
+                      value={newTagPriority}
+                    />
+                    <input
+                      className="p-2 border-2 border-gray-300 rounded"
+                      onChange={e => setNewTagColor(e.target.value)}
+                      type="color"
+                      value={newTagColor}
+                    />
+                    <button
+                      className="p-2 bg-blue-500 text-white rounded"
+                      type="submit"
+                    >
+                      Create Tag
+                    </button>
+                  </form>
+                  <button
+                    className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded"
+                    onClick={() => setIsPopupOpen(false)}
+                  >
+                    X
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
           {/* <ListStages
             project={project}
