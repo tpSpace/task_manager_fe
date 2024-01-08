@@ -3,6 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link';
 import { BsArrowLeft } from 'react-icons/bs';
+import { MdDelete } from 'react-icons/md';
 
 import KanbanBoard from './KanbanBoard';
 import ListStages from './ListStages';
@@ -32,6 +33,8 @@ const SingleProject = ({
   const [newTagTitle, setNewTagTitle] = useState<string>('');
   const [newTagPriority, setNewTagPriority] = useState<number>(1);
   const [newTagColor, setNewTagColor] = useState<string>('#ffffff');
+
+  const [isHover, setIsHover] = useState<boolean>(true);
 
   const handleChangeProjectTitle = (newTitle: string) => {
     setProjectTitle(newTitle);
@@ -98,6 +101,27 @@ const SingleProject = ({
       });
   };
 
+  const handleDeleteTag = async (tagId: string) => {
+    await axios
+      .delete(`${API_URL}/tags/delete/${tagId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(res => {
+        if (res.status === 200) {
+          setProject(prevProject => ({
+            ...prevProject,
+            tags: [
+              ...prevProject.tags.filter(tag => {
+                return tag.id !== tagId;
+              }),
+            ],
+          }));
+        }
+      });
+  };
+
   return (
     <div className="w-full h-full flex flex-row justify-center items-center border-r-2">
       <div className="w-[15%] min-w-[150px] h-full flex-col items-center flex bg-neutral-300 relative">
@@ -159,19 +183,7 @@ const SingleProject = ({
             />
             <div className={'font-Roboto font-medium'}>Setting</div>
           </div>
-          {/* <div>
-            <Tag tag={project.tag} />
-            <div className="flex flex-row space-x-2">
-              {project.tags.map((tag, index) => (
-                <div
-                  key={index}
-                  className="bg-gray-200 rounded-full px-2 py-1 text-sm"
-                >
-                  {tag.title}
-                </div>
-              ))}
-            </div>
-          </div> */}
+
           <div>
             <select
               className="form-select mt-5 mr-7 w-[10%] font-sans text-base text-gray-800 bg-white border-2 border-black rounded-full p-2
@@ -184,10 +196,24 @@ const SingleProject = ({
                 }
               }}
             >
-              <option value="All">All</option>
+              <option
+                onMouseOut={() => setIsHover(false)}
+                onMouseOver={() => setIsHover(true)}
+                value="All"
+              >
+                All
+              </option>
               {project.tags.map((tag, index) => (
                 <option key={index} value={tag.title}>
                   {tag.title}
+                  {isHover ? (
+                    <MdDelete
+                      className="bg-black absolute"
+                      onClick={() => handleDeleteTag(project.tags[index].id)}
+                    />
+                  ) : (
+                    <></>
+                  )}
                 </option>
               ))}
               <option value="+">+</option>
