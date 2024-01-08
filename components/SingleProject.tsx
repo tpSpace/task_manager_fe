@@ -102,8 +102,8 @@ const SingleProject = ({
 
   return (
     <div className="w-full h-full flex flex-row justify-center items-center border-r-2">
-      <div className="w-[15%] min-w-[150px] h-full flex-col items-center flex bg-neutral-300 relative">
-        <div className=" space-y-3 h-30 w-1/2 mt-12 ">
+      <div className="w-[15%] min-w-[150px] h-full flex-col items-center flex bg-neutral-300 relative justify-between py-6">
+        <div className=" space-y-3 h-30 w-1/2">
           <div className="border-2 rounded-xl h-10 w-full bg-neutral-400 border-neutral-500 flex items-center justify-center">
             <p className="text-white text-xl font-Roboto font-medium">Task</p>
           </div>
@@ -114,18 +114,18 @@ const SingleProject = ({
           </div>
         </div>
 
-        <div className="flex flex-col justify-center items-center py-2 space-y-4 mt-20">
+        <div className="flex flex-col justify-center items-center py-2 space-y-4">
           <div className="text-2xl font-Montserrat font-semibold">
             Members ({project.members.length})
           </div>
-          <div className="flex flex-col space-y-4">
+          <div className="flex flex-col space-y-4 max-h-[300px] overflow-y-auto">
             {project.members.map((member, index) => (
               <UserCard admin={project.admin} key={index} user={member} />
             ))}
           </div>
         </div>
         <div
-          className="mt-4 w-full text-center cursor-pointer"
+          className="w-full text-center cursor-pointer"
           onClick={() => {
             navigator.clipboard.writeText(project.id);
           }}
@@ -143,7 +143,7 @@ const SingleProject = ({
         </div>
       </div>
       <div className="flex flex-row w-full h-full overflow-x-auto overflow-y-hidden">
-        <div className="w-full h-full">
+        <div className="w-full h-full flex flex-col">
           <div className="bg-neutral-100 h-[10%] flex items-center px-6 justify-between">
             <div className="flex">
               <Link
