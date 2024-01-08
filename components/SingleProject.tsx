@@ -71,19 +71,24 @@ const SingleProject = ({
           <div className="text-2xl font-Montserrat font-semibold">
             Members ({project.members.length})
           </div>
-          <div className="flex flex-col space-y-4 ">
+          <div className="flex flex-col space-y-4">
             {project.members.map((member, index) => (
               <UserCard key={index} user={member} />
             ))}
           </div>
         </div>
-        <div className="mt-4 w-full text-center">
+        <div
+          className="mt-4 w-full text-center cursor-pointer"
+          onClick={() => {
+            navigator.clipboard.writeText(project.id);
+          }}
+        >
           <span className={'text-lg font-Roboto'}>
             Copy this code to invite
           </span>
           <p
             className={
-              'text-sm font-Roboto font-bold truncate select-all text-cyan-400 hover:text-cyan-500'
+              'text-sm font-Roboto font-bold truncate text-cyan-400 hover:text-cyan-500'
             }
           >
             {project.id}
