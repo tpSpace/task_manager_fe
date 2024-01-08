@@ -185,15 +185,15 @@ const SingleProject = ({
               <option value="+">+</option>
             </select>
             {isPopupOpen && (
-              <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-                <div className="w-1/2 h-1/2 p-2 border-3 relative flex justify-center items-center bg-white">
+              <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 rounded-3xl">
+                <div className="w-1/2 h-1/2 p-2 border-4 border-gray-800 relative flex justify-center items-center bg-white shadow-lg rounded-3xl">
                   {/* Add your tag creation form here */}
                   <form
-                    className="w-full p-4 border-2 border-gray-300 rounded flex flex-col space-y-4"
+                    className="w-full p-4 border-2 border-gray-500 flex flex-col space-y-4 bg-white shadow-md rounded-3xl"
                     onSubmit={handleCreateTag}
                   >
                     <input
-                      className="p-2 border-2 border-gray-300 rounded"
+                      className="p-2 border-2 border-gray-300 rounded-full shadow-sm"
                       onChange={e => setNewTagTitle(e.target.value)}
                       placeholder="Tag title"
                       required
@@ -201,7 +201,7 @@ const SingleProject = ({
                       value={newTagTitle}
                     />
                     <input
-                      className="p-2 border-2 border-gray-300 rounded"
+                      className="p-2 border-2 border-gray-300 rounded-full shadow-sm"
                       onChange={e => setNewTagPriority(Number(e.target.value))}
                       placeholder="Tag priority"
                       required
@@ -209,20 +209,20 @@ const SingleProject = ({
                       value={newTagPriority}
                     />
                     <input
-                      className="p-2 border-2 border-gray-300 rounded"
+                      className="p-2 border-2 border-gray-300 rounded-full shadow-sm"
                       onChange={e => setNewTagColor(e.target.value)}
                       type="color"
                       value={newTagColor}
                     />
                     <button
-                      className="p-2 bg-blue-500 text-white rounded"
+                      className="p-2 bg-black text-white text-bold rounded-full"
                       type="submit"
                     >
                       Create Tag
                     </button>
                   </form>
                   <button
-                    className="absolute top-2 right-2 p-2 bg-red-500 text-white rounded"
+                    className="absolute top-2 right-2 p-2 bg-black text-white text-bold rounded-full"
                     onClick={() => setIsPopupOpen(false)}
                   >
                     X
