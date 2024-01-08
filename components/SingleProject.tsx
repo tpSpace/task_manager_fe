@@ -90,7 +90,12 @@ const SingleProject = ({
                 <BsArrowLeft className="text-4xl" />
               </Link>
             </div>
-            <div className="font-bold font-Montserrat text-4xl">{project.title}</div>
+            <input
+              className="font-bold font-Montserrat text-4xl focus:outline-0 text-center bg-gray-100"
+              onBlur={handleSubmitNewTitle}
+              onChange={e => handleChangeProjectTitle(e.target.value)}
+              value={projectTitle ? projectTitle : project.title}
+            />
             <div className={"font-Roboto font-medium"}>Setting</div>
           </div>
           <ListStages
