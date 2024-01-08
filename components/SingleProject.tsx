@@ -105,7 +105,7 @@ const SingleProject = ({
   };
 
   const handleDeleteTag = async (selectedTag: string) => {
-    const tagToDelete = project.tags.find(tag => tag.title === selectedTag);
+    const tagToDelete = project.tags.find(tag => tag && tag.title === selectedTag);
     if (!tagToDelete) {
       console.error('Tag to delete not found');
 
@@ -204,7 +204,7 @@ const SingleProject = ({
               className="form-select mt-5 mr-7 w-[10%] font-sans text-base text-gray-800 bg-white border-2 border-black rounded-full p-2
               box-border outline-none text-center font-bold appearance-none flex justify-center ml-auto"
               onChange={e => {
-                if (e.target.value === '+') {
+                if (e.target.value === 'Create Tag') {
                   setIsPopupOpen(true);
                 } else if (e.target.value === 'Delete Tag') {
                   setIsDeletePopupOpen(true);
@@ -220,7 +220,8 @@ const SingleProject = ({
               >
                 All
               </option>
-              {project.tags.map((tag, index) => (
+              {project.tags ? project.tags.map((tag, index) => (
+                tag ? (
                 <option key={index} value={tag.title}>
                   {tag.title}
                   {/* {isHover ? (
@@ -231,9 +232,9 @@ const SingleProject = ({
                   ) : (
                     <></>
                   )} */}
-                </option>
-              ))}
-              <option value="+">+</option>
+                </option>) : null
+              )) : null}
+              <option value="Create Tag">Create Tag</option>
               <option value="Delete Tag">Delete Tag</option>
             </select>
             {isPopupOpen && (
@@ -299,9 +300,11 @@ const SingleProject = ({
                       required
                     >
                       {project.tags.map((tag, index) => (
+                        tag ? (
                         <option key={index} value={tag.title}>
                           {tag.title}
                         </option>
+                        ) : null
                       ))}
                     </select>
                     <button
