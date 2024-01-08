@@ -9,22 +9,29 @@ import ListStages from './ListStages';
 
 //import Tag from './Tag';
 import UserCard from '@/components/UserCard';
-import { ProjectProps } from '@/types';
+import { ProjectProps, TagProps } from '@/types';
 
 interface SingleProjectProps {
   project: ProjectProps;
   setStageChangingFlag: () => void;
+  setProject: React.Dispatch<React.SetStateAction<ProjectProps>>;
 }
 
 const SingleProject = ({
   project,
   setStageChangingFlag,
+  setProject,
 }: SingleProjectProps) => {
   const [projectTitle, setProjectTitle] = useState<string>(project.title);
   const token = localStorage.getItem('token');
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const [selectedTag, setSelectedTag] = useState<string>('All');
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const [newTagTitle, setNewTagTitle] = useState<string>('');
+  const [newTagPriority, setNewTagPriority] = useState<number>(1);
+  const [newTagColor, setNewTagColor] = useState<string>('#ffffff');
 
   const handleChangeProjectTitle = (newTitle: string) => {
     setProjectTitle(newTitle);
@@ -50,6 +57,44 @@ const SingleProject = ({
       })
       .catch(err => {
         console.log(err);
+      });
+  };
+
+  const handleCreateTag = async (event: React.FormEvent) => {
+    event.preventDefault();
+    await axios
+      .post(
+        `${API_URL}/tags/create/${project.id}`,
+        {
+          title: newTagTitle,
+          priority: newTagPriority,
+          colour: newTagColor,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
+      .then(res => {
+        setIsPopupOpen(false);
+        setNewTagTitle('');
+        setNewTagPriority(1);
+        setNewTagColor('#ffffff');
+
+        const createdTag = {
+          id: res.data.tagId,
+          title: newTagTitle,
+          priority: newTagPriority,
+          colour: newTagColor,
+        } as TagProps;
+        setProject(prevProject => ({
+          ...prevProject,
+          tags: [...prevProject.tags, createdTag],
+        }));
+      })
+      .catch(err => {
+        console.error('An error occurred while creating the tag:', err);
       });
   };
 
@@ -131,7 +176,13 @@ const SingleProject = ({
             <select
               className="form-select mt-5 mr-7 w-[10%] font-sans text-base text-gray-800 bg-white border-2 border-black rounded-full p-2
               box-border outline-none text-center font-bold appearance-none flex justify-center ml-auto"
-              onChange={e => setSelectedTag(e.target.value)}
+              onChange={e => {
+                if (e.target.value === '+') {
+                  setIsPopupOpen(true);
+                } else {
+                  setSelectedTag(e.target.value);
+                }
+              }}
             >
               <option value="All">All</option>
               {project.tags.map((tag, index) => (
@@ -141,6 +192,52 @@ const SingleProject = ({
               ))}
               <option value="+">+</option>
             </select>
+            {isPopupOpen && (
+              <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50 rounded-3xl">
+                <div className="w-1/2 h-1/2 p-2 border-4 border-gray-800 relative flex justify-center items-center bg-white shadow-lg rounded-3xl">
+                  {/* Add your tag creation form here */}
+                  <form
+                    className="w-full p-4 border-2 border-gray-500 flex flex-col space-y-4 bg-white shadow-md rounded-3xl"
+                    onSubmit={handleCreateTag}
+                  >
+                    <input
+                      className="p-2 border-2 border-gray-300 rounded-full shadow-sm"
+                      onChange={e => setNewTagTitle(e.target.value)}
+                      placeholder="Tag title"
+                      required
+                      type="text"
+                      value={newTagTitle}
+                    />
+                    <input
+                      className="p-2 border-2 border-gray-300 rounded-full shadow-sm"
+                      onChange={e => setNewTagPriority(Number(e.target.value))}
+                      placeholder="Tag priority"
+                      required
+                      type="number"
+                      value={newTagPriority}
+                    />
+                    <input
+                      className="p-2 border-2 border-gray-300 rounded-full shadow-sm"
+                      onChange={e => setNewTagColor(e.target.value)}
+                      type="color"
+                      value={newTagColor}
+                    />
+                    <button
+                      className="p-2 bg-black text-white text-bold rounded-full"
+                      type="submit"
+                    >
+                      Create Tag
+                    </button>
+                  </form>
+                  <button
+                    className="absolute top-2 right-2 p-2 bg-black text-white text-bold rounded-full"
+                    onClick={() => setIsPopupOpen(false)}
+                  >
+                    X
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
           {/* <ListStages
             project={project}
