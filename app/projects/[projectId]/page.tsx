@@ -198,6 +198,7 @@ const ProjectDetail = ({ params }: { params: { projectId: string } }) => {
     <div className="h-[90%] w-full">
       <SingleProject
         project={project}
+        setProject={setProject}
         setStageChangingFlag={() => setStageChangingFlag(!stageChangingFlag)}
       />
     </div>
