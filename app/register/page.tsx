@@ -124,7 +124,7 @@ const RegisterPage = () => {
             {...register('confirmPassword')}
             className="px-4 border-[1px] border-gray-300 p-1 bg-gray-100 rounded-xl focus:border-[3px] font-Roboto"
             placeholder="Enter retype-password"
-            type="new-password"
+            type="password"
           />
           <button
             className="border-[1px] p-1 border-cyan-300 bg-cyan-50 rounded-xl hover:bg-cyan-100 text-cyan-500 font-semibold text-xl font-Roboto"

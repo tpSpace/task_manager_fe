@@ -20,9 +20,10 @@ interface Props {
   deleteTask: (id: string) => void;
   updateTask: (id: string, content: string) => void;
   tags: TagProps[];
+  setTasks: (task: Task[]) => void;
 }
 
-function TaskCard({ task, deleteTask, updateTask, tags }: Props) {
+function TaskCard({ task, deleteTask, updateTask, tags, setTasks }: Props) {
   const [mouseIsOver, setMouseIsOver] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
@@ -91,6 +92,7 @@ function TaskCard({ task, deleteTask, updateTask, tags }: Props) {
       <SingleTicket
         closeModal={() => setIsOpen(false)}
         isOpen={isOpen}
+        setTasks={setTasks}
         tags={tags}
         ticket={task.ticket}
       />

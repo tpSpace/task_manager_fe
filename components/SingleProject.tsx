@@ -6,10 +6,6 @@ import { BsArrowLeft } from 'react-icons/bs';
 import { MdDelete } from 'react-icons/md';
 
 import KanbanBoard from './KanbanBoard';
-import ListStages from './ListStages';
-
-//import Tag from './Tag';
-import Tag from './Tag';
 
 import UserCard from '@/components/UserCard';
 import { ProjectProps, TagProps } from '@/types';
@@ -105,7 +101,9 @@ const SingleProject = ({
   };
 
   const handleDeleteTag = async (selectedTag: string) => {
-    const tagToDelete = project.tags.find(tag => tag && tag.title === selectedTag);
+    const tagToDelete = project.tags.find(
+      tag => tag && tag.title === selectedTag,
+    );
     if (!tagToDelete) {
       console.error('Tag to delete not found');
 
@@ -220,11 +218,12 @@ const SingleProject = ({
               >
                 All
               </option>
-              {project.tags ? project.tags.map((tag, index) => (
-                tag ? (
-                <option key={index} value={tag.title}>
-                  {tag.title}
-                  {/* {isHover ? (
+              {project.tags
+                ? project.tags.map((tag, index) =>
+                    tag ? (
+                      <option key={index} value={tag.title}>
+                        {tag.title}
+                        {/* {isHover ? (
                     <MdDelete
                       className="bg-black absolute"
                       onClick={() => handleDeleteTag(project.tags[index].id)}
@@ -232,8 +231,10 @@ const SingleProject = ({
                   ) : (
                     <></>
                   )} */}
-                </option>) : null
-              )) : null}
+                      </option>
+                    ) : null,
+                  )
+                : null}
               <option value="Create Tag">Create Tag</option>
               <option value="Delete Tag">Delete Tag</option>
             </select>
@@ -299,13 +300,13 @@ const SingleProject = ({
                       onChange={e => setSelectedTag(e.target.value)}
                       required
                     >
-                      {project.tags.map((tag, index) => (
+                      {project.tags.map((tag, index) =>
                         tag ? (
-                        <option key={index} value={tag.title}>
-                          {tag.title}
-                        </option>
-                        ) : null
-                      ))}
+                          <option key={index} value={tag.title}>
+                            {tag.title}
+                          </option>
+                        ) : null,
+                      )}
                     </select>
                     <button
                       className="p-2 bg-black text-white text-bold rounded-full"
@@ -329,7 +330,7 @@ const SingleProject = ({
             selectedTag={selectedTag}
             setStageChangingFlag={setStageChangingFlag}
           /> */}
-          <KanbanBoard project={project} />
+          <KanbanBoard project={project} selectedTag={selectedTag} />
         </div>
       </div>
     </div>
