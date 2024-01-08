@@ -9,9 +9,10 @@ import KanbanBoard from './KanbanBoard';
 import ListStages from './ListStages';
 
 //import Tag from './Tag';
+import Tag from './Tag';
+
 import UserCard from '@/components/UserCard';
 import { ProjectProps, TagProps } from '@/types';
-import Tag from './Tag';
 
 interface SingleProjectProps {
   project: ProjectProps;
@@ -107,6 +108,7 @@ const SingleProject = ({
     const tagToDelete = project.tags.find(tag => tag.title === selectedTag);
     if (!tagToDelete) {
       console.error('Tag to delete not found');
+
       return;
     }
     const tagId = tagToDelete.id;
@@ -286,7 +288,7 @@ const SingleProject = ({
                   {/* Add your tag deletion form */}
                   <form
                     className="w-full p-4 border-2 border-gray-500 flex flex-col space-y-4 bg-white shadow-md rounded-3xl"
-                    onSubmit={(e) => {
+                    onSubmit={e => {
                       e.preventDefault();
                       handleDeleteTag(selectedTag);
                     }}
