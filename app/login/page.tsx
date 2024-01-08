@@ -49,7 +49,7 @@ const LoginPage = () => {
 
   return (
     <div className="flex justify-center items-center h-[90%] flex-col">
-      <h1 className="text-6xl font-bold font-Montserrat">Welcome to TasKing</h1>
+      <h1 className="text-6xl font-bold font-Montserrat -mt-16 mb-16">Welcome to TasKing</h1>
       <div>
         <form
           className="flex flex-col m-4 gap-4"
