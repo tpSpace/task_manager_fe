@@ -55,7 +55,6 @@ const RegisterPage = () => {
     if (password !== confirmPassword) {
       return false;
     }
-
     return true;
   };
 
