@@ -24,28 +24,28 @@ const PageBody: React.FC = () => {
       <div className="bg-white flex flex-col mt-24 sm:mt-14 md:mt-10 lg:mt-0">
         <div className="flex flex-col items-center mt-8 sm:mt-20 md:mt-32 lg:mt-32 xl:mt-32">
           {/* Welcome Message */}
-          <h1 className="font-bold text-center mb-8 text-5xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl">
+          <h1 className="font-bold text-center mx-4 mb-8 text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl">
             Write, plan, share.
             <br /> All in one place.
           </h1>
 
           {/* Additional text */}
-          <p className="font-medium text-black-700 mb-8 text-center text-xl sm:text-xl md:text-2xl lg:text2xl xl:text-3xl">
+          <p className="font-medium text-black-700 mx-4 mb-8 text-center text-lg sm:text-xl md:text-2xl lg:text2xl xl:text-3xl">
             TasKing is the collaborative site that enhanced efficiency.
           </p>
 
           {/* Get Started Button */}
           <button
-            className="bg-black text-white px-8 py-3 rounded-full hover:bg-zinc-700"
+            className="bg-black text-white px-4 lg:px-6 py-2 lg:py-3 rounded-full hover:bg-zinc-700"
             onClick={handleGetStartedClick}
           >
-            <span className="font-bold text-lg sm:text-lg md:text-xl lg:text2xl xl:text-2xl">
+            <span className="font-bold text-base sm:text-lg md:text-xl lg:text2xl xl:text-2xl">
               Get Started
             </span>
           </button>
 
           {/* Notion Image */}
-          <div className="mt-5 pb-6">
+          <div className="mx-4 mt-5 pb-6">
             <Image
               alt="Notion"
               className="h-44 sm:h-64 md:h-72 lg:h-80"
@@ -189,7 +189,7 @@ const PageBody: React.FC = () => {
             Tasking does for us.&quot;
           </div>
 
-          <div className="flex justify-center mt-10 lg:mt-20 h-40 sm:h-80 md:h-96 lg:h-72">
+          <div className="flex justify-center mx-4 mt-10 lg:mt-20 h-40 sm:h-80 md:h-96 lg:h-72">
             <Image
               alt="ApplicationIcon"
               height={1000}
@@ -201,7 +201,7 @@ const PageBody: React.FC = () => {
       </div>
 
       <div className="bg-white mt-12 lg:mt-24">
-        <div className="text-center font-bold text-3xl sm:text-4xl md-5xl lg:text-5xl">
+        <div className="text-center font-bold mx-4 text-2xl sm:text-4xl md:text-5xl">
           Every team, side-by-side
         </div>
 
