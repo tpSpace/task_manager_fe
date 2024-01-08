@@ -9,23 +9,25 @@ import ListStages from './ListStages';
 
 //import Tag from './Tag';
 import UserCard from '@/components/UserCard';
-import { ProjectProps } from '@/types';
+import { ProjectProps, TagProps } from '@/types';
 
 interface SingleProjectProps {
   project: ProjectProps;
   setStageChangingFlag: () => void;
+  setProject: React.Dispatch<React.SetStateAction<ProjectProps>>;
 }
 
 const SingleProject = ({
   project,
   setStageChangingFlag,
+  setProject,
 }: SingleProjectProps) => {
   const [projectTitle, setProjectTitle] = useState<string>(project.title);
   const token = localStorage.getItem('token');
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const [selectedTag, setSelectedTag] = useState<string>('All');
-  const [isPopupOpen, setIsPopupOpen] = useState(false); // New state variable
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const [newTagTitle, setNewTagTitle] = useState<string>('');
   const [newTagPriority, setNewTagPriority] = useState<number>(1);
@@ -60,34 +62,40 @@ const SingleProject = ({
 
   const handleCreateTag = async (event: React.FormEvent) => {
     event.preventDefault();
-
-    try {
-      const response = await fetch(`${API_URL}/tags/create/${project.id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
+    await axios
+      .post(
+        `${API_URL}/tags/create/${project.id}`,
+        {
           title: newTagTitle,
           priority: newTagPriority,
           colour: newTagColor,
-        }),
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
+      .then(res => {
+        setIsPopupOpen(false);
+        setNewTagTitle('');
+        setNewTagPriority(1);
+        setNewTagColor('#ffffff');
+
+        const createdTag = {
+          id: res.data.tagId,
+          title: newTagTitle,
+          priority: newTagPriority,
+          colour: newTagColor,
+        } as TagProps;
+        setProject(prevProject => ({
+          ...prevProject,
+          tags: [...prevProject.tags, createdTag],
+        }));
+      })
+      .catch(err => {
+        console.error('An error occurred while creating the tag:', err);
       });
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      const createdTag = await response.json();
-      project.tags.push(createdTag);
-      setIsPopupOpen(false);
-      setNewTagTitle('');
-      setNewTagPriority(1);
-      setNewTagColor('#ffffff');
-    } catch (error) {
-      console.error('An error occurred while creating the tag:', error);
-    }
   };
 
   return (
