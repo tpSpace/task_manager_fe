@@ -55,7 +55,7 @@ export interface TagProps {
   id: string;
   title: string;
   priority: number;
-  color: string;
+  colour: string;
 }
 
 export interface CommentProps {
