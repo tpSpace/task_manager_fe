@@ -222,14 +222,14 @@ const Projects = () => {
               <span
                 className={
                   ' absolute inset-x-7 inset-y-16 truncate ' +
-                  " text-black text-[35px] font-medium font-Roboto "
+                  ' text-black text-[35px] font-medium font-Roboto '
                 }
               >
                 {project.title}
               </span>
               <span
                 className={
-                  " absolute bottom-2 left-2 font-medium font-Roboto text-black "
+                  ' absolute bottom-2 left-2 font-medium font-Roboto text-black '
                 }
               >
                 Created by: {project.adminName}

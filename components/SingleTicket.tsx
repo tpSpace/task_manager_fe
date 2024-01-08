@@ -14,7 +14,7 @@ interface SingleTicketProps {
   isOpen: boolean;
   closeModal: () => void;
   ticket: TicketProps;
-  setFlag: () => void;
+  setFlag?: (() => void) | undefined;
   tags: TagProps[];
 }
 
@@ -73,7 +73,7 @@ const SingleTicket = ({
     };
 
     initTicket();
-  }, [ticket.ticketId]);
+  }, [API_URL, ticket.ticketId]);
 
   const handleChangeTitle = (title: string) => {
     setUpdatedTicket(prevTicket => ({
@@ -106,9 +106,11 @@ const SingleTicket = ({
       })
       .then(res => {
         closeModal();
-        if (res.status === 200) {
-          console.log(`Ticket ${ticket.title} deleted sucessfully`);
-          setFlag();
+        console.log(`Ticket ${ticket.title} deleted sucessfully`);
+        if (typeof setFlag === 'function') {
+          if (res.status === 200) {
+            setFlag();
+          }
         }
       })
       .catch(err => {
@@ -142,7 +144,9 @@ const SingleTicket = ({
       })
       .then(res => {
         if (res.status === 200) {
-          setFlag();
+          if (typeof setFlag === 'function') {
+            setFlag();
+          }
           console.log(`Ticket ${ticket.title} updated`);
         }
       })

@@ -24,7 +24,7 @@ import TaskCard from './TaskCard';
 import PlusIcon from '../icons/PlusIcon';
 import { Column, Id, Task } from '../types/types';
 
-import { ProjectProps } from '@/types';
+import { ProjectProps, TicketProps } from '@/types';
 
 interface ProjectDetailProps {
   project: ProjectProps;
@@ -58,20 +58,38 @@ function KanbanBoard({ project }: ProjectDetailProps) {
     });
     setColumns(columns);
 
-    const tasks: Task[] = [];
-    project.stages.forEach(stage => {
-      if (!stage.tickets) return;
-      stage.tickets.forEach(ticket => {
-        tasks.push({
+    const fetchTasksForAllStages = async () => {
+      // Collect promises for fetching tickets for each stage
+      const tasksPromises = project.stages.map(async stage => {
+        const tickets = (await (
+          await axios.get(`${API_URL}/tickets/get/stage/${stage.id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+        ).data.tickets) as TicketProps[];
+
+        if (!tickets) return [];
+
+        return tickets.map(ticket => ({
           id: ticket.ticketId,
           columnId: stage.id,
-          content: ticket.title,
-        });
+          ticket: ticket,
+        }));
       });
-    });
-    setTasks(tasks);
+
+      // Wait for all promises to resolve and collect the tasks
+      try {
+        const allTasks = await Promise.all(tasksPromises);
+        setTasks(allTasks.flat());
+      } catch (error) {
+        console.error('Error fetching tasks:', error);
+        // Handle error gracefully, e.g., display an error message
+      }
+    };
+
+    fetchTasksForAllStages();
   }, [project.stages]);
-  console.log('tasks', project);
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -110,6 +128,7 @@ function KanbanBoard({ project }: ProjectDetailProps) {
                   deleteColumn={deleteColumn}
                   deleteTask={deleteTask}
                   key={col.id}
+                  tags={project.tags}
                   tasks={tasks.filter(task => task.columnId === col.id)}
                   updateColumn={updateColumn}
                   updateTask={updateTask}
@@ -154,6 +173,7 @@ function KanbanBoard({ project }: ProjectDetailProps) {
                 createTask={createTask}
                 deleteColumn={deleteColumn}
                 deleteTask={deleteTask}
+                tags={project.tags}
                 tasks={tasks.filter(task => task.columnId === activeColumn.id)}
                 updateColumn={updateColumn}
                 updateTask={updateTask}
@@ -162,6 +182,7 @@ function KanbanBoard({ project }: ProjectDetailProps) {
             {activeTask && (
               <TaskCard
                 deleteTask={deleteTask}
+                tags={project.tags}
                 task={activeTask}
                 updateTask={updateTask}
               />
@@ -181,9 +202,9 @@ function KanbanBoard({ project }: ProjectDetailProps) {
           `${API_URL}/tickets/create/${columnId}`,
           {
             title: 'New Task',
-            description: 'New Task',
-            assignedUserIds: [project.admin],
-            deadline: new Date(),
+            description: 'idk man',
+            assignedUserIds: [project.admin.id],
+            deadline: new Date().toISOString(),
             parentTicketId: '',
           },
           {
@@ -192,18 +213,27 @@ function KanbanBoard({ project }: ProjectDetailProps) {
             },
           },
         )
-        .then(res => {
+        .then(async res => {
           console.log('Create ticket successfully');
-          newTask.id = res.data.ticketId;
+          const newTicket = (
+            await axios.get(
+              `${API_URL}/tickets/get/ticket/${res.data.ticketId}`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              },
+            )
+          ).data.ticket as TicketProps;
           newTask = {
             id: res.data.ticketId,
             columnId: columnId,
-            content: 'New Task',
+            ticket: newTicket,
           } as Task;
+          setTasks([...tasks, newTask]);
         });
     }
     createTask();
-    setTasks([...tasks, newTask]);
   }
 
   function deleteTask(id: Id) {
@@ -330,7 +360,6 @@ function KanbanBoard({ project }: ProjectDetailProps) {
 
     const activeId = active.id;
     const overId = over.id;
-
     if (activeId === overId) return;
 
     const isActiveATask = active.data.current?.type === 'Task';
@@ -359,21 +388,52 @@ function KanbanBoard({ project }: ProjectDetailProps) {
 
     // Im dropping a Task over a column
     if (isActiveATask && isOverAColumn) {
+      console.log(activeId, overId);
       setTasks(tasks => {
         const activeIndex = tasks.findIndex(t => t.id === activeId);
 
         tasks[activeIndex].columnId = overId.toString();
         console.log('DROPPING TASK OVER COLUMN', { activeIndex });
+        async function updateTicket() {
+          await axios
+            .put(
+              `${API_URL}/tickets/update/${activeId}`,
+              {
+                title: tasks[activeIndex].ticket.title,
+                description: tasks[activeIndex].ticket.description,
+                tag: tasks[activeIndex].ticket.tag,
+                stage: overId,
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              },
+            )
+            .then(res => {
+              console.log(overId);
+              console.log(res.data);
+              console.log('Update ticket successfully');
+            })
+            .catch(err => {
+              console.log(err);
+              console.log('Update ticket failed');
+            });
+        }
+        const overIndex = tasks.findIndex(t => t.id === overId);
+        if (
+          tasks[activeIndex].columnId != overId &&
+          overId !== tasks[activeIndex].id &&
+          overId !== tasks[activeIndex].ticket.ticketId &&
+          overId !== columns[overIndex].id
+        ) {
+          updateTicket();
+        }
 
         return arrayMove(tasks, activeIndex, activeIndex);
       });
     }
   }
-}
-
-function generateId() {
-  /* Generate a random number between 0 and 10000 */
-  return Math.floor(Math.random() * 10001).toString();
 }
 
 export default KanbanBoard;

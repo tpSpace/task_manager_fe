@@ -14,8 +14,8 @@ const config: Config = {
           'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       },
       colors: {
-        'mainBackgroundColor': '#0D1117',
-        'columnBackgroundColor': '#161C22'
+        mainBackgroundColor: '#0D1117',
+        columnBackgroundColor: '#161C22',
       },
       maxHeight: {
         '128': '47rem',
@@ -23,8 +23,7 @@ const config: Config = {
       fontFamily: {
         Roboto: ['Roboto', 'sans-serif'],
         Montserrat: ['Montserrat', 'sans-serif'],
-
-      }
+      },
     },
   },
   plugins: [],

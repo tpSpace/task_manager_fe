@@ -14,6 +14,8 @@ import PlusIcon from '../icons/PlusIcon';
 import TrashIcon from '../icons/TrashIcon';
 import { Column, Id, Task } from '../types/types';
 
+import { TagProps } from '@/types';
+
 interface Props {
   column: Column;
   deleteColumn: (id: string) => void;
@@ -23,6 +25,7 @@ interface Props {
   updateTask: (id: string, content: string) => void;
   deleteTask: (id: string) => void;
   tasks: Task[];
+  tags: TagProps[];
 }
 
 const token = localStorage.getItem('token');
@@ -38,6 +41,7 @@ function ColumnContainer({
   tasks,
   deleteTask,
   updateTask,
+  tags,
 }: Props) {
   const [editMode, setEditMode] = useState(false);
 
@@ -204,6 +208,7 @@ function ColumnContainer({
             <TaskCard
               deleteTask={deleteTask}
               key={task.id}
+              tags={tags}
               task={task}
               updateTask={updateTask}
             />
