@@ -9,8 +9,13 @@ import { ProjectProps, StageProps } from '@/types';
 interface ListStagesProps {
   project: ProjectProps;
   setStageChangingFlag: () => void;
+  selectedTag: string;
 }
-const ListStages = ({ project, setStageChangingFlag }: ListStagesProps) => {
+const ListStages = ({
+  project,
+  setStageChangingFlag,
+  selectedTag,
+}: ListStagesProps) => {
   const [isStageFormOpen, setIsStageFormOpen] = useState(false);
 
   const openStageForm = () => {
@@ -26,6 +31,7 @@ const ListStages = ({ project, setStageChangingFlag }: ListStagesProps) => {
       {project.stages?.map((stage, index) => (
         <SingleStage
           key={index}
+          selectedTag={selectedTag}
           setStageChangingFlag={setStageChangingFlag}
           stage={stage}
           tags={project.tags}

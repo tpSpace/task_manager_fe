@@ -35,9 +35,15 @@ const SingleStage: React.FC<SingleStageProps> = ({
     tickets: stage.tickets,
   });
 
+  const [allTickets, setAllTickets] = useState<TicketProps[]>([]);
+
   useEffect(() => {
     reloadTickets();
   }, [flag]);
+
+  useEffect(() => {
+    handleSortTickets();
+  }, [selectedTag]);
 
   const deleteStage = async () => {
     const token = localStorage.getItem('token');
@@ -95,25 +101,38 @@ const SingleStage: React.FC<SingleStageProps> = ({
         console.log(`Stage ${stage.title}'s tickets reloaded`);
 
         const newTickets = responses.data.tickets as TicketProps[];
-        const sortedTickets = newTickets.filter(ticket => {
-          ticket.tag?.title === selectedTag;
-        });
+
         setUpdatedStage({
           ...updatedStage,
-          tickets: selectedTag ? sortedTickets : newTickets,
+          tickets: newTickets,
         });
+
+        setAllTickets(newTickets);
       })
       .catch(err => {
         console.log(err);
       });
   };
 
-  const openTicketForm = () => {
-    setIsTicketFormOpen(true);
-  };
-
-  const closeTicketForm = () => {
-    setIsTicketFormOpen(false);
+  const handleSortTickets = () => {
+    console.log(allTickets);
+    if (selectedTag === '+') return;
+    else if (selectedTag !== 'All') {
+      const sortedTickets = allTickets.filter(ticket => {
+        return ticket.tag?.title === selectedTag;
+      });
+      console.log('selected Tag:', selectedTag);
+      setUpdatedStage(prevStage => ({
+        ...prevStage,
+        tickets: sortedTickets,
+      }));
+    } else {
+      console.log('selected Tag: All');
+      setUpdatedStage(prevStage => ({
+        ...prevStage,
+        tickets: allTickets,
+      }));
+    }
   };
 
   return (
@@ -147,14 +166,14 @@ const SingleStage: React.FC<SingleStageProps> = ({
       <div className="h-20 p-2 flex items-center justify-center">
         <CustomButton
           containerStyles="border-solid w-56 rounded-lg mb-16 h-20 text-6xl flex justify-center bg-gray-100 items-center"
-          handleClick={openTicketForm}
+          handleClick={() => setIsTicketFormOpen(true)}
           title="+"
         />
       </div>
       {/* Ticket Creation Form */}
       {isTicketFormOpen && (
         <TicketCreationForm
-          onClose={closeTicketForm}
+          onClose={() => setIsTicketFormOpen(false)}
           setFlag={() => setFlag(!flag)}
           stageId={stage.id}
         />
