@@ -21,14 +21,14 @@ const SingleProject = ({
   setStageChangingFlag,
 }: SingleProjectProps) => {
   const [projectTitle, setProjectTitle] = useState<string>(project.title);
+  const token = localStorage.getItem('token');
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const handleChangeProjectTitle = (newTitle: string) => {
     setProjectTitle(newTitle);
   };
 
   const handleSubmitNewTitle = async () => {
-    const token = localStorage.getItem('token');
-    const API_URL = process.env.NEXT_PUBLIC_API_URL;
     await axios
       .put(
         `${API_URL}/projects/updateTitle/${project.id}`,

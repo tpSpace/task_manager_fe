@@ -91,8 +91,6 @@ function KanbanBoard({ project }: ProjectDetailProps) {
     fetchTasksForAllStages();
   }, [project.stages]);
 
-  console.log('tasks', project);
-
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
@@ -362,7 +360,6 @@ function KanbanBoard({ project }: ProjectDetailProps) {
 
     const activeId = active.id;
     const overId = over.id;
-
     if (activeId === overId) return;
 
     const isActiveATask = active.data.current?.type === 'Task';
@@ -391,21 +388,52 @@ function KanbanBoard({ project }: ProjectDetailProps) {
 
     // Im dropping a Task over a column
     if (isActiveATask && isOverAColumn) {
+      console.log(activeId, overId);
       setTasks(tasks => {
         const activeIndex = tasks.findIndex(t => t.id === activeId);
 
         tasks[activeIndex].columnId = overId.toString();
         console.log('DROPPING TASK OVER COLUMN', { activeIndex });
+        async function updateTicket() {
+          await axios
+            .put(
+              `${API_URL}/tickets/update/${activeId}`,
+              {
+                title: tasks[activeIndex].ticket.title,
+                description: tasks[activeIndex].ticket.description,
+                tag: tasks[activeIndex].ticket.tag,
+                stage: overId,
+              },
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              },
+            )
+            .then(res => {
+              console.log(overId);
+              console.log(res.data);
+              console.log('Update ticket successfully');
+            })
+            .catch(err => {
+              console.log(err);
+              console.log('Update ticket failed');
+            });
+        }
+        const overIndex = tasks.findIndex(t => t.id === overId);
+        if (
+          tasks[activeIndex].columnId != overId &&
+          overId !== tasks[activeIndex].id &&
+          overId !== tasks[activeIndex].ticket.ticketId &&
+          overId !== columns[overIndex].id
+        ) {
+          updateTicket();
+        }
 
         return arrayMove(tasks, activeIndex, activeIndex);
       });
     }
   }
-}
-
-function generateId() {
-  /* Generate a random number between 0 and 10000 */
-  return Math.floor(Math.random() * 10001).toString();
 }
 
 export default KanbanBoard;

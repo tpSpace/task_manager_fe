@@ -1,7 +1,7 @@
 'use client';
 
 /* eslint-disable import/no-extraneous-dependencies */
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
@@ -24,7 +24,6 @@ interface Props {
 
 function TaskCard({ task, deleteTask, updateTask, tags }: Props) {
   const [mouseIsOver, setMouseIsOver] = useState(false);
-  const [editMode, setEditMode] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 
   const {
@@ -45,11 +44,6 @@ function TaskCard({ task, deleteTask, updateTask, tags }: Props) {
   const style = {
     transition,
     transform: CSS.Transform.toString(transform),
-  };
-
-  const toggleEditMode = () => {
-    setEditMode(prev => !prev);
-    setMouseIsOver(false);
   };
 
   if (isDragging) {
