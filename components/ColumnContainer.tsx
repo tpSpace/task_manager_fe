@@ -26,6 +26,7 @@ interface Props {
   deleteTask: (id: string) => void;
   tasks: Task[];
   tags: TagProps[];
+  setTasks: (task: Task[]) => void;
 }
 
 const token = localStorage.getItem('token');
@@ -42,6 +43,7 @@ function ColumnContainer({
   deleteTask,
   updateTask,
   tags,
+  setTasks,
 }: Props) {
   const [editMode, setEditMode] = useState(false);
 
@@ -208,6 +210,7 @@ function ColumnContainer({
             <TaskCard
               deleteTask={deleteTask}
               key={task.id}
+              setTasks={setTasks}
               tags={tags}
               task={task}
               updateTask={updateTask}

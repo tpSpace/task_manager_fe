@@ -7,8 +7,8 @@ export type Column = {
   title: string;
 };
 
-export type Task = {
+export interface Task {
   id: string;
   columnId: string;
   ticket: TicketProps;
-};
+}

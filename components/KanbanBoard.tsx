@@ -128,6 +128,7 @@ function KanbanBoard({ project }: ProjectDetailProps) {
                   deleteColumn={deleteColumn}
                   deleteTask={deleteTask}
                   key={col.id}
+                  setTasks={setTasks}
                   tags={project.tags}
                   tasks={tasks.filter(task => task.columnId === col.id)}
                   updateColumn={updateColumn}
@@ -173,6 +174,7 @@ function KanbanBoard({ project }: ProjectDetailProps) {
                 createTask={createTask}
                 deleteColumn={deleteColumn}
                 deleteTask={deleteTask}
+                setTasks={setTasks}
                 tags={project.tags}
                 tasks={tasks.filter(task => task.columnId === activeColumn.id)}
                 updateColumn={updateColumn}
@@ -182,6 +184,7 @@ function KanbanBoard({ project }: ProjectDetailProps) {
             {activeTask && (
               <TaskCard
                 deleteTask={deleteTask}
+                setTasks={setTasks}
                 tags={project.tags}
                 task={activeTask}
                 updateTask={updateTask}

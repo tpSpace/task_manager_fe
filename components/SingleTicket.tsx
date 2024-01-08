@@ -9,6 +9,7 @@ import { MdDelete } from 'react-icons/md';
 import Tag from './Tag';
 
 import { TagProps, TicketProps } from '@/types';
+import { Task } from '@/types/types';
 
 interface SingleTicketProps {
   isOpen: boolean;
@@ -16,6 +17,7 @@ interface SingleTicketProps {
   ticket: TicketProps;
   setFlag?: (() => void) | undefined;
   tags: TagProps[];
+  setTasks: (task: Task[]) => void;
 }
 
 const SingleTicket = ({
@@ -24,6 +26,7 @@ const SingleTicket = ({
   closeModal,
   setFlag,
   tags,
+  setTasks,
 }: SingleTicketProps) => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -80,6 +83,23 @@ const SingleTicket = ({
       ...prevTicket,
       title: title,
     }));
+    setTasks((prevTasks: Task[]) => {
+      const newTasks = prevTasks.map(task => {
+        if (task.ticket.ticketId === ticket.ticketId) {
+          return {
+            ...task,
+            ticket: {
+              ...task.ticket,
+              title: title,
+            },
+          };
+        }
+
+        return task as Task;
+      });
+
+      return newTasks as Task[];
+    });
   };
 
   const handleChangeDescription = (description: string) => {
@@ -87,6 +107,23 @@ const SingleTicket = ({
       ...prevTicket,
       description: description,
     }));
+    setTasks((prevTasks: Task[]) => {
+      const newTasks = prevTasks.map(task => {
+        if (task.ticket.ticketId === ticket.ticketId) {
+          return {
+            ...task,
+            ticket: {
+              ...task.ticket,
+              description: description,
+            },
+          };
+        }
+
+        return task as Task;
+      });
+
+      return newTasks as Task[];
+    });
   };
 
   const handleChangeDeadline = (date: Date) => {
@@ -94,6 +131,23 @@ const SingleTicket = ({
       ...prevTicket,
       deadline: date.toISOString(),
     }));
+    setTasks((prevTasks: Task[]) => {
+      const newTasks = prevTasks.map(task => {
+        if (task.ticket.ticketId === ticket.ticketId) {
+          return {
+            ...task,
+            ticket: {
+              ...task.ticket,
+              deadline: date.toISOString(),
+            },
+          };
+        }
+
+        return task as Task;
+      });
+
+      return newTasks as Task[];
+    });
   };
 
   const handleDeleteTicket = async () => {
@@ -116,6 +170,13 @@ const SingleTicket = ({
       .catch(err => {
         console.log(err);
       });
+    setTasks((prevTasks: Task[]) => {
+      const newTasks = prevTasks.filter(
+        task => task.ticket.ticketId !== ticket.ticketId,
+      );
+
+      return newTasks as Task[];
+    });
   };
 
   const handleSelect = async (selected: string) => {
