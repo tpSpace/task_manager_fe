@@ -75,7 +75,7 @@ const SingleTicket = ({
     };
 
     initTicket();
-  }, [ticket.ticketId]);
+  }, [API_URL, ticket.ticketId]);
 
   const handleChangeTitle = (title: string) => {
     setUpdatedTicket(prevTicket => ({
