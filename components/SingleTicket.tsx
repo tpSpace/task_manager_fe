@@ -129,6 +129,10 @@ const SingleTicket = ({
 
   const handleComment = (content: string) => {};
 
+  const handleSubmitComment = (e: any) => {
+    e.preventDefault();
+  };
+
   const loadTicket = async () => {
     const token = localStorage.getItem('token');
 
@@ -264,12 +268,16 @@ const SingleTicket = ({
                               Comments
                             </h1>
                             <div className="row-span-2 min-h-[full] overflow-y-auto">
-                              {updatedTicket.comments?.map((comment, index) => (
+                              {/* {updatedTicket.comments?.map((comment, index) => (
                                 <SingleComment comment={comment} key={index} />
-                              ))}
+                              ))} */}
+                              Under development
                             </div>
 
-                            <form className="w-[80%] flex justify-center px-2">
+                            <form
+                              className="w-[80%] flex justify-center px-2"
+                              onSubmit={handleSubmitComment}
+                            >
                               <textarea
                                 className="w-[80%] resize-none h-8 border-black border-2 rounded-3xl px-2"
                                 onChange={e => handleComment(e.target.value)}
