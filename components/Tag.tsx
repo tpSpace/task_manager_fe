@@ -24,8 +24,7 @@ const Tag: React.FC<TagDetailProps> = ({ tags, handleSelect, selectedTag }) => {
   return (
     <select
       className="font-sans text-base text-gray-800 bg-white border-2 border-black rounded-full p-2
-        w-full box-border outline-none text-center font-bold mt-1 appearance-none flex clsjustify-center"
-      title="Select a tag"
+        w-full box-border outline-none text-center font-bold mt-1 appearance-none flex justify-center"
       onChange={e => handleSelect(e.target.value)}
       //onBlur={loadTicket}
       value={selectedTag || ''}

@@ -180,7 +180,7 @@ const Projects = () => {
           className={
             ' text-black text-center border-black rounded-full border-[3px] bg-gray-50 ' +
             ' text-l h-10 w-1/4 mr-36 ' +
-            ' shadow shadow-black hover:ease-out hover:duration-500 hover:text-xl hover:font-semibold hover:w-1/3 focus:text-xl focus:font-semibold focus:w-1/3 '
+            ' shadow shadow-black hover:ease-out hover:duration-500 hover:text-xl hover:w-1/3 focus:text-xl focus:w-1/3 font-medium font-Roboto'
           }
           onChange={e => {
             setSearch(e.target.value);
@@ -222,14 +222,14 @@ const Projects = () => {
               <span
                 className={
                   ' absolute inset-x-7 inset-y-16 truncate ' +
-                  " text-black text-[35px] font-semibold font-['Montserrat'] "
+                  ' text-black text-[35px] font-medium font-Roboto '
                 }
               >
                 {project.title}
               </span>
               <span
                 className={
-                  " absolute bottom-2 left-2 font-semibold font-['Montserrat'] text-black "
+                  ' absolute bottom-2 left-2 font-medium font-Roboto text-black '
                 }
               >
                 Created by: {project.adminName}
@@ -244,16 +244,16 @@ const Projects = () => {
           />
           <AddProjectPopUp setTrigger={setPopup} trigger={Popup}>
             <div className=" grid grid-cols-2 border-none ">
-              <div className=" bg-white w-[320px] h-[480px] rounded-tl-[20px] rounded-bl-[20px] flex flex-col border-none ">
+              <div className=" bg-white w-[320px] h-[480px] rounded-tl-[20px] rounded-bl-[20px] flex flex-col border-none relative items-center">
                 <span
-                  className="font-['Montserrat'] text-[35px] text-center font-medium w-[290px] h-[3.125rem]
-                mt-[2.69rem] bg-black text-white rounded-[20px] ml-3.5 "
+                  className=" font-Montserrat text-[35px] text-center font-medium w-[290px] h-[3.125rem]
+                mt-[2.69rem] bg-black text-white rounded-[20px] "
                 >
-                  Create a project
+                  Create project
                 </span>
                 <button
                   className=" flex items-center justify-center w-[10rem] h-[10rem] bg-white text-black border-4 rounded-[20px] text-[60px] hover:scale-105
-                 mt-[4.12rem] ml-[5rem] border-black font-medium hover:ease-out hover:duration-100 pb-3 hover:pb-4 "
+                 mt-[4.12rem] border-black font-medium hover:ease-out hover:duration-100 pb-3 hover:pb-4 "
                   onClick={() => {
                     handleCreateProject();
                     setPopup(false);
@@ -265,18 +265,18 @@ const Projects = () => {
               </div>
               <div className="bg-black w-[320px] h-[480px] rounded-tr-[20px] rounded-br-[20px] flex flex-col border-none">
                 <span
-                  className="text-black text-center font-['Montserrat'] text-[35px] font-medium w-[290px] h-[3.125rem]
+                  className="text-black text-center font-Montserrat text-[35px] font-medium w-[290px] h-[3.125rem]
                 mt-[2.69rem] bg-white rounded-[20px] ml-3.5"
                 >
-                  Join a project
+                  Join project
                 </span>
-                <h3 className="text-white text-center text-xl mt-[70px] font-medium">
+                <h3 className="text-white text-center text-xl mt-[70px] font-medium font-Roboto">
                   Enter the project code:
                 </h3>
                 <input
-                  className="text-center rounded-[20px] w-[150px] h-[40px] bg-white text-black font-medium font-['Montserrat'] border-none mt-2 ml-[80px]
-                  focus:w-[250px] focus:text-2xl focus:font-semibold hover:duration-500 hover:ease-out hover:w-[250px]
-                  hover:text-2xl hover:font-semibold hover:ml-[35px] focus:ml-[35px]"
+                  className="text-center rounded-[20px] w-[150px] h-[40px] bg-white text-black font-medium font-Roboto border-none mt-2 ml-[80px]
+                  focus:w-[250px] focus:text-2xl hover:duration-500 hover:ease-out hover:w-[250px]
+                  hover:text-2xl hover:ml-[35px] focus:ml-[35px]"
                   onChange={e => {
                     setProjectCode(e.target.value);
                   }}
@@ -286,7 +286,7 @@ const Projects = () => {
                 />
                 <button
                   className="text-black text-center w-[6rem] h-[3.125rem] bg-white rounded-[20px] mt-5 ml-[110px]
-                font-['Montserrat'] text-2xl font-medium hover:font-semibold hover:text-3xl hover:ease-out hover:duration-100"
+                font-Roboto text-2xl font-medium hover:font-semibold hover:scale-125 hover:ease-out hover:duration-100"
                   onClick={() => {
                     handleJoinProject();
                     setPopup(false);

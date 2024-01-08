@@ -6,10 +6,9 @@ import Image from 'next/image';
 import { AiOutlineEnter } from 'react-icons/ai';
 import { MdDelete } from 'react-icons/md';
 
-import SingleComment from './SingleComment';
 import Tag from './Tag';
 
-import { CommentProps, TagProps, TicketProps } from '@/types';
+import { TagProps, TicketProps } from '@/types';
 
 interface SingleTicketProps {
   isOpen: boolean;
@@ -41,16 +40,16 @@ const SingleTicket = ({
     creator: ticket.creator,
   });
 
-  const [comment, setComment] = useState<CommentProps>({
-    id: '',
-    commenter: {
-      name: '',
-      id: '',
-    },
-    content: '',
-  });
+  // const [comment, setComment] = useState<CommentProps>({
+  //   id: '',
+  //   commenter: {
+  //     name: '',
+  //     id: '',
+  //   },
+  //   content: '',
+  // });
 
-  const [comments, setComments] = useState<CommentProps[]>([]);
+  // const [comments, setComments] = useState<CommentProps[]>([]);
 
   // initialize the ticket when the pop-up shown
   useEffect(() => {

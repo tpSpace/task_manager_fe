@@ -9,8 +9,13 @@ import { ProjectProps, StageProps } from '@/types';
 interface ListStagesProps {
   project: ProjectProps;
   setStageChangingFlag: () => void;
+  selectedTag: string;
 }
-const ListStages = ({ project, setStageChangingFlag }: ListStagesProps) => {
+const ListStages = ({
+  project,
+  setStageChangingFlag,
+  selectedTag,
+}: ListStagesProps) => {
   const [isStageFormOpen, setIsStageFormOpen] = useState(false);
 
   const openStageForm = () => {
@@ -22,10 +27,11 @@ const ListStages = ({ project, setStageChangingFlag }: ListStagesProps) => {
   };
 
   return (
-    <div className="flex flex-row py-10 h-[90%] w-full overflow-x-scroll">
+    <div className="flex flex-row pb-10 h-[90%] w-full overflow-x-scroll">
       {project.stages?.map((stage, index) => (
         <SingleStage
           key={index}
+          selectedTag={selectedTag}
           setStageChangingFlag={setStageChangingFlag}
           stage={stage}
           tags={project.tags}
