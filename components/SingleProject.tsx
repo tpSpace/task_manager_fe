@@ -21,6 +21,8 @@ const SingleProject = ({
 }: SingleProjectProps) => {
   const [projectTitle, setProjectTitle] = useState<string>(project.title);
 
+  const [selectedTag, setSelectedTag] = useState<string>('All');
+
   const handleChangeProjectTitle = (newTitle: string) => {
     setProjectTitle(newTitle);
   };
@@ -98,8 +100,37 @@ const SingleProject = ({
             />
             <div className={"font-Roboto font-medium"}>Setting</div>
           </div>
+          {/* <div>
+            <Tag tag={project.tag} />
+            <div className="flex flex-row space-x-2">
+              {project.tags.map((tag, index) => (
+                <div
+                  key={index}
+                  className="bg-gray-200 rounded-full px-2 py-1 text-sm"
+                >
+                  {tag.title}
+                </div>
+              ))}
+            </div>
+          </div> */}
+          <div>
+            <select
+              className="form-select mt-5 mr-7 w-[10%] font-sans text-base text-gray-800 bg-white border-2 border-black rounded-full p-2
+              box-border outline-none text-center font-bold appearance-none flex justify-center ml-auto"
+              onChange={e => setSelectedTag(e.target.value)}
+            >
+              <option value="All">All</option>
+              {project.tags.map((tag, index) => (
+                <option key={index} value={tag.title}>
+                  {tag.title}
+                </option>
+              ))}
+              <option value="+">+</option>
+            </select>
+          </div>
           <ListStages
             project={project}
+            selectedTag={selectedTag}
             setStageChangingFlag={setStageChangingFlag}
           />
           {/* <KanbanBoard project={project} /> */}
