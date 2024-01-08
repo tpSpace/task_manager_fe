@@ -65,7 +65,6 @@ const SingleTicket = ({
         })
         .then(res => {
           if (res.status === 200) {
-            console.log(res.data);
             setUpdatedTicket(res.data.ticket);
           }
         })
