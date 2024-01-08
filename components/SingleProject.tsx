@@ -124,18 +124,18 @@ const SingleProject = ({
             ))}
           </div>
         </div>
-        <div
-          className="w-full text-center cursor-pointer"
-          onClick={() => {
-            navigator.clipboard.writeText(project.id);
-          }}
-        >
-          <span className={'text-lg font-Roboto'}>
-            Copy this code to invite
+        <div className="w-full text-center cursor-pointer">
+          <span
+            className={'text-lg font-Roboto'}
+            onClick={() => {
+              navigator.clipboard.writeText(project.id);
+            }}
+          >
+            Click to copy code
           </span>
           <p
             className={
-              'text-sm font-Roboto font-bold truncate text-cyan-400 hover:text-cyan-500'
+              'text-sm font-Roboto font-bold truncate text-cyan-400 hover:text-cyan-500 select-all'
             }
           >
             {project.id}
