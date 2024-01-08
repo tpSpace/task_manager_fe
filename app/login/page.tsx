@@ -56,8 +56,12 @@ const LoginPage = () => {
           onSubmit={handleSubmit(submit)}
         >
           <span
-            className={"-mb-4 font-semibold text-base font-Roboto text-neutral-600"}
-          >Email</span>
+            className={
+              '-mb-4 font-semibold text-base font-Roboto text-neutral-600'
+            }
+          >
+            Email
+          </span>
           <input
             autoComplete="email"
             className=" px-4 border-[1px] border-gray-300 p-1 bg-gray-100 rounded-xl focus:border-[3px] font-Roboto"
@@ -66,8 +70,12 @@ const LoginPage = () => {
             {...register('email')}
           />
           <span
-            className={"-mb-4 -mt-4 font-semibold text-base font-Roboto text-neutral-600"}
-          >Password</span>
+            className={
+              '-mb-4 -mt-4 font-semibold text-base font-Roboto text-neutral-600'
+            }
+          >
+            Password
+          </span>
           <input
             autoComplete="current-password"
             className=" px-4 border-[1px] border-gray-300 p-1 bg-gray-100 rounded-xl focus:border-[3px] font-Roboto"
