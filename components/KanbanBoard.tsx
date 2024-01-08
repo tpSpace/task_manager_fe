@@ -58,26 +58,39 @@ function KanbanBoard({ project }: ProjectDetailProps) {
     });
     setColumns(columns);
 
-    const tasks: Task[] = [];
-    project.stages.forEach(async stage => {
-      const tickets = (await (
-        await axios.get(`${API_URL}/tickets/get/stage/${stage.id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-      ).data.tickets) as TicketProps[];
-      if (!tickets) return;
-      tickets.forEach(ticket => {
-        tasks.push({
+    const fetchTasksForAllStages = async () => {
+      // Collect promises for fetching tickets for each stage
+      const tasksPromises = project.stages.map(async stage => {
+        const tickets = (await (
+          await axios.get(`${API_URL}/tickets/get/stage/${stage.id}`, {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+        ).data.tickets) as TicketProps[];
+
+        if (!tickets) return [];
+
+        return tickets.map(ticket => ({
           id: ticket.ticketId,
           columnId: stage.id,
           ticket: ticket,
-        });
+        }));
       });
-    });
-    setTasks(tasks);
+
+      // Wait for all promises to resolve and collect the tasks
+      try {
+        const allTasks = await Promise.all(tasksPromises);
+        setTasks(allTasks.flat());
+      } catch (error) {
+        console.error('Error fetching tasks:', error);
+        // Handle error gracefully, e.g., display an error message
+      }
+    };
+
+    fetchTasksForAllStages();
   }, [project.stages]);
+
   console.log('tasks', project);
 
   const sensors = useSensors(
