@@ -7,8 +7,8 @@ interface UserCardProps {
 }
 const UserCard = ({ user }: UserCardProps) => {
   return (
-    <div className="border-2 border-black rounded-full h-10 w-full bg-slate-400 p-4 flex items-center justify-center ">
-      <div className="text-lg"> {user.name}</div>
+    <div className="border-2 border-neutral-400 rounded-xl h-10 w-full bg-neutral-100 p-4 flex items-center justify-center ">
+      <div className="text-lg font-Roboto">{user.name}</div>
     </div>
   );
 };
