@@ -22,7 +22,7 @@ const ListStages = ({ project, setStageChangingFlag }: ListStagesProps) => {
   };
 
   return (
-    <div className="flex flex-row py-10 h-[90%] w-full overflow-x-scroll">
+    <div className="flex flex-row pb-10 h-[90%] w-full overflow-x-scroll">
       {project.stages?.map((stage, index) => (
         <SingleStage
           key={index}
