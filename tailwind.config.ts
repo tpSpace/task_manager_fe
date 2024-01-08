@@ -20,6 +20,11 @@ const config: Config = {
       maxHeight: {
         '128': '47rem',
       },
+      fontFamily: {
+        Roboto: ['Roboto', 'sans-serif'],
+        Montserrat: ['Montserrat', 'sans-serif'],
+
+      }
     },
   },
   plugins: [],
