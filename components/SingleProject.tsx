@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import axios from "axios";
 import Link from 'next/link';
 import { BsArrowLeft } from 'react-icons/bs';
 
@@ -17,6 +19,36 @@ const SingleProject = ({
   project,
   setStageChangingFlag,
 }: SingleProjectProps) => {
+  const [projectTitle, setProjectTitle] = useState<string>(project.title);
+
+  const handleChangeProjectTitle = (newTitle: string) => {
+    setProjectTitle(newTitle);
+  };
+
+  const handleSubmitNewTitle = async () => {
+    const token = localStorage.getItem('token');
+    const API_URL = process.env.NEXT_PUBLIC_API_URL;
+    await axios
+      .put(
+        `${API_URL}/projects/updateTitle/${project.id}`,
+        {
+          title: projectTitle,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
+      .then(res => {
+        if (res.status === 200) {
+          console.log('Project title updated successfully');
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
   return (
     <div className="w-full h-full flex flex-row justify-center items-center border-r-2">
       <div className="w-[15%] min-w-[150px] h-full flex-col items-center flex bg-neutral-300 relative">
