@@ -426,12 +426,9 @@ function KanbanBoard({ project, selectedTag }: ProjectDetailProps) {
         async function updateTicket() {
           await axios
             .put(
-              `${API_URL}/tickets/update/${activeId}`,
+              `${API_URL}/tickets/update/stage/${activeId}`,
               {
-                title: tasks[activeIndex].ticket.title,
-                description: tasks[activeIndex].ticket.description,
-                tag: tasks[activeIndex].ticket.tag,
-                stage: overId,
+                stageId: overId,
               },
               {
                 headers: {
@@ -456,7 +453,7 @@ function KanbanBoard({ project, selectedTag }: ProjectDetailProps) {
           overId !== tasks[activeIndex].ticket.ticketId &&
           overId !== columns[overIndex].id
         ) {
-          // updateTicket();
+          updateTicket();
         }
 
         return arrayMove(tasks, activeIndex, activeIndex);
