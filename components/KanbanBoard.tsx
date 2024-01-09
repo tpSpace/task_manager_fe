@@ -447,14 +447,9 @@ function KanbanBoard({ project, selectedTag }: ProjectDetailProps) {
             });
         }
         const overIndex = tasks.findIndex(t => t.id === overId);
-        if (
-          tasks[activeIndex].columnId != overId &&
-          overId !== tasks[activeIndex].id &&
-          overId !== tasks[activeIndex].ticket.ticketId &&
-          overId !== columns[overIndex].id
-        ) {
+        
           updateTicket();
-        }
+        
 
         return arrayMove(tasks, activeIndex, activeIndex);
       });
