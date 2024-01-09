@@ -154,6 +154,23 @@ function ColumnContainer({
               className="bg-black focus:border-rose-500 border rounded outline-none px-2"
               onBlur={() => {
                 setEditMode(false);
+                const data = {
+                  title: newTitle,
+                };
+                async function updateColumnTitle() {
+                  await axios.put(
+                    `${API_URL}/stages/updateTitle/${column.id}`,
+                    data,
+                    {
+                      headers: {
+                        Authorization: `Bearer ${token}`,
+                      },
+                    },
+                  );
+                  console.log('update column title');
+                }
+                updateColumnTitle();
+                setEditMode(false);
               }}
               onChange={e => {
                 updateColumn(column.id, e.target.value);
