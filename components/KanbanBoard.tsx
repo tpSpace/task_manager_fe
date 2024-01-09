@@ -46,6 +46,8 @@ function KanbanBoard({ project, selectedTag }: ProjectDetailProps) {
   console.log(selectedTag);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [tickets, setTickets] = useState<Task[]>([]);
+  // create a useMemo for
+  const cache = useMemo(() => tasks, [tasks]);
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
 
   const [activeTask, setActiveTask] = useState<Task | null>(null);
@@ -108,6 +110,7 @@ function KanbanBoard({ project, selectedTag }: ProjectDetailProps) {
       } catch (error) {
         console.error('Error fetching tasks:', error);
         // Handle error gracefully, e.g., display an error message
+        setTasks(cache);
       }
     };
 
