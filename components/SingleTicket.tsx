@@ -358,10 +358,13 @@ const SingleTicket = ({
                       </div>
                     </div>
 
-                    <div className="h-[96%] ml-1 mr-4 mt-1 mb-3 bg-gray-200 border-black border-2 rounded-2xl">
-                      <h1 className="text-2xl font-semibold text-center">
+                    <div className="h-[96%] ml-1 mr-4 mt-1 mb-3 bg-gray-200 border-black border-2 rounded-2xl flex justify-center items-center relative">
+                      <h1 className="absolute text-2xl font-semibold text-center top-0">
                         Relationship tree
                       </h1>
+                      <div className='absolute overflow-y-auto min-h-[full] row-span-2 text-center'>
+                        Under development
+                      </div>
                     </div>
                   </div>
                 </Dialog.Panel>
