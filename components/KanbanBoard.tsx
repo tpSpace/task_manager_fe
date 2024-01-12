@@ -46,6 +46,8 @@ function KanbanBoard({ project, selectedTag }: ProjectDetailProps) {
   console.log(selectedTag);
   const [tasks, setTasks] = useState<Task[]>([]);
   const [tickets, setTickets] = useState<Task[]>([]);
+  // create a useMemo for
+  const cache = useMemo(() => tasks, [tasks]);
   const [activeColumn, setActiveColumn] = useState<Column | null>(null);
 
   const [activeTask, setActiveTask] = useState<Task | null>(null);
@@ -108,6 +110,7 @@ function KanbanBoard({ project, selectedTag }: ProjectDetailProps) {
       } catch (error) {
         console.error('Error fetching tasks:', error);
         // Handle error gracefully, e.g., display an error message
+        setTasks(cache);
       }
     };
 
@@ -423,12 +426,9 @@ function KanbanBoard({ project, selectedTag }: ProjectDetailProps) {
         async function updateTicket() {
           await axios
             .put(
-              `${API_URL}/tickets/update/${activeId}`,
+              `${API_URL}/tickets/update/stage/${activeId}`,
               {
-                title: tasks[activeIndex].ticket.title,
-                description: tasks[activeIndex].ticket.description,
-                tag: tasks[activeIndex].ticket.tag,
-                stage: overId,
+                stageId: overId,
               },
               {
                 headers: {
@@ -447,14 +447,9 @@ function KanbanBoard({ project, selectedTag }: ProjectDetailProps) {
             });
         }
         const overIndex = tasks.findIndex(t => t.id === overId);
-        if (
-          tasks[activeIndex].columnId != overId &&
-          overId !== tasks[activeIndex].id &&
-          overId !== tasks[activeIndex].ticket.ticketId &&
-          overId !== columns[overIndex].id
-        ) {
-          // updateTicket();
-        }
+        
+          updateTicket();
+        
 
         return arrayMove(tasks, activeIndex, activeIndex);
       });
